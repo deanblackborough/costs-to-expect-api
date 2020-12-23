@@ -2,8 +2,8 @@
 
 namespace App\ItemType\Game;
 
-use App\ItemType\SummaryResourceTypeResponse as BaseSummaryResourceTypeResponse;
 use App\ItemType\Game\SummaryTransformer as GameTransformer;
+use App\ItemType\SummaryResourceTypeResponse as BaseSummaryResourceTypeResponse;
 use App\Request\Validate\Boolean;
 use Illuminate\Http\JsonResponse;
 
@@ -13,14 +13,13 @@ class SummaryResourceTypeResponse extends BaseSummaryResourceTypeResponse
         int $resource_type_id,
         bool $permitted_user = false,
         int $user_id = null
-    )
-    {
+    ) {
         parent::__construct(
             $resource_type_id,
             $permitted_user,
             $user_id
         );
-        
+
         $this->setUpCache();
 
         $this->model = new SummaryResourceTypeModel();
@@ -49,7 +48,6 @@ class SummaryResourceTypeResponse extends BaseSummaryResourceTypeResponse
     protected function filteredSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->filteredSummary(
                 $this->resource_type_id,
                 $this->parameters,
@@ -89,7 +87,6 @@ class SummaryResourceTypeResponse extends BaseSummaryResourceTypeResponse
     protected function resourcesSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->resourcesSummary(
                 $this->resource_type_id,
                 $this->parameters
@@ -111,7 +108,6 @@ class SummaryResourceTypeResponse extends BaseSummaryResourceTypeResponse
     protected function summary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->summary(
                 $this->resource_type_id,
                 $this->parameters

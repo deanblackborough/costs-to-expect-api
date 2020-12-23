@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\Game;
@@ -27,7 +28,7 @@ class Model extends LaravelModel
         return $this->hasOne(Category::class, 'id', 'winner_id');
     }
 
-    public function instance(int $item_id): ?Model
+    public function instance(int $item_id): ?self
     {
         return $this->where('item_id', '=', $item_id)->
             select(
@@ -36,7 +37,7 @@ class Model extends LaravelModel
             first();
     }
 
-    public function instanceToArray(LaravelModel $item, Model $item_type): array
+    public function instanceToArray(LaravelModel $item, self $item_type): array
     {
         return [
             'item_id' => $item->id,
@@ -57,27 +58,26 @@ class Model extends LaravelModel
         int $resource_id,
         int $item_id,
         array $parameters = []
-    ): ?array
-    {
+    ): ?array {
         $fields = [
             'item.id AS item_id',
             "{$this->table}.name AS item_name",
             "{$this->table}.description AS item_description",
             "{$this->table}.game AS item_game",
             "{$this->table}.statistics AS item_statistics",
-            "category.id AS item_winner_id",
-            "category.name AS item_winner_name",
+            'category.id AS item_winner_id',
+            'category.name AS item_winner_name',
             "{$this->table}.score AS item_score",
             "{$this->table}.complete AS item_complete",
             "{$this->table}.created_at AS item_created_at",
-            "{$this->table}.updated_at AS item_updated_at"
+            "{$this->table}.updated_at AS item_updated_at",
         ];
 
         $result = $this
             ->from('item')
             ->join($this->table, 'item.id', "{$this->table}.item_id")
             ->join('resource', 'item.resource_id', 'resource.id')
-            ->leftJoin('category', $this->table . '.winner', 'category.id')
+            ->leftJoin('category', $this->table.'.winner', 'category.id')
             ->where('item.resource_id', '=', $resource_id)
             ->where('resource.resource_type_id', '=', $resource_type_id)
             ->where("{$this->table}.item_id", '=', $item_id)
@@ -98,16 +98,15 @@ class Model extends LaravelModel
         array $parameters = [],
         array $search_parameters = [],
         array $filter_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this->from('item')
-            ->join($this->table, 'item.id', $this->table . '.item_id')
+            ->join($this->table, 'item.id', $this->table.'.item_id')
             ->join('resource', 'item.resource_id', 'resource.id')
             ->where('resource_id', '=', $resource_id)
             ->where('resource.resource_type_id', '=', $resource_type_id);
 
         if (array_key_exists('complete', $parameters) === true) {
-            $collection->where($this->table . '.complete', '=', 1);
+            $collection->where($this->table.'.complete', '=', 1);
         }
 
         $collection = Clause::applySearch(
@@ -133,32 +132,31 @@ class Model extends LaravelModel
         array $search_parameters = [],
         array $filter_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $select_fields = [
             'item.id AS item_id',
             "{$this->table}.name AS item_name",
             "{$this->table}.description AS item_description",
             "{$this->table}.game AS item_game",
             "{$this->table}.statistics AS item_statistics",
-            "category.id AS item_winner_id",
-            "category.name AS item_winner_name",
+            'category.id AS item_winner_id',
+            'category.name AS item_winner_name',
             "{$this->table}.score AS item_score",
             "{$this->table}.complete AS item_complete",
             "{$this->table}.created_at AS item_created_at",
-            "{$this->table}.updated_at AS item_updated_at"
+            "{$this->table}.updated_at AS item_updated_at",
         ];
 
         $collection = $this
             ->from('item')
             ->join($this->table, 'item.id', "{$this->table}.item_id")
             ->join('resource', 'item.resource_id', 'resource.id')
-            ->leftJoin('category', $this->table . '.winner', 'category.id')
+            ->leftJoin('category', $this->table.'.winner', 'category.id')
             ->where('resource_id', '=', $resource_id)
             ->where('resource.resource_type_id', '=', $resource_type_id);
 
         if (array_key_exists('complete', $parameters) === true) {
-            $collection->where($this->table . '.complete', '=', 1);
+            $collection->where($this->table.'.complete', '=', 1);
         }
 
         $collection = Clause::applySearch(
@@ -180,7 +178,7 @@ class Model extends LaravelModel
                         break;
 
                     default:
-                        $collection->orderBy('item.' . $field, $direction);
+                        $collection->orderBy('item.'.$field, $direction);
                         break;
                 }
             }
@@ -208,7 +206,7 @@ class Model extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->get()

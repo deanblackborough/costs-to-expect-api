@@ -9,8 +9,8 @@ return [
         'description' => 'item-transfer/fields.description-resource_id',
         'type' => 'string',
         'validation' => [
-            'length' => 10
+            'length' => 10,
         ],
-        'required' => true
-    ]
+        'required' => true,
+    ],
 ];

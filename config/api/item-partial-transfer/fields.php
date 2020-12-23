@@ -9,9 +9,9 @@ return [
         'description' => 'item-partial-transfer/fields.description-resource_id',
         'type' => 'string',
         'validation' => [
-            'length' => 10
+            'length' => 10,
         ],
-        'required' => true
+        'required' => true,
     ],
     'percentage' => [
         'field' => 'percentage',
@@ -20,8 +20,8 @@ return [
         'type' => 'integer',
         'validation' => [
             'min' => 1,
-            'max' => 99
+            'max' => 99,
         ],
-        'required' => true
-    ]
+        'required' => true,
+    ],
 ];

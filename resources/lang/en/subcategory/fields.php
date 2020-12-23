@@ -7,5 +7,5 @@ return [
     'description-name' => 'Enter a name for the subcategory',
 
     'title-description' => 'Subcategory description',
-    'description-description' => 'Enter a description for the subcategory'
+    'description-description' => 'Enter a description for the subcategory',
 ];

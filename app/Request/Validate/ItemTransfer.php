@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Validate;
@@ -9,7 +10,7 @@ use Illuminate\Validation\Rule;
 
 /**
  * Validation helper class for item movement, returns the generated validator
- * objects
+ * objects.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -18,7 +19,7 @@ use Illuminate\Validation\Rule;
 class ItemTransfer extends BaseValidator
 {
     /**
-     * Create the validation rules for the create (POST) request
+     * Create the validation rules for the create (POST) request.
      *
      * @param array $options
      *
@@ -38,14 +39,13 @@ class ItemTransfer extends BaseValidator
             array_merge(
                 request()->all(),
                 [
-                    'resource_id' => $resource_id
+                    'resource_id' => $resource_id,
                 ]
             ),
             [
                 'resource_id' => [
                     'required',
-                    Rule::exists('resource', 'id')->where(static function ($query) use ($options)
-                    {
+                    Rule::exists('resource', 'id')->where(static function ($query) use ($options) {
                         $query->where('resource_type_id', '=', $options['resource_type_id'])->
                             where('id', '!=', $options['existing_resource_id']);
                     }),

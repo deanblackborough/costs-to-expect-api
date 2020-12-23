@@ -10,5 +10,5 @@ return [
     'description-description' => 'Enter a description for the item',
 
     'title-quantity' => 'Quantity',
-    'description-quantity' => 'Enter the quantity'
+    'description-quantity' => 'Enter the quantity',
 ];

@@ -6,5 +6,5 @@ return [
     'name',
     'description',
     'public',
-    'created'
+    'created',
 ];

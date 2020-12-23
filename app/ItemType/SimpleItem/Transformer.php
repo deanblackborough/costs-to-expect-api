@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -20,7 +21,7 @@ class Transformer extends BaseTransformer
             'description' => $to_transform['item_description'],
             'quantity' => (int) $to_transform['item_quantity'],
             'created' => $to_transform['item_created_at'],
-            'updated' => $to_transform['item_updated_at']
+            'updated' => $to_transform['item_updated_at'],
         ];
     }
 }

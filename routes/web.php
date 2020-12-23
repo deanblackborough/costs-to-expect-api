@@ -11,7 +11,7 @@ Route::view(
     [
         'maintenance' => app()->isDownForMaintenance(),
         'version' => $version['version'],
-        'date' => $version['release_date']
+        'date' => $version['release_date'],
     ]
 );
 
@@ -21,8 +21,6 @@ Route::view(
     [
         'maintenance' => app()->isDownForMaintenance(),
         'version' => $version['version'],
-        'date' => $version['release_date']
+        'date' => $version['release_date'],
     ]
 );
-
-

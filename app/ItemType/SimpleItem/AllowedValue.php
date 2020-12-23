@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -11,8 +12,7 @@ class AllowedValue extends BaseAllowedValue
         int $resource_type_id,
         int $resource_id,
         array $viewable_resource_types
-    )
-    {
+    ) {
         parent::__construct(
             $resource_type_id,
             $resource_id,

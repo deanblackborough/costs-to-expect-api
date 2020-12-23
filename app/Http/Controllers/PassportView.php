@@ -8,13 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-/**
- * @package App\Http\Controllers
- */
 class PassportView extends Controller
 {
     /**
-     * login to the API and create an access token
+     * login to the API and create an access token.
      *
      * @return Http\JsonResponse
      */
@@ -24,14 +21,13 @@ class PassportView extends Controller
             Auth::attempt(
                 [
                     'email' => request('email'),
-                    'password' => request('password')
+                    'password' => request('password'),
                 ]
             ) === true
         ) {
             $user = Auth::user();
 
             if ($user !== null) {
-
                 $token = $user->createToken('costs-to-expect-api');
 
                 return response()->json(
@@ -41,7 +37,7 @@ class PassportView extends Controller
                         'token' => $token->accessToken,
                         'created' => $token->token->created_at,
                         'updated' => $token->token->updated_at,
-                        'expires' => $token->token->expires_at
+                        'expires' => $token->token->expires_at,
                     ],
                     201
                 );
@@ -59,7 +55,7 @@ class PassportView extends Controller
     }
 
     /**
-     * Register with the API will return the token
+     * Register with the API will return the token.
      *
      * @return Http\JsonResponse
      */
@@ -79,7 +75,7 @@ class PassportView extends Controller
             return response()->json(
                 [
                     'message' => 'Validation error, please review the below',
-                    'fields' => $validator->errors()
+                    'fields' => $validator->errors(),
                 ],
                 422
             );
@@ -99,7 +95,7 @@ class PassportView extends Controller
     }
 
     /**
-     * Return user details
+     * Return user details.
      *
      * @return Http\JsonResponse
      */

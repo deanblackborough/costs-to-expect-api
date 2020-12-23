@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Validate;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
 
 /**
  * Validation helper class for request errors, returns the generated validator
- * object
+ * object.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
 class RequestErrorLog extends BaseValidator
 {
     /**
-     * Return a valid validator object for a create (POST) request
+     * Return a valid validator object for a create (POST) request.
      *
      * @param array $options
      *

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleExpense;
@@ -22,7 +23,7 @@ class SummaryTransformerByCategory extends Transformer
                     'id' => $this->hash->category()->encode($summary['id']),
                     'name' => $summary['name'],
                     'description' => $summary['description'],
-                    'subtotals' => []
+                    'subtotals' => [],
                 ];
             }
 
@@ -31,7 +32,7 @@ class SummaryTransformerByCategory extends Transformer
                     'code' => $summary['currency_code'],
                 ],
                 'count' => $summary['total_count'],
-                'subtotal' => number_format((float)$summary['total'], 2, '.', '')
+                'subtotal' => number_format((float) $summary['total'], 2, '.', ''),
             ];
         }
 

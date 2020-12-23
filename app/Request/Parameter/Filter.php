@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Parameter;
 
-use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use DateTime;
+use Illuminate\Support\Facades\Validator as ValidatorFacade;
 
 /**
- * Fetch and validate any filter parameters
+ * Fetch and validate any filter parameters.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -19,7 +20,7 @@ class Filter
 
     /**
      * Check the URI for the filter parameter, if the format is valid split the
-     * string and set a filter array of the filter parameters and the ranges
+     * string and set a filter array of the filter parameters and the ranges.
      */
     private static function find(): void
     {
@@ -45,7 +46,7 @@ class Filter
                             ) {
                                 self::$parameters[$filter[0]] = [
                                     'from' => $filter[1],
-                                    'to' => $filter[2]
+                                    'to' => $filter[2],
                                 ];
                             }
                             break;
@@ -55,7 +56,7 @@ class Filter
                                 self::validateMoney($filter[2]) === false) {
                                 self::$parameters[$filter[0]] = [
                                     'from' => $filter[1],
-                                    'to' => $filter[2]
+                                    'to' => $filter[2],
                                 ];
                             }
                             break;
@@ -71,7 +72,7 @@ class Filter
 
     /**
      * Validate the supplied filter parameters array, if they are not in the
-     * expected array we silently reject them
+     * expected array we silently reject them.
      *
      * @param array $parameters
      */
@@ -86,7 +87,7 @@ class Filter
 
     /**
      * Return all the valid filterable parameters, check the supplied array
-     * against the set filter parameters
+     * against the set filter parameters.
      *
      * @param array $parameters
      *
@@ -101,7 +102,7 @@ class Filter
     }
 
     /**
-     * Generate the X-Filter header string for the valid filter options
+     * Generate the X-Filter header string for the valid filter options.
      *
      * @return string|null
      */
@@ -110,7 +111,7 @@ class Filter
         $header = '';
 
         foreach (self::$parameters as $key => $values) {
-            $header .= '|' . $key . ':' . urlencode($values['from']) . ':' . urlencode($values['to']);
+            $header .= '|'.$key.':'.urlencode($values['from']).':'.urlencode($values['to']);
         }
 
         if ($header !== '') {
@@ -125,22 +126,22 @@ class Filter
         DateTime::createFromFormat('Y-m-d', $date);
         $errors = DateTime::getLastErrors();
 
-        return ($errors['warning_count'] === 0 && $errors['error_count'] === 0);
+        return $errors['warning_count'] === 0 && $errors['error_count'] === 0;
     }
 
     private static function validateMoney($value): bool
     {
         $validator = ValidatorFacade::make(
             [
-                'value' => $value
+                'value' => $value,
             ],
             [
                 'value' => [
                     'required',
                     'string',
                     'regex:/^\d+\.\d{2}$/',
-                    'max:16'
-                ]
+                    'max:16',
+                ],
             ]
         );
 

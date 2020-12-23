@@ -8,5 +8,5 @@ return [
     'total',
     'actualised_total',
     'effective_date',
-    'created'
+    'created',
 ];

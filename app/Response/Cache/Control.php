@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache as LaravelCache;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Cache helper, wrapper around the Laravel cache facade
+ * Cache helper, wrapper around the Laravel cache facade.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -33,7 +33,7 @@ class Control
         $this->cache_prefix = $this->public_cache_prefix;
 
         if ($permitted_user === true && $user_id !== null) {
-            $this->cache_prefix = '-'  . $user_id . '-';
+            $this->cache_prefix = '-'.$user_id.'-';
             $this->visibility = 'private';
         }
 
@@ -55,19 +55,18 @@ class Control
 
     public function clearCacheForRequestedKey(string $key): void
     {
-        LaravelCache::forget($this->cache_prefix . $key);
+        LaravelCache::forget($this->cache_prefix.$key);
 
         // Clear public if possibly necessary
         if ($this->cache_prefix !== $this->public_cache_prefix) {
-            LaravelCache::forget($this->public_cache_prefix . $key);
+            LaravelCache::forget($this->public_cache_prefix.$key);
         }
     }
 
     public function clearMatchingPublicCacheKeys(
         array $key_wildcards,
         bool $include_summaries = true
-    ): void
-    {
+    ): void {
         foreach ($key_wildcards as $key_wildcard) {
             $keys = $this->fetchMatchingPublicCacheKeys($key_wildcard, $include_summaries);
 
@@ -86,8 +85,7 @@ class Control
     public function clearMatchingCacheKeys(
         array $key_wildcards,
         bool $include_summaries = true
-    ): void
-    {
+    ): void {
         foreach ($key_wildcards as $key_wildcard) {
             $keys = $this->fetchMatchingCacheKeys($key_wildcard, $include_summaries);
 
@@ -99,13 +97,13 @@ class Control
 
     public function getByKey(string $key): ?array
     {
-        return LaravelCache::get($this->cache_prefix . $key);
+        return LaravelCache::get($this->cache_prefix.$key);
     }
 
     public function putByKey(string $key, array $data): bool
     {
         return LaravelCache::put(
-            $this->cache_prefix . $key,
+            $this->cache_prefix.$key,
             $data,
             $this->ttl
         );
@@ -164,10 +162,9 @@ class Control
     public function fetchMatchingCacheKeys(
         string $key_wildcard,
         bool $include_summaries = false
-    ): array
-    {
+    ): array {
         return (new \App\Models\Cache())->matchingKeys(
-            $this->laravel_cache_prefix . $this->cache_prefix,
+            $this->laravel_cache_prefix.$this->cache_prefix,
             $key_wildcard,
             $include_summaries
         );
@@ -176,10 +173,9 @@ class Control
     public function fetchMatchingPublicCacheKeys(
         string $key_wildcard,
         bool $include_summaries = false
-    ): array
-    {
+    ): array {
         return (new \App\Models\Cache())->matchingKeys(
-            $this->laravel_cache_prefix . $this->public_cache_prefix,
+            $this->laravel_cache_prefix.$this->public_cache_prefix,
             $key_wildcard,
             $include_summaries
         );

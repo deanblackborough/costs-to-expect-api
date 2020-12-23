@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Route\Validate;
@@ -6,7 +7,7 @@ namespace App\Request\Route\Validate;
 use App\Models\ResourceAccess;
 
 /**
- * Validate the route params to an item type
+ * Validate the route params to an item type.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -15,15 +16,15 @@ use App\Models\ResourceAccess;
 class ItemType
 {
     /**
-     * Validate that the user is able to view the requested item type
+     * Validate that the user is able to view the requested item type.
      *
      * @param string|int $item_type_id
      *
-     * @return boolean
+     * @return bool
      */
     public static function existsToUserForViewing($item_type_id): bool
     {
-        return !(
+        return ! (
             (new ResourceAccess())->itemTypeExistsToUser((int) $item_type_id) === false
         );
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -21,7 +22,7 @@ class Model extends LaravelModel
 
     public $timestamps = false;
 
-    public function instance(int $item_id): ?Model
+    public function instance(int $item_id): ?self
     {
         return $this->where('item_id', '=', $item_id)->
             select(
@@ -31,14 +32,14 @@ class Model extends LaravelModel
     }
 
     /**
-     * Convert the model instance to an array for use with the item transformer
+     * Convert the model instance to an array for use with the item transformer.
      *
      * @param Model $item
      * @param Model $item_type
      *
      * @return array
      */
-    public function instanceToArray(LaravelModel $item, Model $item_type): array
+    public function instanceToArray(LaravelModel $item, self $item_type): array
     {
         return [
             'item_id' => $item->id,
@@ -51,9 +52,9 @@ class Model extends LaravelModel
     }
 
     /**
-     * @param integer $resource_type_id
-     * @param integer $resource_id
-     * @param integer $item_id
+     * @param int $resource_type_id
+     * @param int $resource_id
+     * @param int $item_id
      * @param array $parameters
      *
      * @return array|null
@@ -63,15 +64,14 @@ class Model extends LaravelModel
         int $resource_id,
         int $item_id,
         array $parameters = []
-    ): ?array
-    {
+    ): ?array {
         $fields = [
             'item.id AS item_id',
             "{$this->table}.name AS item_name",
             "{$this->table}.description AS item_description",
             "{$this->table}.quantity AS item_quantity",
             "{$this->table}.created_at AS item_created_at",
-            "{$this->table}.updated_at AS item_updated_at"
+            "{$this->table}.updated_at AS item_updated_at",
         ];
 
         $result = $this->from('item')->
@@ -93,15 +93,15 @@ class Model extends LaravelModel
 
     /**
      * Return the total count for the given request, similar to the collection
-     * method just without the sorting and only returning a count
+     * method just without the sorting and only returning a count.
      *
-     * @param integer $resource_type_id
-     * @param integer $resource_id
+     * @param int $resource_type_id
+     * @param int $resource_id
      * @param array $parameters
      * @param array $search_parameters
      * @param array $filter_parameters
      *
-     * @return integer
+     * @return int
      */
     public function totalCount(
         int $resource_type_id,
@@ -109,10 +109,9 @@ class Model extends LaravelModel
         array $parameters = [],
         array $search_parameters = [],
         array $filter_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this->from('item')->
-            join($this->table, 'item.id', $this->table . '.item_id')->
+            join($this->table, 'item.id', $this->table.'.item_id')->
             join('resource', 'item.resource_id', 'resource.id')->
             where('resource_id', '=', $resource_id)->
             where('resource.resource_type_id', '=', $resource_type_id);
@@ -131,7 +130,7 @@ class Model extends LaravelModel
         return $collection->count();
     }
 
-     public function paginatedCollection(
+    public function paginatedCollection(
         int $resource_type_id,
         int $resource_id,
         int $offset = 0,
@@ -139,15 +138,14 @@ class Model extends LaravelModel
         array $search_parameters = [],
         array $filter_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $select_fields = [
             'item.id AS item_id',
             "{$this->table}.name AS item_name",
             "{$this->table}.description AS item_description",
             "{$this->table}.quantity AS item_quantity",
             "{$this->table}.created_at AS item_created_at",
-            "{$this->table}.updated_at AS item_updated_at"
+            "{$this->table}.updated_at AS item_updated_at",
         ];
 
         $collection = $this->from('item')->
@@ -177,11 +175,11 @@ class Model extends LaravelModel
                     case 'description':
                     case 'name':
                     case 'quantity':
-                        $collection->orderBy($this->table . '.' . $field, $direction);
+                        $collection->orderBy($this->table.'.'.$field, $direction);
                         break;
 
                     default:
-                        $collection->orderBy('item.' . $field, $direction);
+                        $collection->orderBy('item.'.$field, $direction);
                         break;
                 }
             }
@@ -210,7 +208,7 @@ class Model extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->get()

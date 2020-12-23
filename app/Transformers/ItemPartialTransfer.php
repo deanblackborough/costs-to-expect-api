@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
@@ -6,7 +7,7 @@ namespace App\Transformers;
 use App\Transformers\Transformer;
 
 /**
- * Transform the data from our queries into the format we want to display
+ * Transform the data from our queries into the format we want to display.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -29,16 +30,16 @@ class ItemPartialTransfer extends Transformer
             'item' => [
                 'id' => $this->hash->item()->encode($to_transform['item_item_id']),
                 'name' => $to_transform['item_name'],
-                'description' => $to_transform['item_description']
+                'description' => $to_transform['item_description'],
             ],
             'percentage' => (int) ($to_transform['percentage']),
             'transferred' => [
                 'at' => $to_transform['created_at'],
                 'user' => [
                     'id' => $this->hash->user()->encode($to_transform['user_id']),
-                    'name' => $to_transform['user_name']
-                ]
-            ]
+                    'name' => $to_transform['user_name'],
+                ],
+            ],
         ];
     }
 }

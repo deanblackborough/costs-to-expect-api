@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
@@ -6,7 +7,7 @@ namespace App\Transformers;
 use App\Transformers\Transformer;
 
 /**
- * Transform the data from our queries into the format we want to display
+ * Transform the data from our queries into the format we want to display.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -23,7 +24,7 @@ class RequestErrorLog extends Transformer
             'request_uri' => $to_transform['request_error_log_request_uri'],
             'source' => $to_transform['request_error_log_source'],
             'created' => $to_transform['request_error_log_created_at'],
-            'debug' => $to_transform['request_error_log_debug']
+            'debug' => $to_transform['request_error_log_debug'],
         ];
     }
 }

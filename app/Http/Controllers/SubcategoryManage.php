@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ClearCache;
-use App\Response\Cache;
 use App\Models\Subcategory;
-use App\Transformers\Subcategory as SubcategoryTransformer;
 use App\Request\Validate\Subcategory as SubcategoryValidator;
+use App\Response\Cache;
 use App\Response\Responses;
+use App\Transformers\Subcategory as SubcategoryTransformer;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Manage category sub categories
+ * Manage category sub categories.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -24,7 +24,7 @@ class SubcategoryManage extends Controller
     protected bool $allow_entire_collection = true;
 
     /**
-     * Create a new sub category
+     * Create a new sub category.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -44,7 +44,7 @@ class SubcategoryManage extends Controller
             ->setGroupKey(Cache\KeyGroup::SUBCATEGORY_CREATE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'category_id' => $category_id
+                'category_id' => $category_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -53,12 +53,11 @@ class SubcategoryManage extends Controller
             $sub_category = new Subcategory([
                 'category_id' => $category_id,
                 'name' => request()->input('name'),
-                'description' => request()->input('description')
+                'description' => request()->input('description'),
             ]);
             $sub_category->save();
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return Responses::failedToSaveModelForCreate();
         }
@@ -70,7 +69,7 @@ class SubcategoryManage extends Controller
     }
 
     /**
-     * Delete the requested sub category
+     * Delete the requested sub category.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -82,8 +81,7 @@ class SubcategoryManage extends Controller
         $resource_type_id,
         $category_id,
         $subcategory_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.subcategory'));
         }
@@ -101,7 +99,7 @@ class SubcategoryManage extends Controller
             ->setGroupKey(Cache\KeyGroup::SUBCATEGORY_DELETE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'category_id' => $category_id
+                'category_id' => $category_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -120,7 +118,7 @@ class SubcategoryManage extends Controller
     }
 
     /**
-     * Update the selected subcategory
+     * Update the selected subcategory.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -132,8 +130,7 @@ class SubcategoryManage extends Controller
         $resource_type_id,
         $category_id,
         $subcategory_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.subcategory'));
         }
@@ -147,8 +144,8 @@ class SubcategoryManage extends Controller
         \App\Request\BodyValidation::checkForEmptyPatch();
 
         $validator = (new SubcategoryValidator())->update([
-            'category_id' => (int)$category_id,
-            'subcategory_id' => (int)$subcategory_id
+            'category_id' => (int) $category_id,
+            'subcategory_id' => (int) $subcategory_id,
         ]);
         \App\Request\BodyValidation::validateAndReturnErrors($validator);
 
@@ -167,7 +164,7 @@ class SubcategoryManage extends Controller
             ->setGroupKey(Cache\KeyGroup::SUBCATEGORY_UPDATE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'category_id' => $category_id
+                'category_id' => $category_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -176,7 +173,6 @@ class SubcategoryManage extends Controller
             $subcategory->save();
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return Responses::failedToSaveModelForUpdate();
         }

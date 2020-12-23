@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Summary;
 use App\Http\Controllers\Controller;
 use App\Models\Summary\Category;
 use App\Option\SummaryCategoryCollection;
-use App\Response\Cache;
 use App\Request\Parameter;
+use App\Response\Cache;
 use App\Response\Header\Headers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Summary controller for the categories routes
+ * Summary controller for the categories routes.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Config;
 class CategoryView extends Controller
 {
     /**
-     * Return a summary of the categories
+     * Return a summary of the categories.
      *
      * @param $resource_type_id
      *
@@ -43,7 +43,6 @@ class CategoryView extends Controller
         $cache_summary->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_summary->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.category.summary-searchable')
             );
@@ -65,7 +64,7 @@ class CategoryView extends Controller
             }
 
             $collection = [
-                'categories' => $total
+                'categories' => $total,
             ];
 
             $headers = new Headers();
@@ -85,9 +84,8 @@ class CategoryView extends Controller
         return response()->json($cache_summary->collection(), 200, $cache_summary->headers());
     }
 
-
     /**
-     * Generate the OPTIONS request for the categories summary
+     * Generate the OPTIONS request for the categories summary.
      *
      * @param $resource_type_id
      *

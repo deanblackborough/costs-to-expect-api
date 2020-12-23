@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
 
 use App\AllowedValue\Currency;
 use App\ItemType\ItemType;
-use App\Transformers\Transformer;
 use App\Request\Hash;
 use App\Request\Validate\Validator;
+use App\Transformers\Transformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 
@@ -33,9 +34,9 @@ class Item extends ItemType
     }
 
     /**
-     * Create and save the item and item type data
+     * Create and save the item and item type data.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return Model
      */
@@ -54,7 +55,7 @@ class Item extends ItemType
             'total' => request()->input('total'),
             'percentage' => request()->input('percentage', 100),
             'created_at' => Date::now(),
-            'updated_at' => null
+            'updated_at' => null,
         ]);
 
         $item->setActualisedTotal(

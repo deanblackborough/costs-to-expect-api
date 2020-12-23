@@ -13,5 +13,5 @@ return [
     'description-item_type_id' => 'The item type to use for this resource type',
 
     'title-public' => 'Public resource type?',
-    'description-public' => 'Do you want to expose this resource type to the public?'
+    'description-public' => 'Do you want to expose this resource type to the public?',
 ];

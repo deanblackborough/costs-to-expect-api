@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\PermittedUser;
-use App\Transformers\PermittedUser as PermittedUserTransformer;
 use App\Option\PermittedUserCollection;
-use App\Response\Cache;
 use App\Request\Parameter;
+use App\Response\Cache;
 use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
+use App\Transformers\PermittedUser as PermittedUserTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Manage permitted users
+ * Manage permitted users.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -39,7 +39,6 @@ class PermittedUserView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.permitted-user.searchable')
             );
@@ -89,7 +88,7 @@ class PermittedUserView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the permitted users collection
+     * Generate the OPTIONS request for the permitted users collection.
      *
      * @param string $resource_type_id
      *

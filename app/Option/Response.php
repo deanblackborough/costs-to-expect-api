@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Option;
@@ -38,8 +39,8 @@ abstract class Response
                 'Content-Type' => 'application/json',
                 'Content-Language' => app()->getLocale(),
                 'Referrer-Policy' => 'strict-origin-when-cross-origin',
-                'X-Content-Type-Options' => 'nosniff'
-            ]
+                'X-Content-Type-Options' => 'nosniff',
+            ],
         ];
 
         response()->json(
@@ -50,7 +51,7 @@ abstract class Response
         exit;
     }
 
-    public function setAllowedValues(array $allowed_values): Response
+    public function setAllowedValues(array $allowed_values): self
     {
         $this->allowed_values = $allowed_values;
 
@@ -61,7 +62,7 @@ abstract class Response
      * @todo This is a new method to work with the WIP new config based item
      * approach, we are going to develop this slowly to see how it works
      */
-    public function setEntity(ItemType $entity): Response
+    public function setEntity(ItemType $entity): self
     {
         $this->entity = $entity;
 

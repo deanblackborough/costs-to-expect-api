@@ -10,15 +10,15 @@ return [
         'type' => 'string',
         'validation' => [
             'unique-for' => 'resource_type_id',
-            'max-length' => 255
+            'max-length' => 255,
         ],
-        'required' => true
+        'required' => true,
     ],
     'description' => [
         'field' => 'description',
         'title' => 'category/fields.title-description',
         'description' => 'category/fields.description-description',
         'type' => 'string',
-        'required' => true
-    ]
+        'required' => true,
+    ],
 ];

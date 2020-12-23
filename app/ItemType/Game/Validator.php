@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\Game;
@@ -53,6 +54,4 @@ class Validator extends BaseValidator
             $messages
         );
     }
-
-
 }

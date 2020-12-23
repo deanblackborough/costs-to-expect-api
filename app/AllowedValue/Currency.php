@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -16,7 +17,7 @@ class Currency
 
     /**
      * Generate the allowed values item type array, will be passed to the
-     * Option classes and merged with the fields/parameters
+     * Option classes and merged with the fields/parameters.
      *
      * @return array
      */
@@ -36,7 +37,7 @@ class Currency
             $parameters['currency_id']['allowed_values'][$id] = [
                 'value' => $id,
                 'name' => $currency['currency_name'],
-                'description' => $currency['currency_name']
+                'description' => $currency['currency_name'],
             ];
         }
 

@@ -8,42 +8,42 @@ return [
             'name' => [
                 'required',
                 'string',
-                'max:255'
+                'max:255',
             ],
             'description' => [
                 'sometimes',
-                'string'
-            ]
+                'string',
+            ],
         ],
-        'messages' => []
+        'messages' => [],
     ],
     'PATCH' => [
         'fields' => [
             'game' => [
                 'sometimes',
-                'json'
+                'json',
             ],
             'statistics' => [
                 'sometimes',
-                'json'
+                'json',
             ],
             'winner_id' => [
                 'sometimes',
                 'nullable',
-                'exists:category,id'
+                'exists:category,id',
             ],
             'score' => [
                 'sometimes',
                 'integer',
-                'min:0'
+                'min:0',
             ],
             'complete' => [
                 'sometimes',
-                'boolean'
-            ]
+                'boolean',
+            ],
         ],
         'messages' => [
-            'winner_id.exists' => 'item-type-game/validation.winner_id-exists'
-        ]
-    ]
+            'winner_id.exists' => 'item-type-game/validation.winner_id-exists',
+        ],
+    ],
 ];

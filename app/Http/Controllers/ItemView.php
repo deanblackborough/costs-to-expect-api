@@ -17,7 +17,7 @@ class ItemView extends Controller
 {
     /**
      * Return all the items for the resource type and resource applying
-     * any filtering, pagination and ordering
+     * any filtering, pagination and ordering.
      *
      * @param string $resource_type_id
      * @param string $resource_id
@@ -27,8 +27,7 @@ class ItemView extends Controller
     public function index(
         string $resource_type_id,
         string $resource_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.resource'));
         }
@@ -51,7 +50,7 @@ class ItemView extends Controller
     }
 
     /**
-     * Return a single item
+     * Return a single item.
      *
      * @param string $resource_id
      * @param string $resource_type_id
@@ -63,8 +62,7 @@ class ItemView extends Controller
         $resource_type_id,
         $resource_id,
         $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }
@@ -86,7 +84,7 @@ class ItemView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the item list
+     * Generate the OPTIONS request for the item list.
      *
      * @param string $resource_type_id
      * @param string $resource_id
@@ -96,8 +94,7 @@ class ItemView extends Controller
     public function optionsIndex(
         string $resource_type_id,
         string $resource_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.resource'));
         }
@@ -120,7 +117,7 @@ class ItemView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for a specific item
+     * Generate the OPTIONS request for a specific item.
      *
      * @param string $resource_id
      * @param string $resource_type_id
@@ -132,8 +129,7 @@ class ItemView extends Controller
         string $resource_type_id,
         string $resource_id,
         string $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }

@@ -9,8 +9,8 @@ return [
         'description' => 'permitted-user/fields.description-user_id',
         'type' => 'string',
         'validation' => [
-            'length' => 10
+            'length' => 10,
         ],
-        'required' => true
-    ]
+        'required' => true,
+    ],
 ];

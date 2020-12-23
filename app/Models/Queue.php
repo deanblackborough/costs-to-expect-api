@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -21,8 +22,7 @@ class Queue extends Model
     public function paginatedCollection(
         int $offset = 0,
         int $limit = 10
-    ): array
-    {
+    ): array {
         $collection = $this
             ->select(
                 "{$this->table}.id AS {$this->table}_id",
@@ -46,7 +46,7 @@ class Queue extends Model
             );
 
         $result = $result
-            ->where($this->table . '.id', '=', $currency_id)
+            ->where($this->table.'.id', '=', $currency_id)
             ->get()
             ->toArray();
 

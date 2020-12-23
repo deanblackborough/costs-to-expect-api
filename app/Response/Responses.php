@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Response;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\App;
 /**
  * Utility class to return default responses, we want some consistency
  * through out the API so all non expected responses should be returned via this
- * class
+ * class.
  *
  * As with all utility classes, eventually they may be moved into libraries if
  * they gain more than a few functions and the creation of a library makes
@@ -29,7 +30,7 @@ class Responses
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ];
         }
 
@@ -37,7 +38,7 @@ class Responses
     }
 
     /**
-     * Return not found, 404
+     * Return not found, 404.
      *
      * @param string|null $type Entity type that cannot be found
      * @param Exception|null $e
@@ -48,10 +49,10 @@ class Responses
     {
         $response = [
             'message' => ($type !== null) ? trans('responses.not-found-entity', ['type'=>$type]) :
-                trans('responses.not-found')
+                trans('responses.not-found'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -63,7 +64,7 @@ class Responses
     }
 
     /**
-     * Return not found, 404
+     * Return not found, 404.
      *
      * @param string|null $type Entity type that cannot be found
      * @param Exception|null $e
@@ -74,10 +75,10 @@ class Responses
     {
         $response = [
             'message' => ($type !== null) ? trans('responses.not-found-or-not-accessible-entity', ['type'=>$type]) :
-                trans('responses.not-found')
+                trans('responses.not-found'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -89,7 +90,7 @@ class Responses
     }
 
     /**
-     * Return a foreign key constraint error, 500
+     * Return a foreign key constraint error, 500.
      *
      * @param string $message Custom message for error
      * @param Exception|null $e
@@ -99,10 +100,10 @@ class Responses
     public static function foreignKeyConstraintError($message = '', ?Exception $e = null): JsonResponse
     {
         $response = [
-            'message' => (strlen($message) > 0) ? $message : trans('responses.constraint')
+            'message' => (strlen($message) > 0) ? $message : trans('responses.constraint'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -114,7 +115,7 @@ class Responses
     }
 
     /**
-     * 500 error, unable to select the data ready to enable us to update or delete
+     * 500 error, unable to select the data ready to enable us to update or delete.
      *
      * Until we add logging this is an unknown server error, later we will
      * add MySQL error logging
@@ -129,7 +130,7 @@ class Responses
             'message' => trans('responses.model-select-failure'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -156,7 +157,7 @@ class Responses
             'message' => trans('responses.model-save-failure-update'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -168,7 +169,7 @@ class Responses
     }
 
     /**
-     * 403 error, authentication required
+     * 403 error, authentication required.
      *
      * @param Exception|null $e
      *
@@ -177,10 +178,10 @@ class Responses
     public static function authenticationRequired(?Exception $e = null): JsonResponse
     {
         $response = [
-            'message' => trans('responses.authentication-required')
+            'message' => trans('responses.authentication-required'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -195,15 +196,15 @@ class Responses
     {
         $response = [
             'message' => trans('responses.category-limit'),
-            'limit' => $limit
+            'limit' => $limit,
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
         response()
-            ->json($response,400)
+            ->json($response, 400)
             ->send();
         exit();
     }
@@ -211,15 +212,15 @@ class Responses
     public static function notSupported(?Exception $e = null): JsonResponse
     {
         $response = [
-            'message' => trans('responses.not-supported')
+            'message' => trans('responses.not-supported'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
         response()
-            ->json($response,405)
+            ->json($response, 405)
             ->send();
         exit();
     }
@@ -240,7 +241,7 @@ class Responses
             'message' => trans('responses.model-save-failure-create'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -253,7 +254,7 @@ class Responses
 
     /**
      * 404 error, unable to decode the selected value, hasher missing or value
-     * invalid
+     * invalid.
      *
      * @param Exception|null $e
      *
@@ -262,10 +263,10 @@ class Responses
     public static function unableToDecode(?Exception $e = null): JsonResponse
     {
         $response = [
-            'message' => trans('responses.decode-error')
+            'message' => trans('responses.decode-error'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -277,7 +278,7 @@ class Responses
     }
 
     /**
-     * 204, successful request, no content to return, typically a PATCH
+     * 204, successful request, no content to return, typically a PATCH.
      *
      * @param Exception|null $e
      *
@@ -287,11 +288,11 @@ class Responses
     {
         $response = [];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
-        response()->json($response,204)->send();
+        response()->json($response, 204)->send();
         exit;
     }
 
@@ -299,23 +300,23 @@ class Responses
     {
         $response = [
             'message' => trans('responses.subcategory-limit'),
-            'limit' => $limit
+            'limit' => $limit,
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
         response()
-            ->json($response,400)
+            ->json($response, 400)
             ->send();
         exit();
     }
 
     /**
-     * 200, successful request, no content to return
+     * 200, successful request, no content to return.
      *
-     * @param boolean $array Return empty array, if false empty object
+     * @param bool $array Return empty array, if false empty object
      * @param Exception|null $e
      *
      * @return JsonResponse
@@ -324,16 +325,16 @@ class Responses
     {
         $response = ($array === true ? [] : null);
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
-        response()->json($response,200)->send();
+        response()->json($response, 200)->send();
         exit;
     }
 
     /**
-     * 400 error, nothing to PATCH, bad request
+     * 400 error, nothing to PATCH, bad request.
      *
      * @param Exception|null $e
      *
@@ -342,10 +343,10 @@ class Responses
     public static function nothingToPatch(?Exception $e = null): JsonResponse
     {
         $response = [
-            'message' => trans('responses.patch-empty')
+            'message' => trans('responses.patch-empty'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -357,7 +358,7 @@ class Responses
     }
 
     /**
-     * 400 error, invalid fields in the request, therefore bad request
+     * 400 error, invalid fields in the request, therefore bad request.
      *
      * @param array $invalid_fields An array of invalid fields
      * @param Exception|null $e
@@ -368,10 +369,10 @@ class Responses
     {
         $response = [
             'message' => trans('responses.patch-invalid'),
-            'fields' => $invalid_fields
+            'fields' => $invalid_fields,
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -383,7 +384,7 @@ class Responses
     }
 
     /**
-     * 503, maintenance
+     * 503, maintenance.
      *
      * @param Exception|null $e
      *
@@ -392,10 +393,10 @@ class Responses
     public static function maintenance(?Exception $e = null): JsonResponse
     {
         $response = [
-            'message' => trans('responses.maintenance')
+            'message' => trans('responses.maintenance'),
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 
@@ -407,7 +408,7 @@ class Responses
     }
 
     /**
-     * 422 error, validation error
+     * 422 error, validation error.
      *
      * @param array $validation_errors
      * @param Exception|null $e
@@ -418,10 +419,10 @@ class Responses
     {
         $response = [
             'message' => trans('responses.validation'),
-            'fields' => $validation_errors
+            'fields' => $validation_errors,
         ];
 
-        if ($e instanceOf Exception) {
+        if ($e instanceof Exception) {
             $response = self::addException($response, $e);
         }
 

@@ -12,15 +12,14 @@ class SummaryResponse extends BaseSummaryResponse
         int $resource_id,
         bool $permitted_user = false,
         int $user_id = null
-    )
-    {
+    ) {
         parent::__construct(
             $resource_type_id,
             $resource_id,
             $permitted_user,
             $user_id
         );
-        
+
         $this->setUpCache();
 
         $this->model = new SummaryModel();
@@ -45,7 +44,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function filteredSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->filteredSummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -78,7 +76,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function summary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->summary(
                 $this->resource_type_id,
                 $this->resource_id,

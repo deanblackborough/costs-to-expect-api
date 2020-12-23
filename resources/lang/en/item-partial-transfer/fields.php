@@ -7,5 +7,5 @@ return [
     'description-resource_id' => 'Resource to partially transfer the item to',
 
     'title-percentage' => 'Percentage',
-    'description-percentage' => 'Percentage of the total to transfer to the given resource'
+    'description-percentage' => 'Percentage of the total to transfer to the given resource',
 ];

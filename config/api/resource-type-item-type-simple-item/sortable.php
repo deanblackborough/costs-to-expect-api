@@ -6,5 +6,5 @@ return [
     'name',
     'description',
     'quantity',
-    'created'
+    'created',
 ];

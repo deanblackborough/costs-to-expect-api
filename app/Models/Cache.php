@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Manage the our cache
+ * Manage the our cache.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -24,7 +25,7 @@ class Cache extends Model
     /**
      * Fetch all the matching private cache keys that are a match or wildcard
      * match for the given key and prefix, optionally we can fetch summary
-     * cache keys
+     * cache keys.
      *
      * @param string $prefix
      * @param string $key
@@ -36,16 +37,15 @@ class Cache extends Model
         string $prefix,
         string $key,
         bool $include_summaries = false
-    ): array
-    {
+    ): array {
         $result = $this
             ->where('expiration', '>', DB::raw('UNIX_TIMESTAMP()'))
-            ->where('key', 'LIKE', $prefix . rtrim($key, '/') . '%');
+            ->where('key', 'LIKE', $prefix.rtrim($key, '/').'%');
 
         if ($include_summaries === true) {
-            $summary_key = rtrim(str_replace('v2/', 'v2/summary/', $prefix . $key), '/');
+            $summary_key = rtrim(str_replace('v2/', 'v2/summary/', $prefix.$key), '/');
 
-            $result->orWhere('key', 'LIKE', $summary_key . '%');
+            $result->orWhere('key', 'LIKE', $summary_key.'%');
         }
 
         return $result

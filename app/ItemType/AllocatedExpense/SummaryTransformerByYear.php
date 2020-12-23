@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
@@ -21,7 +22,7 @@ class SummaryTransformerByYear extends Transformer
                 $temporary[$summary['year']] = [
                     'id' => $summary['year'],
                     'year' => $summary['year'],
-                    'subtotals' => []
+                    'subtotals' => [],
                 ];
             }
 
@@ -30,7 +31,7 @@ class SummaryTransformerByYear extends Transformer
                     'code' => $summary['currency_code'],
                 ],
                 'count' => $summary['total_count'],
-                'subtotal' => number_format((float)$summary['total'], 2, '.', '')
+                'subtotal' => number_format((float) $summary['total'], 2, '.', ''),
             ];
         }
 

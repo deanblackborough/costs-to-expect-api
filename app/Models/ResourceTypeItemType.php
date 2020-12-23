@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Resource type item type model
+ * Resource type item type model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -21,9 +22,9 @@ class ResourceTypeItemType extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     /**
-     * Fetch the item type assigned to the requested resource type
+     * Fetch the item type assigned to the requested resource type.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
      * @return string|null
      */
@@ -44,13 +45,13 @@ class ResourceTypeItemType extends Model
     }
 
     /**
-     * Return an instance of the resource type item type
+     * Return an instance of the resource type item type.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
      * @return ResourceAccess|null
      */
-    public function instance(int $resource_type_id): ?ResourceTypeItemType
+    public function instance(int $resource_type_id): ?self
     {
         return $this->where('resource_type_id', '=', $resource_type_id)->
             first();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -25,8 +26,7 @@ class SummaryModel extends LaravelModel
         array $parameters = [],
         array $search_parameters = [],
         array $filter_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->
             selectRaw("
                 SUM({$this->sub_table}.quantity) AS total, 
@@ -48,14 +48,14 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id);
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id);
 
         $collection = Clause::applySearch(
             $collection,
@@ -73,7 +73,7 @@ class SummaryModel extends LaravelModel
     }
 
     /**
-     * Return the total summary for all items
+     * Return the total summary for all items.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -85,8 +85,7 @@ class SummaryModel extends LaravelModel
         int $resource_type_id,
         int $resource_id,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->selectRaw("
                 SUM({$this->sub_table}.quantity) AS total, 
                 COUNT({$this->sub_table}.item_id) AS total_count
@@ -107,7 +106,7 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")

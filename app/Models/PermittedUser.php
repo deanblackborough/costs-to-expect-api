@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -7,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Error log
+ * Error log.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -21,14 +22,14 @@ class PermittedUser extends Model
     protected $guarded = ['id'];
 
     /**
-     * Return an instance of a permitted user
+     * Return an instance of a permitted user.
      *
-     * @param integer $resource_type_id
-     * @param integer $user_id
+     * @param int $resource_type_id
+     * @param int $user_id
      *
      * @return ResourceAccess|null
      */
-    public function instance(int $resource_type_id, int $user_id): ?PermittedUser
+    public function instance(int $resource_type_id, int $user_id): ?self
     {
         return $this->where('resource_type_id', '=', $resource_type_id)->
             where('user_id', '=', $user_id)->
@@ -36,19 +37,18 @@ class PermittedUser extends Model
     }
 
     /**
-     * Return the total number of permitted users for the resource type
+     * Return the total number of permitted users for the resource type.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      * @param array $search_parameters
      *
-     * @return integer
+     * @return int
      */
     public function totalCount(
         int $resource_type_id,
         array $search_parameters = []
-    ): int
-    {
-        $collection = $this->select("permitted_user.id")->
+    ): int {
+        $collection = $this->select('permitted_user.id')->
             join('users', 'permitted_user.user_id', 'users.id')->
             where('permitted_user.resource_type_id', '=', $resource_type_id);
 
@@ -58,11 +58,11 @@ class PermittedUser extends Model
     }
 
     /**
-     * Return the permitted users based on the given conditions
+     * Return the permitted users based on the given conditions.
      *
-     * @param integer $resource_type_id
-     * @param integer $offset
-     * @param integer $limit
+     * @param int $resource_type_id
+     * @param int $offset
+     * @param int $limit
      * @param array $search_parameters
      * @param array $sort_parameters
      *
@@ -74,8 +74,7 @@ class PermittedUser extends Model
         int $limit = 10,
         array $search_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->select(
                 'permitted_user.id AS permitted_user_id',
                 'users.name AS permitted_user_name',
@@ -95,7 +94,7 @@ class PermittedUser extends Model
                         break;
 
                     default:
-                        $collection->orderBy('users.' . $field, $direction);
+                        $collection->orderBy('users.'.$field, $direction);
                         break;
                 }
             }

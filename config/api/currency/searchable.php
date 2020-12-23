@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 return [
     'code' => [
-        'type' => 'string'
+        'type' => 'string',
     ],
     'name' => [
-        'type' => 'string'
-    ]
+        'type' => 'string',
+    ],
 ];

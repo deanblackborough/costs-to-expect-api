@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Option;
@@ -20,7 +21,7 @@ class ItemCollection extends Response
 
         $post = new \App\Method\PostRequest();
         $this->verbs['POST'] = $post->setFields($this->entity->postFields())
-            ->setDescription( 'route-descriptions.item_POST')
+            ->setDescription('route-descriptions.item_POST')
             ->setAuthenticationRequirement(true)
             ->setAuthenticationStatus($this->permissions['manage'])
             ->setDynamicFields($this->allowed_values)

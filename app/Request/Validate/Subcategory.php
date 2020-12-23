@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Validate;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
 
 /**
  * Validation helper class for subcategories, returns the generated
- * validator objects
+ * validator objects.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -18,9 +19,9 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
 class Subcategory extends BaseValidator
 {
     /**
-     * Create the validation rules for the create (POST) request
+     * Create the validation rules for the create (POST) request.
      *
-     * @param integer $category_id
+     * @param int $category_id
      *
      * @return array
      */
@@ -32,7 +33,7 @@ class Subcategory extends BaseValidator
                     'required',
                     'string',
                     'max:255',
-                    'unique:sub_category,name,null,id,category_id,' . $category_id
+                    'unique:sub_category,name,null,id,category_id,'.$category_id,
                 ],
             ],
             Config::get('api.subcategory.validation.POST.fields')
@@ -40,10 +41,10 @@ class Subcategory extends BaseValidator
     }
 
     /**
-     * Create the validation rules for the update (PATCH) request
+     * Create the validation rules for the update (PATCH) request.
      *
-     * @param integer $category_id
-     * @param integer $subcategory_id
+     * @param int $category_id
+     * @param int $subcategory_id
      *
      * @return array
      */
@@ -55,7 +56,7 @@ class Subcategory extends BaseValidator
                     'sometimes',
                     'string',
                     'max:255',
-                    'unique:sub_category,name,'. $subcategory_id . ',id,category_id,' . $category_id
+                    'unique:sub_category,name,'.$subcategory_id.',id,category_id,'.$category_id,
                 ],
             ],
             Config::get('api.subcategory.validation.PATCH.fields')
@@ -64,7 +65,7 @@ class Subcategory extends BaseValidator
 
     /**
      * Any fields which can't be defined via the configuration files because
-     * the validation rules are dynamic
+     * the validation rules are dynamic.
      *
      * @return array|string[]
      */
@@ -74,7 +75,7 @@ class Subcategory extends BaseValidator
     }
 
     /**
-     * Return a valid validator object for a create (POST) request
+     * Return a valid validator object for a create (POST) request.
      *
      * @param array $options
      *
@@ -92,7 +93,7 @@ class Subcategory extends BaseValidator
     }
 
     /**
-     * Return a valid validator object for a update (PATCH) request
+     * Return a valid validator object for a update (PATCH) request.
      *
      * @param array $options
      *

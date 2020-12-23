@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
@@ -24,22 +25,21 @@ class ResourceTypeModel extends LaravelModel
     protected $guarded = ['id', 'actualised_total', 'created_at', 'updated_at'];
 
     /**
-     * Return the total number of items for the requested resource type
+     * Return the total number of items for the requested resource type.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      * @param array $parameters_collection
      * @param array $search_parameters
      * @param array $filter_parameters
      *
-     * @return integer
+     * @return int
      */
     public function totalCount(
         int $resource_type_id,
         array $parameters_collection = [],
         array $search_parameters = [],
         array $filter_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this->join('item_type_allocated_expense', 'item.id', 'item_type_allocated_expense.item_id')->
             join('resource', 'item.resource_id', 'resource.id')->
             join('resource_type', 'resource.resource_type_id', 'resource_type.id')->
@@ -57,7 +57,7 @@ class ResourceTypeModel extends LaravelModel
 
         if (array_key_exists('category', $parameters_collection) === true &&
             $parameters_collection['category'] !== null) {
-            $collection->join("item_category", "item_category.item_id", "item.id");
+            $collection->join('item_category', 'item_category.item_id', 'item.id');
             $collection->where('item_category.category_id', '=', $parameters_collection['category']);
 
             if (
@@ -89,7 +89,7 @@ class ResourceTypeModel extends LaravelModel
 
     /**
      * Return the pagination collection for all the items assigned to the
-     * resources for a resource group
+     * resources for a resource group.
      *
      * @param int $resource_type_id
      * @param int $offset
@@ -109,8 +109,7 @@ class ResourceTypeModel extends LaravelModel
         array $search_parameters = [],
         array $filter_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $select_fields = [
             'resource.id AS resource_id',
             'resource.name AS resource_name',
@@ -118,15 +117,15 @@ class ResourceTypeModel extends LaravelModel
             'item.id AS item_id',
             'item_type_allocated_expense.name AS item_name',
             'item_type_allocated_expense.description AS item_description',
-            "currency.id AS item_currency_id",
-            "currency.code AS item_currency_code",
-            "currency.name AS item_currency_name",
+            'currency.id AS item_currency_id',
+            'currency.code AS item_currency_code',
+            'currency.name AS item_currency_name',
             'item_type_allocated_expense.effective_date AS item_effective_date',
             'item_type_allocated_expense.total AS item_total',
             'item_type_allocated_expense.percentage AS item_percentage',
             'item_type_allocated_expense.actualised_total AS item_actualised_total',
             'item_type_allocated_expense.created_at AS item_created_at',
-            'item_type_allocated_expense.updated_at AS item_updated_at'
+            'item_type_allocated_expense.updated_at AS item_updated_at',
         ];
 
         $collection = $this->join('item_type_allocated_expense', 'item.id', 'item_type_allocated_expense.item_id')->
@@ -191,7 +190,6 @@ class ResourceTypeModel extends LaravelModel
         if (array_key_exists('category', $parameters_collection) === true &&
             $parameters_collection['category'] !== null &&
             $category_join === false) {
-
             $collection->join('item_category', 'item.id', 'item_category.item_id')->
                 join('category', 'item_category.category_id', 'category.id')->
                 where('item_category.category_id', '=', $parameters_collection['category']);
@@ -199,7 +197,6 @@ class ResourceTypeModel extends LaravelModel
             if (array_key_exists('subcategory', $parameters_collection) === true &&
                 $parameters_collection['subcategory'] !== null &&
                 $subcategory_join === false) {
-
                 $collection->join('item_sub_category', 'item_category.id', 'item_sub_category.item_category_id')->
                     join('sub_category', 'item_sub_category.sub_category_id', 'sub_category.id')->
                     where('item_sub_category.sub_category_id', '=', $parameters_collection['subcategory']);
@@ -232,11 +229,11 @@ class ResourceTypeModel extends LaravelModel
                     case 'effective_date':
                     case 'name':
                     case 'total':
-                        $collection->orderBy('item_type_allocated_expense.' . $field, $direction);
+                        $collection->orderBy('item_type_allocated_expense.'.$field, $direction);
                         break;
 
                     default:
-                        $collection->orderBy('item.' . $field, $direction);
+                        $collection->orderBy('item.'.$field, $direction);
                         break;
                 }
             }
@@ -268,7 +265,7 @@ class ResourceTypeModel extends LaravelModel
                         `resource`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->get()
@@ -277,11 +274,11 @@ class ResourceTypeModel extends LaravelModel
 
     /**
      * Work out the maximum effective date year for the requested
-     * resource type id, defaults to the current year if no data exists
+     * resource type id, defaults to the current year if no data exists.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
-     * @return integer
+     * @return int
      */
     public function maximumEffectiveDateYear(int $resource_type_id): int
     {
@@ -301,11 +298,11 @@ class ResourceTypeModel extends LaravelModel
 
     /**
      * Work out the minimum effective date year for the requested
-     * resource type id, defaults to the current year if no data exists
+     * resource type id, defaults to the current year if no data exists.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
-     * @return integer
+     * @return int
      */
     public function minimumEffectiveDateYear(int $resource_type_id): int
     {

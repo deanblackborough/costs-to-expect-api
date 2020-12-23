@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
 
-use App\Transformers\Transformer;
-use App\Transformers\Resource as ResourceTransformer;
 use App\Transformers\Resource;
+use App\Transformers\Resource as ResourceTransformer;
+use App\Transformers\Transformer;
 
 /**
- * Transform the data from our queries into the format we want to display
+ * Transform the data from our queries into the format we want to display.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -35,7 +36,7 @@ class ResourceType extends Transformer
                 'id' => $this->hash->itemType()->encode($to_transform['resource_type_item_type_id']),
                 'name' => $to_transform['resource_type_item_type_name'],
                 'friendly_name' => $to_transform['resource_type_item_type_friendly_name'],
-                'description' => $to_transform['resource_type_item_type_description']
+                'description' => $to_transform['resource_type_item_type_description'],
             ];
         }
 

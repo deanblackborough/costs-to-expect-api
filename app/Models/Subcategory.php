@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Sub category model
+ * Sub category model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -37,18 +38,17 @@ class Subcategory extends Model
     }
 
     /**
-     * @param integer $resource_type_id
-     * @param integer $category_id
+     * @param int $resource_type_id
+     * @param int $category_id
      * @param array $search_parameters
      *
-     * @return integer
+     * @return int
      */
     public function totalCount(
         int $resource_type_id,
         int $category_id,
         array $search_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this->join('category', 'sub_category.category_id', 'category.id')->
             where('sub_category.category_id', '=', $category_id)->
             where('category.resource_type_id', '=', $resource_type_id);
@@ -59,10 +59,10 @@ class Subcategory extends Model
     }
 
     /**
-     * @param integer $resource_type_id
-     * @param integer $category_id
-     * @param integer $offset
-     * @param integer $limit
+     * @param int $resource_type_id
+     * @param int $category_id
+     * @param int $offset
+     * @param int $limit
      * @param array $search_parameters
      * @param array $sort_parameters
      *
@@ -75,8 +75,7 @@ class Subcategory extends Model
         int $limit = 10,
         array $search_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->select(
                 'sub_category.id AS subcategory_id',
@@ -97,7 +96,7 @@ class Subcategory extends Model
                         sub_category.category_id = ? 
                 ) AS last_updated',
                 [
-                    $category_id
+                    $category_id,
                 ]
             )
             ->join('category', 'sub_category.category_id', 'category.id')
@@ -114,7 +113,7 @@ class Subcategory extends Model
                         break;
 
                     default:
-                        $collection->orderBy('sub_category.' . $field, $direction);
+                        $collection->orderBy('sub_category.'.$field, $direction);
                         break;
                 }
             }
@@ -132,8 +131,7 @@ class Subcategory extends Model
     public function single(
         int $category_id,
         int $subcategory_id
-    ): ?array
-    {
+    ): ?array {
         $result = $this
             ->select(
                 'sub_category.id AS subcategory_id',
@@ -144,7 +142,7 @@ class Subcategory extends Model
             ->where('category_id', '=', $category_id);
 
         $result = $result
-            ->where($this->table . '.id', '=', $subcategory_id)
+            ->where($this->table.'.id', '=', $subcategory_id)
             ->get()
             ->toArray();
 
@@ -158,8 +156,7 @@ class Subcategory extends Model
     public function instance(
         int $category_id,
         int $subcategory_id
-    ): ?Subcategory
-    {
+    ): ?self {
         return $this->select(
                 'sub_category.id',
                 'sub_category.name',
@@ -170,19 +167,19 @@ class Subcategory extends Model
     }
 
     /**
-     * Convert the model instance to an array for use with the transformer
+     * Convert the model instance to an array for use with the transformer.
      *
      * @param Subcategory $subcategory
      *
      * @return array
      */
-    public function instanceToArray(Subcategory $subcategory): array
+    public function instanceToArray(self $subcategory): array
     {
         return [
             'subcategory_id' => $subcategory->id,
             'subcategory_name' => $subcategory->name,
             'subcategory_description' => $subcategory->description,
-            'subcategory_created_at' => $subcategory->created_at->toDateTimeString()
+            'subcategory_created_at' => $subcategory->created_at->toDateTimeString(),
         ];
     }
 }

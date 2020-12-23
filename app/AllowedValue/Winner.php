@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -30,7 +31,7 @@ class Winner
             $parameters['winner_id']['allowed_values'][$id] = [
                 'value' => $id,
                 'name' => $category['category_name'],
-                'description' => $category['category_description']
+                'description' => $category['category_description'],
             ];
         }
 

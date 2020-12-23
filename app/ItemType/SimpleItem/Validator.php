@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -21,7 +22,7 @@ class Validator extends BaseValidator
     }
 
     /**
-     * Return the validator object for the create request
+     * Return the validator object for the create request.
      *
      * @param array $options
      *
@@ -33,7 +34,7 @@ class Validator extends BaseValidator
     }
 
     /**
-     * Return a valid validator object for a update (PATCH) request
+     * Return a valid validator object for a update (PATCH) request.
      *
      * @param array $options
      *

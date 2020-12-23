@@ -6,18 +6,18 @@ use App\Jobs\ClearCache;
 use App\Models\Category;
 use App\Models\PermittedUser;
 use App\Models\Resource;
-use App\Models\ResourceTypeItemType;
-use App\Response\Cache;
 use App\Models\ResourceType;
-use App\Transformers\ResourceType as ResourceTypeTransformer;
+use App\Models\ResourceTypeItemType;
 use App\Request\Validate\ResourceType as ResourceTypeValidator;
+use App\Response\Cache;
+use App\Transformers\ResourceType as ResourceTypeTransformer;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Manage resource types
+ * Manage resource types.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -28,14 +28,14 @@ class ResourceTypeManage extends Controller
     protected bool $allow_entire_collection = true;
 
     /**
-     * Create a new resource type
+     * Create a new resource type.
      *
      * @return JsonResponse
      */
     public function create(): JsonResponse
     {
         $validator = (new ResourceTypeValidator)->create([
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
         ]);
         \App\Request\BodyValidation::validateAndReturnErrors($validator);
 
@@ -46,18 +46,18 @@ class ResourceTypeManage extends Controller
             ->setUserId($this->user_id);
 
         try {
-            $resource_type = DB::transaction(function() {
+            $resource_type = DB::transaction(function () {
                 $resource_type = new ResourceType([
                     'name' => request()->input('name'),
                     'description' => request()->input('description'),
-                    'public' => request()->input('public', 0)
+                    'public' => request()->input('public', 0),
                 ]);
                 $resource_type->save();
 
                 $permitted_users = new PermittedUser([
                     'resource_type_id' => $resource_type->id,
                     'user_id' => $this->user_id,
-                    'added_by' => $this->user_id
+                    'added_by' => $this->user_id,
                 ]);
                 $permitted_users->save();
 
@@ -69,7 +69,7 @@ class ResourceTypeManage extends Controller
 
                 $resource_type_item_type = new ResourceTypeItemType([
                     'resource_type_id' => $resource_type->id,
-                    'item_type_id' => $item_type_id
+                    'item_type_id' => $item_type_id,
                 ]);
                 $resource_type_item_type->save();
 
@@ -77,19 +77,18 @@ class ResourceTypeManage extends Controller
             });
 
             ClearCache::dispatchNow($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return \App\Response\Responses::failedToSaveModelForCreate();
         }
 
         return response()->json(
-            (new ResourceTypeTransformer((New ResourceType())->instanceToArray($resource_type)))->asArray(),
+            (new ResourceTypeTransformer((new ResourceType())->instanceToArray($resource_type)))->asArray(),
             201
         );
     }
 
     /**
-     * Delete the requested resource type
+     * Delete the requested resource type.
      *
      * @param string $resource_type_id
      *
@@ -97,8 +96,7 @@ class ResourceTypeManage extends Controller
      */
     public function delete(
         string $resource_type_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.resource-type'));
         }
@@ -120,7 +118,7 @@ class ResourceTypeManage extends Controller
         $cache_job_payload = (new Cache\JobPayload())
             ->setGroupKey(Cache\KeyGroup::RESOURCE_TYPE_DELETE)
             ->setRouteParameters([
-                'resource_type_id' => $resource_type_id
+                'resource_type_id' => $resource_type_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -133,7 +131,7 @@ class ResourceTypeManage extends Controller
             $resource_type !== null
         ) {
             try {
-                DB::transaction(static function() use ($resource_type_item_type, $permitted_user, $resource_type) {
+                DB::transaction(static function () use ($resource_type_item_type, $permitted_user, $resource_type) {
                     $resource_type_item_type->delete();
                     $permitted_user->delete();
                     $resource_type->delete();
@@ -153,7 +151,7 @@ class ResourceTypeManage extends Controller
     }
 
     /**
-     * Update the selected category
+     * Update the selected category.
      *
      * @param string $resource_type_id
      *
@@ -161,8 +159,7 @@ class ResourceTypeManage extends Controller
      */
     public function update(
         string $resource_type_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.resource-type'));
         }
@@ -177,7 +174,7 @@ class ResourceTypeManage extends Controller
 
         $validator = (new ResourceTypeValidator())->update([
             'resource_type_id' => (int) ($resource_type_id),
-            'user_id' => $this->user_id
+            'user_id' => $this->user_id,
         ]);
         \App\Request\BodyValidation::validateAndReturnErrors($validator);
 
@@ -195,7 +192,7 @@ class ResourceTypeManage extends Controller
         $cache_job_payload = (new Cache\JobPayload())
             ->setGroupKey(Cache\KeyGroup::RESOURCE_TYPE_UPDATE)
             ->setRouteParameters([
-                'resource_type_id' => $resource_type_id
+                'resource_type_id' => $resource_type_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -204,7 +201,6 @@ class ResourceTypeManage extends Controller
             $resource_type->save();
 
             ClearCache::dispatch($cache_job_payload->payload())->delay(now()->addMinute());
-
         } catch (Exception $e) {
             return \App\Response\Responses::failedToSaveModelForUpdate();
         }

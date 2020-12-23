@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Route\Validate;
@@ -13,15 +14,15 @@ use App\Models\ResourceAccess;
 class Queue
 {
     /**
-     * Validate that the user is able to view the requested currency
+     * Validate that the user is able to view the requested currency.
      *
      * @param string|int $queue_id
      *
-     * @return boolean
+     * @return bool
      */
     public static function existsToUserForViewing($queue_id): bool
     {
-        return !(
+        return ! (
             (new ResourceAccess())->queueExistsToUser((int) $queue_id) === false
         );
     }

@@ -6,7 +6,7 @@ use App\Request\Hash;
 use Closure;
 
 /**
- * Convert hashed route params, decode the value and reset in the route
+ * Convert hashed route params, decode the value and reset in the route.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020

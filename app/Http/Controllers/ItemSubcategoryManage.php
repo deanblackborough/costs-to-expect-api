@@ -6,15 +6,15 @@ use App\ItemType\Entity;
 use App\Jobs\ClearCache;
 use App\Models\ItemCategory;
 use App\Models\ItemSubcategory;
-use App\Transformers\ItemSubcategory as ItemSubcategoryTransformer;
 use App\Request\Validate\ItemSubcategory as ItemSubcategoryValidator;
 use App\Response\Cache;
+use App\Transformers\ItemSubcategory as ItemSubcategoryTransformer;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Manage the category for an item row
+ * Manage the category for an item row.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -23,7 +23,7 @@ use Illuminate\Http\JsonResponse;
 class ItemSubcategoryManage extends Controller
 {
     /**
-     * Assign the sub category
+     * Assign the sub category.
      *
      * @param string $resource_type_id
      * @param string $resource_id
@@ -37,8 +37,7 @@ class ItemSubcategoryManage extends Controller
         string $resource_id,
         string $item_id,
         string $item_category_id = null
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item-category'));
         }
@@ -73,7 +72,7 @@ class ItemSubcategoryManage extends Controller
             ->setGroupKey(Cache\KeyGroup::ITEM_SUBCATEGORY_CREATE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'resource_id' => $resource_id
+                'resource_id' => $resource_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -87,12 +86,11 @@ class ItemSubcategoryManage extends Controller
 
             $item_sub_category = new ItemSubcategory([
                 'item_category_id' => $item_category_id,
-                'sub_category_id' => $subcategory_id
+                'sub_category_id' => $subcategory_id,
             ]);
             $item_sub_category->save();
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return \App\Response\Responses::failedToSaveModelForCreate();
         }
@@ -104,7 +102,7 @@ class ItemSubcategoryManage extends Controller
     }
 
     /**
-     * Delete the assigned sub category
+     * Delete the assigned sub category.
      *
      * @param string $resource_type_id,
      * @param string $resource_id,
@@ -120,8 +118,7 @@ class ItemSubcategoryManage extends Controller
         string $item_id,
         string $item_category_id = null,
         string $item_subcategory_id = null
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item-subcategory'));
         }
@@ -146,7 +143,7 @@ class ItemSubcategoryManage extends Controller
             ->setGroupKey(Cache\KeyGroup::ITEM_SUBCATEGORY_DELETE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'resource_id' => $resource_id
+                'resource_id' => $resource_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);

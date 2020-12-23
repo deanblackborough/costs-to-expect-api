@@ -8,54 +8,54 @@ return [
             'name' => [
                 'required',
                 'string',
-                'max:255'
+                'max:255',
             ],
             'description' => [
                 'sometimes',
-                'string'
+                'string',
             ],
             'currency_id' => [
                 'required',
-                'exists:currency,id'
+                'exists:currency,id',
             ],
             'total' => [
                 'required',
                 'string',
                 'regex:/^\d+\.\d{2}$/',
-                'max:16'
+                'max:16',
             ],
         ],
         'messages' => [
             'total.regex' => 'item-type-simple-expense/validation.total-regex',
             'currency_id.required' => 'item-type-simple-expense/validation.currency_id-required',
-            'currency_id.exists' => 'item-type-simple-expense/validation.currency_id-exists'
-        ]
+            'currency_id.exists' => 'item-type-simple-expense/validation.currency_id-exists',
+        ],
     ],
     'PATCH' => [
         'fields' => [
             'name' => [
                 'sometimes',
                 'string',
-                'max:255'
+                'max:255',
             ],
             'description' => [
                 'sometimes',
                 'nullable',
-                'string'
+                'string',
             ],
             'currency_id' => [
                 'sometimes',
-                'exists:currency,id'
+                'exists:currency,id',
             ],
             'total' => [
                 'sometimes',
                 'string',
-                'regex:/^\d+\.\d{2}$/'
+                'regex:/^\d+\.\d{2}$/',
             ],
         ],
         'messages' => [
             'total.regex' => 'item-type-simple-expense/validation.total-regex',
-            'currency_id.exists' => 'item-type-simple-expense/validation.currency_id-exists'
-        ]
-    ]
+            'currency_id.exists' => 'item-type-simple-expense/validation.currency_id-exists',
+        ],
+    ],
 ];

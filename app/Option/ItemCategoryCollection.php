@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Option;
@@ -20,7 +21,7 @@ class ItemCategoryCollection extends Response
             setDynamicFields($this->allowed_values)->
             setAuthenticationRequirement(true)->
             setAuthenticationStatus($this->permissions['manage'])->
-            setDescription('route-descriptions.item_category_POST_' . $this->entity->type())->
+            setDescription('route-descriptions.item_category_POST_'.$this->entity->type())->
             option();
 
         return $this;

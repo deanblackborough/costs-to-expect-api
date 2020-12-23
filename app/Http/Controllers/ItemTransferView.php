@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItemTransfer;
-use App\Transformers\ItemTransfer as ItemTransferTransformer;
 use App\Option\ItemTransferCollection;
 use App\Option\ItemTransferItem;
 use App\Option\ItemTransferTransfer;
+use App\Request\Parameter;
 use App\Response\Cache;
 use App\Response\Header\Headers;
-use App\Request\Parameter;
 use App\Response\Pagination as UtilityPagination;
+use App\Transformers\ItemTransfer as ItemTransferTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Transfer items
+ * Transfer items.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Config;
 class ItemTransferView extends Controller
 {
     /**
-     * Return the item transfers collection
+     * Return the item transfers collection.
      *
      * @param string $resource_type_id
      *
@@ -46,7 +46,6 @@ class ItemTransferView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $parameters = Parameter\Request::fetch(
                 array_keys(Config::get('api.item-transfer.parameters.collection'))
             );
@@ -63,7 +62,7 @@ class ItemTransferView extends Controller
                 parameters();
 
             $transfers = (new ItemTransfer())->paginatedCollection(
-                (int)$resource_type_id,
+                (int) $resource_type_id,
                 $this->viewable_resource_types,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
@@ -90,7 +89,7 @@ class ItemTransferView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the transfers collection
+     * Generate the OPTIONS request for the transfers collection.
      *
      * @param $resource_type_id
      *
@@ -122,8 +121,7 @@ class ItemTransferView extends Controller
         string $resource_type_id,
         string $resource_id,
         string $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }
@@ -141,7 +139,7 @@ class ItemTransferView extends Controller
     }
 
     /**
-     * Return a single item transfer
+     * Return a single item transfer.
      *
      * @param $resource_type_id
      * @param $item_transfer_id
@@ -151,8 +149,7 @@ class ItemTransferView extends Controller
     public function show(
         $resource_type_id,
         $item_transfer_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item-transfer'));
         }

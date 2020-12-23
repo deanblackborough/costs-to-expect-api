@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subcategory;
 use App\Option\SubcategoryCollection;
 use App\Option\SubcategoryItem;
+use App\Request\Parameter;
 use App\Response\Cache;
 use App\Response\Header\Header;
-use App\Request\Parameter;
 use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
-use App\Models\Subcategory;
 use App\Transformers\Subcategory as SubcategoryTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Manage category sub categories
+ * Manage category sub categories.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -41,7 +41,6 @@ class SubcategoryView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.subcategory.searchable')
             );
@@ -51,8 +50,8 @@ class SubcategoryView extends Controller
             );
 
             $total = (new Subcategory())->totalCount(
-                (int)$resource_type_id,
-                (int)$category_id,
+                (int) $resource_type_id,
+                (int) $category_id,
                 $search_parameters
             );
 
@@ -63,8 +62,8 @@ class SubcategoryView extends Controller
                 parameters();
 
             $subcategories = (new Subcategory())->paginatedCollection(
-                (int)$resource_type_id,
-                (int)$category_id,
+                (int) $resource_type_id,
+                (int) $category_id,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
                 $search_parameters,
@@ -103,7 +102,7 @@ class SubcategoryView extends Controller
     }
 
     /**
-     * Return a single sub category
+     * Return a single sub category.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -115,8 +114,7 @@ class SubcategoryView extends Controller
         $resource_type_id,
         $category_id,
         $subcategory_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.subcategory'));
         }
@@ -141,7 +139,7 @@ class SubcategoryView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the sub categories list
+     * Generate the OPTIONS request for the sub categories list.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -160,7 +158,7 @@ class SubcategoryView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the specific sub category
+     * Generate the OPTIONS request for the specific sub category.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -172,8 +170,7 @@ class SubcategoryView extends Controller
         $resource_type_id,
         $category_id,
         $subcategory_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.subcategory'));
         }

@@ -8,11 +8,10 @@ Route::group(
         'prefix' => Config::get('api.app.version.prefix'),
         'middleware' => [
             'convert.route.parameters',
-            'convert.get.parameters'
-        ]
+            'convert.get.parameters',
+        ],
     ],
     static function () {
-
         Route::get(
             'summary/resource-types',
             'Summary\ResourceTypeView@index'

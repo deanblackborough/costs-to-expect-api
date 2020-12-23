@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 
 class NullDescriptionFieldAllocatedExpense extends Migration
 {
@@ -14,8 +14,7 @@ class NullDescriptionFieldAllocatedExpense extends Migration
      */
     public function up()
     {
-        Schema::table('item_type_allocated_expense', function (Blueprint $table)
-        {
+        Schema::table('item_type_allocated_expense', function (Blueprint $table) {
             $table->string('description', 255)->nullable()->change();
         });
 
@@ -29,8 +28,7 @@ class NullDescriptionFieldAllocatedExpense extends Migration
      */
     public function down()
     {
-        Schema::table('item_type_allocated_expense', function (Blueprint $table)
-        {
+        Schema::table('item_type_allocated_expense', function (Blueprint $table) {
             $table->string('description', 255)->change();
         });
 

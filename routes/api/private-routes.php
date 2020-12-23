@@ -8,8 +8,8 @@ Route::group(
         'prefix' => Config::get('api.app.version.prefix'),
         'middleware' => [
             'auth:api',
-            'convert.route.parameters'
-        ]
+            'convert.route.parameters',
+        ],
     ],
     static function () {
         Route::get(

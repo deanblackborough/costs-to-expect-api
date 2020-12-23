@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\Game;
 
 use App\AllowedValue\Winner;
 use App\ItemType\ItemType;
-use App\Transformers\Transformer;
 use App\Request\Hash;
 use App\Request\Validate\Validator;
+use App\Transformers\Transformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config as LaravelConfig;
 use Illuminate\Support\Facades\Date;
@@ -39,10 +40,10 @@ class Item extends ItemType
             'item_id' => $id,
             'name' => request()->input('name'),
             'description' => request()->input('description', null),
-            'game' => "{\"turns\": []}",
-            'statistics' => "{\"turns\": 0, \"scores\": []}",
+            'game' => '{"turns": []}',
+            'statistics' => '{"turns": 0, "scores": []}',
             'created_at' => Date::now(),
-            'updated_at' => null
+            'updated_at' => null,
         ]);
 
         $item->save();
@@ -111,7 +112,7 @@ class Item extends ItemType
 
     public function patchFields(): array
     {
-        return LaravelConfig::get($this->base_path . '.fields-patch', []);
+        return LaravelConfig::get($this->base_path.'.fields-patch', []);
     }
 
     public function summaryClass(): string

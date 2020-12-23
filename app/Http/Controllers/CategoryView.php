@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Subcategory;
 use App\Option\CategoryCollection;
 use App\Option\CategoryItem;
-Use App\Response\Cache;
-use App\Response\Header\Header;
 use App\Request\Parameter;
+use App\Response\Cache;
+use App\Response\Header\Header;
 use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
-use App\Models\Category;
 use App\Transformers\Category as CategoryTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
@@ -25,7 +25,7 @@ class CategoryView extends Controller
     protected bool $allow_entire_collection = true;
 
     /**
-     * Return the categories collection
+     * Return the categories collection.
      *
      * @param string $resource_type_id
      *
@@ -47,7 +47,6 @@ class CategoryView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.category.searchable')
             );
@@ -109,7 +108,7 @@ class CategoryView extends Controller
     }
 
     /**
-     * Return a single category
+     * Return a single category.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -162,7 +161,7 @@ class CategoryView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the category list
+     * Generate the OPTIONS request for the category list.
      *
      * @param $resource_type_id
      *
@@ -180,7 +179,7 @@ class CategoryView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for a specific category
+     * Generate the OPTIONS request for a specific category.
      *
      * @param $resource_type_id
      * @param $category_id

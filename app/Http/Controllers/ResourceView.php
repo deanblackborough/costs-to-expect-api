@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ResourceType;
 use App\AllowedValue\ItemSubtype;
+use App\Models\Resource;
+use App\Models\ResourceType;
 use App\Option\ResourceCollection;
 use App\Option\ResourceItem;
+use App\Request\Parameter;
 use App\Response\Cache;
 use App\Response\Header\Header;
-use App\Request\Parameter;
 use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
-use App\Models\Resource;
 use App\Transformers\Resource as ResourceTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Manage resources
+ * Manage resources.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -28,7 +28,7 @@ class ResourceView extends Controller
     protected bool $allow_entire_collection = true;
 
     /**
-     * Return all the resources
+     * Return all the resources.
      *
      * @param string $resource_type_id
      *
@@ -50,7 +50,6 @@ class ResourceView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.resource.searchable')
             );
@@ -111,7 +110,7 @@ class ResourceView extends Controller
     }
 
     /**
-     * Return a single resource
+     * Return a single resource.
      *
      * @param string $resource_type_id
      * @param string $resource_id
@@ -121,8 +120,7 @@ class ResourceView extends Controller
     public function show(
         string $resource_type_id,
         string $resource_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.resource'));
         }

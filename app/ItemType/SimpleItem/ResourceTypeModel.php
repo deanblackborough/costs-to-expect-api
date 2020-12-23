@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -25,8 +26,7 @@ class ResourceTypeModel extends LaravelModel
         int $resource_type_id,
         array $search_parameters = [],
         array $filter_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this->join($this->item_table, 'item.id', "{$this->item_table}.item_id")->
             join('resource', 'item.resource_id', 'resource.id')->
             join('resource_type', 'resource.resource_type_id', 'resource_type.id')->
@@ -49,7 +49,7 @@ class ResourceTypeModel extends LaravelModel
 
     /**
      * Return the pagination collection for all the items assigned to the
-     * resources for a resource group
+     * resources for a resource group.
      *
      * @param int $resource_type_id
      * @param int $offset
@@ -68,8 +68,7 @@ class ResourceTypeModel extends LaravelModel
         array $search_parameters = [],
         array $filter_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $select_fields = [
             'resource.id AS resource_id',
             'resource.name AS resource_name',
@@ -79,7 +78,7 @@ class ResourceTypeModel extends LaravelModel
             "{$this->item_table}.description AS item_description",
             "{$this->item_table}.quantity AS item_quantity",
             "{$this->item_table}.created_at AS item_created_at",
-            "{$this->item_table}.updated_at AS item_updated_at"
+            "{$this->item_table}.updated_at AS item_updated_at",
         ];
 
         $collection = $this->join($this->item_table, 'item.id', "{$this->item_table}.item_id")->
@@ -108,11 +107,11 @@ class ResourceTypeModel extends LaravelModel
                     case 'description':
                     case 'name':
                     case 'quantity':
-                        $collection->orderBy($this->item_table . '.' . $field, $direction);
+                        $collection->orderBy($this->item_table.'.'.$field, $direction);
                         break;
 
                     default:
-                        $collection->orderBy('item.' . $field, $direction);
+                        $collection->orderBy('item.'.$field, $direction);
                         break;
                 }
             }
@@ -143,7 +142,7 @@ class ResourceTypeModel extends LaravelModel
                         `resource`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->get()

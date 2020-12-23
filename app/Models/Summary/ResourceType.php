@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Summary;
@@ -8,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Resource type model
+ * Resource type model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -22,8 +23,7 @@ class ResourceType extends Model
     public function totalCount(
         array $viewable_resource_types = [],
         array $search_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw('COUNT(resource_type.id) AS total')
             ->selectRaw(

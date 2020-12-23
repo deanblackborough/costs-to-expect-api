@@ -9,8 +9,8 @@ return [
             'title' => 'item-type-game/parameters.title-complete',
             'description' => 'item-type-game/parameters.description-complete',
             'type' => 'boolean',
-            'required' => false
-        ]
+            'required' => false,
+        ],
     ],
-    'item' => []
+    'item' => [],
 ];

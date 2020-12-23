@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
 
 use App\ItemType\ItemType;
-use App\Transformers\Transformer;
 use App\Request\Validate\Validator;
+use App\Transformers\Transformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 
@@ -38,7 +39,7 @@ class Item extends ItemType
             'description' => request()->input('description', null),
             'quantity' => request()->input('quantity', 1),
             'created_at' => Date::now(),
-            'updated_at' => null
+            'updated_at' => null,
         ]);
 
         $item->save();

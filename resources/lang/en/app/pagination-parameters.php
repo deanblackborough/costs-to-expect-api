@@ -7,5 +7,5 @@ return [
     'description-offset' => 'Start result for pagination',
 
     'title-limit' => 'Limit',
-    'description-limit' => 'Number of results to return'
+    'description-limit' => 'Number of results to return',
 ];

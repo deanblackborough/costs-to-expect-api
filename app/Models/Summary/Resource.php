@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Summary;
@@ -8,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Resource model
+ * Resource model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -23,8 +24,7 @@ class Resource extends Model
         int $resource_type_id,
         array $viewable_resource_types,
         array $search_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("COUNT({$this->table}.id) AS total")
             ->selectRaw("
@@ -40,7 +40,7 @@ class Resource extends Model
                         `{$this->table}`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->join('resource_type', 'resource.resource_type_id', 'resource_type.id')

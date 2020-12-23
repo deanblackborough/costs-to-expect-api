@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType;
@@ -31,8 +32,7 @@ abstract class ResourceTypeResponse
         int $resource_type_id,
         bool $permitted_user,
         ?int $user_id
-    )
-    {
+    ) {
         $this->resource_type_id = $resource_type_id;
         $this->permitted_user = $permitted_user;
         $this->user_id = $user_id;
@@ -51,8 +51,7 @@ abstract class ResourceTypeResponse
         int $total,
         array $collection,
         string $last_updated = null
-    ): array
-    {
+    ): array {
         $headers = new Headers();
         $headers
             ->collection($pagination_parameters, $count, $total)
@@ -71,9 +70,8 @@ abstract class ResourceTypeResponse
     }
 
     protected function fetchAllRequestParameters(
-        \App\ItemType\ItemType $entity
-    ): void
-    {
+        ItemType $entity
+    ): void {
         $this->request_parameters = Request::fetch(
             array_keys($entity->resourceTypeRequestParameters()),
             $this->resource_type_id
@@ -95,6 +93,7 @@ abstract class ResourceTypeResponse
     protected function pagination_parameters(int $total): array
     {
         $pagination = new UtilityPagination(request()->path(), $total);
+
         return $pagination
             ->allowPaginationOverride(false)
             ->setSearchParameters($this->search_parameters)

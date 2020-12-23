@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
@@ -6,7 +7,7 @@ namespace App\Transformers;
 use App\Transformers\Transformer;
 
 /**
- * Transform the data from our queries into the format we want to display
+ * Transform the data from our queries into the format we want to display.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -28,8 +29,8 @@ class ResourceTypeItem extends Transformer
             'resource' => [
                 'id' => $this->hash->resource()->encode($to_transform['resource_id']),
                 'name' => $to_transform['resource_name'],
-                'description' => $to_transform['resource_description']
-            ]
+                'description' => $to_transform['resource_description'],
+            ],
         ];
 
         if (
@@ -39,7 +40,7 @@ class ResourceTypeItem extends Transformer
             $item['category'] = [
                 'id' => $this->hash->category()->encode($to_transform['category_id']),
                 'name' => $to_transform['category_name'],
-                'description' => $to_transform['category_description']
+                'description' => $to_transform['category_description'],
             ];
 
             if (
@@ -49,7 +50,7 @@ class ResourceTypeItem extends Transformer
                 $item['subcategory'] = [
                     'id' => $this->hash->subcategory()->encode($to_transform['subcategory_id']),
                     'name' => $to_transform['subcategory_name'],
-                    'description' => $to_transform['subcategory_description']
+                    'description' => $to_transform['subcategory_description'],
                 ];
             }
         }

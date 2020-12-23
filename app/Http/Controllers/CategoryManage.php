@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ClearCache;
-use App\Request\BodyValidation;
-Use App\Response\Cache;
 use App\Models\Category;
-use App\Transformers\Category as CategoryTransformer;
+use App\Request\BodyValidation;
 use App\Request\Validate\Category as CategoryValidator;
+use App\Response\Cache;
 use App\Response\Responses;
+use App\Transformers\Category as CategoryTransformer;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +21,7 @@ use Illuminate\Http\JsonResponse;
 class CategoryManage extends Controller
 {
     /**
-     * Create a new category
+     * Create a new category.
      *
      * @param $resource_type_id
      *
@@ -34,14 +34,14 @@ class CategoryManage extends Controller
         }
 
         $validator = (new CategoryValidator)->create([
-            'resource_type_id' => $resource_type_id
+            'resource_type_id' => $resource_type_id,
         ]);
         BodyValidation::validateAndReturnErrors($validator);
 
         $cache_job_payload = (new Cache\JobPayload())
             ->setGroupKey(Cache\KeyGroup::CATEGORY_CREATE)
             ->setRouteParameters([
-                'resource_type_id' => $resource_type_id
+                'resource_type_id' => $resource_type_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -50,14 +50,13 @@ class CategoryManage extends Controller
             $category = new Category([
                 'name' => request()->input('name'),
                 'description' => request()->input('description'),
-                'resource_type_id' => $resource_type_id
+                'resource_type_id' => $resource_type_id,
             ]);
             $category->save();
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
-           return Responses::failedToSaveModelForCreate();
+            return Responses::failedToSaveModelForCreate();
         }
 
         return response()->json(
@@ -67,7 +66,7 @@ class CategoryManage extends Controller
     }
 
     /**
-     * Delete the requested category
+     * Delete the requested category.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -77,8 +76,7 @@ class CategoryManage extends Controller
     public function delete(
         $resource_type_id,
         $category_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item-category'));
         }
@@ -86,7 +84,7 @@ class CategoryManage extends Controller
         $cache_job_payload = (new Cache\JobPayload())
             ->setGroupKey(Cache\KeyGroup::CATEGORY_DELETE)
             ->setRouteParameters([
-                'resource_type_id' => $resource_type_id
+                'resource_type_id' => $resource_type_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -110,7 +108,7 @@ class CategoryManage extends Controller
     }
 
     /**
-     * Update the selected category
+     * Update the selected category.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -133,7 +131,7 @@ class CategoryManage extends Controller
 
         $validator = (new CategoryValidator)->update([
             'resource_type_id' => (int) $category->resource_type_id,
-            'category_id' => (int) $category_id
+            'category_id' => (int) $category_id,
         ]);
 
         if ($validator === null) {
@@ -156,7 +154,7 @@ class CategoryManage extends Controller
         $cache_job_payload = (new Cache\JobPayload())
             ->setGroupKey(Cache\KeyGroup::CATEGORY_UPDATE)
             ->setRouteParameters([
-                'resource_type_id' => $resource_type_id
+                'resource_type_id' => $resource_type_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -165,7 +163,6 @@ class CategoryManage extends Controller
             $category->save();
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return Responses::failedToSaveModelForUpdate();
         }

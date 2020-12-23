@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType;
@@ -35,8 +36,7 @@ abstract class Response
         int $resource_id,
         bool $permitted_user,
         ?int $user_id
-    )
-    {
+    ) {
         $this->resource_type_id = $resource_type_id;
         $this->resource_id = $resource_id;
         $this->permitted_user = $permitted_user;
@@ -49,6 +49,7 @@ abstract class Response
     }
 
     abstract public function collectionResponse(): JsonResponse;
+
     abstract public function showResponse(int $item_id): JsonResponse;
 
     protected function collectionHeaders(
@@ -57,8 +58,7 @@ abstract class Response
         int $total,
         array $collection,
         string $last_updated = null
-    ): array
-    {
+    ): array {
         $headers = new Headers();
         $headers
             ->collection($pagination_parameters, $count, $total)
@@ -86,8 +86,7 @@ abstract class Response
 
     protected function fetchAllRequestParameters(
         ItemType $entity
-    ): void
-    {
+    ): void {
         $this->request_parameters = Request::fetch(
             array_keys($entity->requestParameters()),
             $this->resource_type_id
@@ -109,6 +108,7 @@ abstract class Response
     protected function pagination_parameters(int $total): array
     {
         $pagination = new UtilityPagination(request()->path(), $total);
+
         return $pagination
             ->allowPaginationOverride(false)
             ->setSearchParameters($this->search_parameters)

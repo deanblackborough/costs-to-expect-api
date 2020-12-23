@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -8,7 +9,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Resource type model
+ * Resource type model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -62,9 +63,8 @@ class ResourceType extends Model
     public function totalCount(
         array $viewable_resource_types = [],
         array $search_parameters = []
-    ): int
-    {
-        $collection = $this->select("resource_type.id");
+    ): int {
+        $collection = $this->select('resource_type.id');
 
         $collection = Clause::applyViewableResourceTypes(
             $collection,
@@ -87,8 +87,7 @@ class ResourceType extends Model
         int $limit = 10,
         array $search_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->select(
                 'resource_type.id AS resource_type_id',
@@ -124,7 +123,7 @@ class ResourceType extends Model
             )
             ->join('resource_type_item_type', 'resource_type.id', 'resource_type_item_type.resource_type_id')
             ->join('item_type', 'resource_type_item_type.item_type_id', 'item_type.id')
-            ->leftJoin("resource", "resource_type.id", "resource.id");
+            ->leftJoin('resource', 'resource_type.id', 'resource.id');
 
         $collection = Clause::applyViewableResourceTypes(
             $collection,
@@ -141,7 +140,7 @@ class ResourceType extends Model
                         break;
 
                     default:
-                        $collection->orderBy('resource_type.' . $field, $direction);
+                        $collection->orderBy('resource_type.'.$field, $direction);
                         break;
                 }
             }
@@ -158,8 +157,7 @@ class ResourceType extends Model
     public function single(
         int $resource_type_id,
         array $viewable_resource_types = []
-    ): ?array
-    {
+    ): ?array {
         $result = $this
             ->select(
                 'resource_type.id AS resource_type_id',
@@ -184,7 +182,7 @@ class ResourceType extends Model
             )
             ->join('resource_type_item_type', 'resource_type.id', 'resource_type_item_type.resource_type_id')
             ->join('item_type', 'resource_type_item_type.item_type_id', 'item_type.id')
-            ->leftJoin("resource", "resource_type.id", "resource.id");
+            ->leftJoin('resource', 'resource_type.id', 'resource.id');
 
         $result = Clause::applyViewableResourceTypes(
             $result,
@@ -192,7 +190,7 @@ class ResourceType extends Model
         );
 
         $result = $result
-            ->where($this->table . '.id', '=', $resource_type_id)
+            ->where($this->table.'.id', '=', $resource_type_id)
             ->get()
             ->toArray();
 
@@ -204,13 +202,13 @@ class ResourceType extends Model
     }
 
     /**
-     * Convert the model instance to an array for use with the transformer
+     * Convert the model instance to an array for use with the transformer.
      *
      * @param ResourceType
      *
      * @return array
      */
-    public function instanceToArray(ResourceType $resource_type): array
+    public function instanceToArray(self $resource_type): array
     {
         return [
             'resource_type_id' => $resource_type->id,
@@ -221,18 +219,18 @@ class ResourceType extends Model
             'resource_type_item_type_id' => $resource_type->item_type->id,
             'resource_type_item_type_name' => $resource_type->item_type->name,
             'resource_type_item_type_friendly_name' => $resource_type->item_type->friendly_name,
-            'resource_type_item_type_description' => $resource_type->item_type->description
+            'resource_type_item_type_description' => $resource_type->item_type->description,
         ];
     }
 
     /**
-     * Return an instance of a resource type
+     * Return an instance of a resource type.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
      * @return ResourceType|null
      */
-    public function instance(int $resource_type_id): ?ResourceType
+    public function instance(int $resource_type_id): ?self
     {
         return $this->find($resource_type_id);
     }

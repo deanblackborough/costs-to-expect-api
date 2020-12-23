@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -24,8 +25,8 @@ class ResourceTypeTransformer extends BaseTransformer
             'resource' => [
                 'id' => $this->hash->resource()->encode($to_transform['resource_id']),
                 'name' => $to_transform['resource_name'],
-                'description' => $to_transform['resource_description']
-            ]
+                'description' => $to_transform['resource_description'],
+            ],
         ];
     }
 }

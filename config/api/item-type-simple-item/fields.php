@@ -9,22 +9,22 @@ return [
         'description' => 'item-type-simple-item/fields.description-name',
         'type' => 'string',
         'validation' => [
-            'max-length' => 255
+            'max-length' => 255,
         ],
-        'required' => true
+        'required' => true,
     ],
     'description' => [
         'field' => 'description',
         'title' => 'item-type-simple-item/fields.title-description',
         'description' => 'item-type-simple-item/fields.description-description',
         'type' => 'string',
-        'required' => false
+        'required' => false,
     ],
     'quantity' => [
         'field' => 'quantity',
         'title' => 'item-type-simple-item/fields.title-quantity',
         'description' => 'item-type-simple-item/fields.description-quantity',
         'type' => 'integer',
-        'required' => true
-    ]
+        'required' => true,
+    ],
 ];

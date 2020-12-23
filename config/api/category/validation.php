@@ -7,22 +7,22 @@ return [
         'fields' => [
             'description' => [
                 'required',
-                'string'
-            ]
+                'string',
+            ],
         ],
         'messages' => [
-            'name.unique' => 'category/validation.name-unique'
-        ]
+            'name.unique' => 'category/validation.name-unique',
+        ],
     ],
     'PATCH' => [
         'fields' => [
             'description' => [
                 'sometimes',
-                'string'
-            ]
+                'string',
+            ],
         ],
         'messages' => [
-            'name.unique' => 'category/validation.name-unique'
-        ]
-    ]
+            'name.unique' => 'category/validation.name-unique',
+        ],
+    ],
 ];

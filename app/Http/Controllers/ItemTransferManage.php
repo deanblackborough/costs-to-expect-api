@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Jobs\ClearCache;
 use App\Models\Item;
 use App\Models\ItemTransfer;
-use App\Response\Cache;
 use App\Request\Validate\ItemTransfer as ItemTransferValidator;
+use App\Response\Cache;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Transfer items
+ * Transfer items.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -25,8 +25,7 @@ class ItemTransferManage extends Controller
         string $resource_type_id,
         string $resource_id,
         string $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }
@@ -36,7 +35,7 @@ class ItemTransferManage extends Controller
         $validator = (new ItemTransferValidator)->create(
             [
                 'resource_type_id' => $resource_type_id,
-                'existing_resource_id' => $resource_id
+                'existing_resource_id' => $resource_id,
             ]
         );
         \App\Request\BodyValidation::validateAndReturnErrors($validator);
@@ -44,7 +43,7 @@ class ItemTransferManage extends Controller
         $cache_job_payload = (new Cache\JobPayload())
             ->setGroupKey(Cache\KeyGroup::ITEM_TRANSFER_CREATE)
             ->setRouteParameters([
-                'resource_type_id' => $resource_type_id
+                'resource_type_id' => $resource_type_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -56,7 +55,7 @@ class ItemTransferManage extends Controller
                 return \App\Response\Responses::unableToDecode();
             }
 
-            DB::transaction(static function() use ($resource_type_id, $resource_id, $item_id, $new_resource_id, $user_id) {
+            DB::transaction(static function () use ($resource_type_id, $resource_id, $item_id, $new_resource_id, $user_id) {
                 $item = (new Item())->instance($resource_type_id, $resource_id, $item_id);
                 if ($item !== null) {
                     $item->resource_id = $new_resource_id;
@@ -67,16 +66,15 @@ class ItemTransferManage extends Controller
 
                 $item_transfer = new ItemTransfer([
                     'resource_type_id' => $resource_type_id,
-                    'from' => (int)$resource_id,
+                    'from' => (int) $resource_id,
                     'to' => $new_resource_id,
                     'item_id' => $item_id,
-                    'transferred_by' => $user_id
+                    'transferred_by' => $user_id,
                 ]);
                 $item_transfer->save();
             });
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (QueryException $e) {
             return \App\Response\Responses::foreignKeyConstraintError();
         } catch (Exception $e) {

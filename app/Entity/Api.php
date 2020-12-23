@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -9,7 +10,6 @@ class Api
 {
     public function __construct()
     {
-
     }
 
     public function filterParameter(): array

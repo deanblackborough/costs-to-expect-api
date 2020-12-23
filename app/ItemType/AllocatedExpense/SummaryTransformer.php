@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
@@ -16,10 +17,10 @@ class SummaryTransformer extends Transformer
     {
         $this->transformed = [
             'currency' => [
-                'code' => $to_transform['currency_code']
+                'code' => $to_transform['currency_code'],
             ],
             'count' => $to_transform['total_count'],
-            'subtotal' => number_format((float) $to_transform['total'], 2, '.', '')
+            'subtotal' => number_format((float) $to_transform['total'], 2, '.', ''),
         ];
     }
 }

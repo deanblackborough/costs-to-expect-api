@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -7,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Request error log
+ * Request error log.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -28,8 +29,7 @@ class RequestErrorLog extends Model
     public function paginatedCollection(
         int $offset = 0,
         int $limit = 10
-    ): array
-    {
+    ): array {
         return $this->select(
                 'request_error_log.method AS request_error_log_method',
                 'request_error_log.expected_status_code AS request_error_log_expected_status_code',

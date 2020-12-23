@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Validate;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 
 /**
- * Base validator class, sets up the interface and includes helper methods
+ * Base validator class, sets up the interface and includes helper methods.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -28,7 +29,7 @@ abstract class Validator
 
     /**
      * Fetch the validation error messages from the requested configuration
-     * file and translate the message strings
+     * file and translate the message strings.
      *
      * @param string $config_key
      *
@@ -47,7 +48,7 @@ abstract class Validator
 
     /**
      * Check to ensure we have all the required indexes, check the required
-     * keys against the provided keys
+     * keys against the provided keys.
      *
      * @param array $required
      * @param array $provided
@@ -55,8 +56,7 @@ abstract class Validator
     protected function requiredIndexes(
         array $required = [],
         array $provided = []
-    ): void
-    {
+    ): void {
         foreach ($provided as $key => $value) {
             if (in_array($key, $required, true) === false) {
                 abort(500, 'Indexes missing in options array for validator');
@@ -65,7 +65,7 @@ abstract class Validator
     }
 
     /**
-     * Return a valid validator object for a create (POST) request
+     * Return a valid validator object for a create (POST) request.
      *
      * @param array $options
      *
@@ -74,7 +74,7 @@ abstract class Validator
     abstract public function create(array $options = []): \Illuminate\Contracts\Validation\Validator;
 
     /**
-     * Return a valid validator object for a update (PATCH) request
+     * Return a valid validator object for a update (PATCH) request.
      *
      * @param array $options
      *

@@ -13,5 +13,5 @@ return [
     'description-currency_id' => 'The currency for this expense',
 
     'title-total' => 'Item total',
-    'description-total' => 'Enter the total cost for the item'
+    'description-total' => 'Enter the total cost for the item',
 ];

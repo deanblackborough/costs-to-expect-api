@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Method;
@@ -21,8 +22,8 @@ class DeleteRequest extends Method
             'description' => $this->description,
             'authentication' => [
                 'required' => $this->authentication,
-                'authenticated' => $this->authenticated
-            ]
+                'authenticated' => $this->authenticated,
+            ],
         ];
     }
 }

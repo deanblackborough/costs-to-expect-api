@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -16,7 +17,7 @@ class SummaryTransformer extends Transformer
     {
         $this->transformed = [
             'count' => (int) $to_transform['total_count'],
-            'total' => (int) $to_transform['total']
+            'total' => (int) $to_transform['total'],
         ];
     }
 }

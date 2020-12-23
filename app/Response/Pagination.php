@@ -1,15 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Response;
 
-use App\Request\Validate\Boolean;
-
 use App\Request\Hash;
+use App\Request\Validate\Boolean;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Generate the pagination URIs based on all the request parameters
+ * Generate the pagination URIs based on all the request parameters.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -64,7 +64,7 @@ class Pagination
      *
      * @return Pagination
      */
-    public function allowPaginationOverride(bool $allow_override): Pagination
+    public function allowPaginationOverride(bool $allow_override): self
     {
         $this->allow_override = $allow_override;
 
@@ -72,13 +72,13 @@ class Pagination
     }
 
     /**
-     * Set any request parameters
+     * Set any request parameters.
      *
      * @param array $parameters
      *
      * @return Pagination
      */
-    public function setParameters(array $parameters = []): Pagination
+    public function setParameters(array $parameters = []): self
     {
         $this->parameters = $parameters;
 
@@ -86,13 +86,13 @@ class Pagination
     }
 
     /**
-     * Set any request filtering parameters
+     * Set any request filtering parameters.
      *
      * @param array $parameters
      *
      * @return Pagination
      */
-    public function setFilteringParameters(array $parameters = []): Pagination
+    public function setFilteringParameters(array $parameters = []): self
     {
         $this->filtering_parameters = $parameters;
 
@@ -100,13 +100,13 @@ class Pagination
     }
 
     /**
-     * Set any request sort parameters
+     * Set any request sort parameters.
      *
      * @param array $parameters
      *
      * @return Pagination
      */
-    public function setSortParameters(array $parameters = []): Pagination
+    public function setSortParameters(array $parameters = []): self
     {
         $this->sort_parameters = $parameters;
 
@@ -114,13 +114,13 @@ class Pagination
     }
 
     /**
-     * Set any request search parameters
+     * Set any request search parameters.
      *
      * @param array $parameters
      *
      * @return Pagination
      */
-    public function setSearchParameters(array $parameters = []): Pagination
+    public function setSearchParameters(array $parameters = []): self
     {
         $this->search_parameters = $parameters;
 
@@ -129,7 +129,7 @@ class Pagination
 
     /**
      * Return the generated pagination parameters, the uris for next and
-     * previous, the defined offset and limit
+     * previous, the defined offset and limit.
      *
      * @return array
      */
@@ -140,7 +140,7 @@ class Pagination
         return [
             'links' => $uris,
             'offset' => ($this->collection === false ? $this->offset : 0),
-            'limit' => ($this->collection === false ? $this->limit : $this->total)
+            'limit' => ($this->collection === false ? $this->limit : $this->total),
         ];
     }
 
@@ -157,12 +157,12 @@ class Pagination
                     switch ($parameter) {
                         case 'category':
                         case 'subcategory':
-                            $parameters .= $parameter . '=' .
+                            $parameters .= $parameter.'='.
                                 $this->hash->encode($parameter, $parameter_value);
                             break;
 
                         default:
-                            $parameters .= $parameter . '=' . $parameter_value;
+                            $parameters .= $parameter.'='.$parameter_value;
                             break;
                     }
                 }
@@ -180,11 +180,11 @@ class Pagination
     {
         $filter_parameters = '';
         foreach ($this->filtering_parameters as $field => $ranges) {
-            $filter_parameters .= '|' . $field . ':' . $ranges['from'] . ':' . $ranges['to'];
+            $filter_parameters .= '|'.$field.':'.$ranges['from'].':'.$ranges['to'];
         }
 
         if ($filter_parameters !== '') {
-            $filter_parameters = 'filter=' . ltrim($filter_parameters, '|') . '&';
+            $filter_parameters = 'filter='.ltrim($filter_parameters, '|').'&';
         }
 
         return $filter_parameters;
@@ -194,11 +194,11 @@ class Pagination
     {
         $sort_parameters = '';
         foreach ($this->sort_parameters as $field => $order) {
-            $sort_parameters .= '|' . $field . ':' . $order;
+            $sort_parameters .= '|'.$field.':'.$order;
         }
 
         if ($sort_parameters !== '') {
-            $sort_parameters = 'sort=' . ltrim($sort_parameters, '|') . '&';
+            $sort_parameters = 'sort='.ltrim($sort_parameters, '|').'&';
         }
 
         return $sort_parameters;
@@ -208,11 +208,11 @@ class Pagination
     {
         $search_parameters = '';
         foreach ($this->search_parameters as $field => $partial_term) {
-            $search_parameters .= '|' . $field . ':' . urlencode($partial_term);
+            $search_parameters .= '|'.$field.':'.urlencode($partial_term);
         }
 
         if ($search_parameters !== '') {
-            $search_parameters = 'search=' . ltrim($search_parameters, '|') . '&';
+            $search_parameters = 'search='.ltrim($search_parameters, '|').'&';
         }
 
         return $search_parameters;
@@ -229,11 +229,10 @@ class Pagination
 
         $uris = [
             'next' => null,
-            'previous' => null
+            'previous' => null,
         ];
 
         if ($this->collection === false) {
-
             $previous_offset = null;
             $next_offset = null;
 
@@ -254,16 +253,16 @@ class Pagination
             $app_url = Config::get('api.app.url');
 
             if ($previous_offset !== null) {
-                $uris['previous'] .= $app_url . '/' . $this->uri .
-                    $parameters . $sort_parameters . $search_parameters .
-                    $filter_parameters . 'offset=' . $previous_offset . '&limit=' .
+                $uris['previous'] .= $app_url.'/'.$this->uri.
+                    $parameters.$sort_parameters.$search_parameters.
+                    $filter_parameters.'offset='.$previous_offset.'&limit='.
                     $this->limit;
             }
 
             if ($next_offset !== null) {
-                $uris['next'] .= $app_url . '/' . $this->uri .
-                    $parameters . $sort_parameters . $search_parameters .
-                    $filter_parameters . 'offset=' . $next_offset . '&limit=' .
+                $uris['next'] .= $app_url.'/'.$this->uri.
+                    $parameters.$sort_parameters.$search_parameters.
+                    $filter_parameters.'offset='.$next_offset.'&limit='.
                     $this->limit;
             }
         }

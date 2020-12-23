@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Method;
 
 /**
  * Helper class to generate the data required to build the OPTIONS required for
- * a single HTTP Verb, in this case PATCH
+ * a single HTTP Verb, in this case PATCH.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -28,8 +29,7 @@ class PatchRequest extends Method
 
     public function setDynamicFields(
         array $fields = []
-    ): PatchRequest
-    {
+    ): self {
         $this->dynamic_fields = $fields;
 
         return $this;
@@ -37,8 +37,7 @@ class PatchRequest extends Method
 
     public function setFields(
         array $fields
-    ): PatchRequest
-    {
+    ): self {
         if (count($fields) > 0) {
             $this->fields = $fields;
         }
@@ -76,9 +75,9 @@ class PatchRequest extends Method
             'description' => $this->description,
             'authentication' => [
                 'required' => $this->authentication,
-                'authenticated' => $this->authenticated
+                'authenticated' => $this->authenticated,
             ],
-            'fields' => $this->fields_after_localisation
+            'fields' => $this->fields_after_localisation,
         ];
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class NullDescriptionFieldSimpleItems extends Migration
 {
@@ -13,8 +13,7 @@ class NullDescriptionFieldSimpleItems extends Migration
      */
     public function up()
     {
-        Schema::table('item_type_simple_item', function (Blueprint $table)
-        {
+        Schema::table('item_type_simple_item', function (Blueprint $table) {
             $table->string('description', 255)->nullable()->change();
         });
     }
@@ -26,8 +25,7 @@ class NullDescriptionFieldSimpleItems extends Migration
      */
     public function down()
     {
-        Schema::table('item_type_simple_item', function (Blueprint $table)
-        {
+        Schema::table('item_type_simple_item', function (Blueprint $table) {
             $table->string('description', 255)->change();
         });
     }

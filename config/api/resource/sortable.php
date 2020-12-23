@@ -6,5 +6,5 @@ return [
     'name',
     'description',
     'effective_date',
-    'created'
+    'created',
 ];

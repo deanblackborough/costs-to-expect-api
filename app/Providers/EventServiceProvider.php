@@ -13,15 +13,15 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Laravel\Passport\Events\AccessTokenCreated' => [
-            'App\Listeners\RevokeTokens',
-            'App\Listeners\PruneTokens'
+            \App\Listeners\RevokeTokens::class,
+            \App\Listeners\PruneTokens::class,
         ],
-        'App\Events\RequestError' => [
-            'App\Listeners\CaptureAndSendRequestError'
+        \App\Events\RequestError::class => [
+            \App\Listeners\CaptureAndSendRequestError::class,
         ],
-        'App\Events\InternalError' => [
-            'App\Listeners\CaptureAndSendInternalError'
-        ]
+        \App\Events\InternalError::class => [
+            \App\Listeners\CaptureAndSendInternalError::class,
+        ],
     ];
 
     /**
@@ -31,6 +31,5 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
     }
 }

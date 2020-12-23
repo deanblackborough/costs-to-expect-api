@@ -12,8 +12,8 @@ use Illuminate\Http\JsonResponse;
  */
 class ToolView extends Controller
 {
-     /**
-     * Options request for the tools/cache route
+    /**
+     * Options request for the tools/cache route.
      *
      * @return JsonResponse
      */
