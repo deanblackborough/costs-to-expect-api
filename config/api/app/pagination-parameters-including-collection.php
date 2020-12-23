@@ -9,7 +9,7 @@ return [
         'description' => 'app/pagination-parameters-including-collection.description-offset',
         'default' => 0,
         'type' => 'integer',
-        'required' => false
+        'required' => false,
     ],
     'limit' => [
         'parameter' => 'limit',
@@ -17,7 +17,7 @@ return [
         'description' => 'app/pagination-parameters-including-collection.description-limit',
         'default' => 10,
         'type' => 'integer',
-        'required' => false
+        'required' => false,
     ],
     'collection' => [
         'parameter' => 'collection',
@@ -25,6 +25,6 @@ return [
         'description' => 'app/pagination-parameters-including-collection.description-collection',
         'default' => false,
         'type' => 'boolean',
-        'required' => false
-    ]
+        'required' => false,
+    ],
 ];

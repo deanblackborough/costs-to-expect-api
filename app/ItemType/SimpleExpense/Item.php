@@ -1,13 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleExpense;
 
 use App\AllowedValue\Currency;
 use App\ItemType\ItemType;
-use App\Transformers\Transformer;
 use App\Request\Hash;
 use App\Request\Validate\Validator;
+use App\Transformers\Transformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 
@@ -39,7 +40,7 @@ class Item extends ItemType
             'currency_id' => $currency_id,
             'total' => request()->input('total'),
             'created_at' => Date::now(),
-            'updated_at' => null
+            'updated_at' => null,
         ]);
 
         $item->save();

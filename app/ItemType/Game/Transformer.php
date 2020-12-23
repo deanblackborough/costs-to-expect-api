@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\Game;
@@ -26,21 +27,21 @@ class Transformer extends BaseTransformer
             }
         } catch (\JsonException $e) {
             $game = [
-                'error' => 'Unable to decode scores'
+                'error' => 'Unable to decode scores',
             ];
-       }
+        }
 
-       $winner = null;
-       if (
+        $winner = null;
+        if (
            array_key_exists('item_winner_id', $to_transform) &&
            array_key_exists('item_winner_name', $to_transform) &&
            $to_transform['item_winner_id'] !== null
        ) {
             $winner = [
                 'id' => $this->hash->category()->encode($to_transform['item_winner_id']),
-                'name' => $to_transform['item_winner_name']
+                'name' => $to_transform['item_winner_name'],
             ];
-       }
+        }
 
         $this->transformed = [
             'id' => $this->hash->item()->encode($to_transform['item_id']),
@@ -52,7 +53,7 @@ class Transformer extends BaseTransformer
             'score' => $to_transform['item_score'],
             'complete' => $to_transform['item_complete'],
             'created' => $to_transform['item_created_at'],
-            'updated' => $to_transform['item_updated_at']
+            'updated' => $to_transform['item_updated_at'],
         ];
     }
 }

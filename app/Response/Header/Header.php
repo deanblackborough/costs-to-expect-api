@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Response\Header;
@@ -26,12 +27,12 @@ class Header
             'Content-Type' => 'application/json',
             'Content-Language' => app()->getLocale(),
             'Referrer-Policy' => 'strict-origin-when-cross-origin',
-            'X-Content-Type-Options' => 'nosniff'
+            'X-Content-Type-Options' => 'nosniff',
         ];
     }
 
     /**
-     * Generate the initial headers necessary for a collection
+     * Generate the initial headers necessary for a collection.
      *
      * @param array $pagination Pagination data array, assumed indexes, offset,
      * limit, links (with previous and next indexes)
@@ -44,8 +45,7 @@ class Header
         array $pagination,
         int $count,
         int $total_count
-    ): Header
-    {
+    ): self {
         $this->headers = array_merge(
             $this->headers,
             [
@@ -54,7 +54,7 @@ class Header
                 'X-Offset' => $pagination['offset'],
                 'X-Limit' => $pagination['limit'],
                 'X-Link-Previous' => $pagination['links']['previous'],
-                'X-Link-Next' => $pagination['links']['next']
+                'X-Link-Next' => $pagination['links']['next'],
             ]
         );
 
@@ -62,17 +62,17 @@ class Header
     }
 
     /**
-     * Generate the initial headers necessary for an item
+     * Generate the initial headers necessary for an item.
      *
      * @return Header
      */
-    public function item(): Header
+    public function item(): self
     {
         $this->headers = array_merge(
             $this->headers,
             [
                 'X-Total-Count' => 1,
-                'X-Count' => 1
+                'X-Count' => 1,
             ]
         );
 
@@ -81,7 +81,7 @@ class Header
 
     /**
      * Add a header to the headers array, does not check to see if the header
-     * already exists, overwrites if previously set
+     * already exists, overwrites if previously set.
      *
      * @param string $name Header name
      * @param mixed $value Header value
@@ -91,94 +91,93 @@ class Header
     public function add(
         string $name,
         $value
-    ): Header
-    {
+    ): self {
         $this->headers[$name] = $value;
 
         return $this;
     }
 
     /**
-     * Add the cache control header
+     * Add the cache control header.
      *
      * @param string $visibility
      * @param int $max_age
      *
      * @return Header
      */
-    public function addCacheControl($visibility, $max_age = 31536000): Header
+    public function addCacheControl($visibility, $max_age = 31536000): self
     {
         return $this->add('Cache-Control', "{$visibility}, max-age={$max_age}");
     }
 
     /**
-     * Add the eTag
+     * Add the eTag.
      *
      * @param array $content The response data array
      *
      * @return Header
      */
-    public function addETag(array $content): Header
+    public function addETag(array $content): self
     {
         $json = json_encode($content, JSON_THROW_ON_ERROR | 15);
 
         if ($json !== false) {
-            $this->add('ETag', '"' . md5($json) . '"');
+            $this->add('ETag', '"'.md5($json).'"');
         }
 
         return $this;
     }
 
     /**
-     * Add the X-Filter header
+     * Add the X-Filter header.
      *
      * @param mixed $value
      *
      * @return Header
      */
-    public function addFilter($value): Header
+    public function addFilter($value): self
     {
         return $this->add('X-Filter', $value);
     }
 
     /**
-     * Add the X-Parameters header
+     * Add the X-Parameters header.
      *
      * @param mixed $value
      *
      * @return Header
      */
-    public function addParameters($value): Header
+    public function addParameters($value): self
     {
         return $this->add('X-Parameters', $value);
     }
 
     /**
-     * Add the X-Sort header
+     * Add the X-Sort header.
      *
      * @param mixed $value
      *
      * @return Header
      */
-    public function addSort($value): Header
+    public function addSort($value): self
     {
         return $this->add('X-Sort', $value);
     }
 
     /**
-     * Add the X-Search header
+     * Add the X-Search header.
      *
      * @param mixed $value
      *
      * @return Header
      */
-    public function addSearch($value): Header
+    public function addSearch($value): self
     {
         return $this->add('X-Search', $value);
     }
 
     /**
-     * Return the headers array
+     * Return the headers array.
      *
      * @return array
      */

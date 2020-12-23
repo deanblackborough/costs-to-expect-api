@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -16,9 +17,9 @@ class Subcategory
 
     /**
      * Generate the allowed values subcategories array, will be passed to the
-     * Option classes and merged with the fields/parameters
+     * Option classes and merged with the fields/parameters.
      *
-     * @param integer $category_id
+     * @param int $category_id
      *
      * @return array
      */
@@ -41,7 +42,7 @@ class Subcategory
             $parameters['subcategory_id']['allowed_values'][$id] = [
                 'value' => $id,
                 'name' => $subcategory->name,
-                'description' => $subcategory->description
+                'description' => $subcategory->description,
             ];
         }
 

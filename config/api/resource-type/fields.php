@@ -9,16 +9,16 @@ return [
         'description' => 'resource-type/fields.description-name',
         'type' => 'string',
         'validation' => [
-            'max-length' => 255
+            'max-length' => 255,
         ],
-        'required' => true
+        'required' => true,
     ],
     'description' => [
         'field' => 'description',
         'title' => 'resource-type/fields.title-description',
         'description' => 'resource-type/fields.description-description',
         'type' => 'string',
-        'required' => true
+        'required' => true,
     ],
     'item_type_id' => [
         'field' => 'item_type_id',
@@ -26,15 +26,15 @@ return [
         'description' => 'resource-type/fields.description-item_type_id',
         'type' => 'string',
         'validation' => [
-            'length' => 10
+            'length' => 10,
         ],
-        'required' => true
+        'required' => true,
     ],
     'public' => [
         'field' => 'public',
         'title' => 'resource-type/fields.title-public',
         'description' => 'resource-type/fields.description-public',
         'type' => 'boolean',
-        'required' => false
-    ]
+        'required' => false,
+    ],
 ];

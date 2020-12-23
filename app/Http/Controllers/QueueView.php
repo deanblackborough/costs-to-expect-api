@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Queue;
 use App\Option\QueueCollection;
 use App\Option\QueueItem;
-use App\Response\Cache;
-use App\Response\Header\Headers;
 use App\Request\Parameter;
 use App\Request\Route;
+use App\Response\Cache;
+use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
 use App\Transformers\Queue as QueueTransformer;
 use Illuminate\Http\JsonResponse;
@@ -34,7 +34,6 @@ class QueueView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $total = (new Queue())->totalCount();
 
             $pagination = new UtilityPagination(request()->path(), $total);
@@ -47,7 +46,7 @@ class QueueView extends Controller
             );
 
             $collection = array_map(
-                static function($jon) {
+                static function ($jon) {
                     return (new QueueTransformer($jon))->asArray();
                 },
                 $jobs

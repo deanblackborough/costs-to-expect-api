@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Method;
@@ -25,8 +26,7 @@ class PostRequest extends Method
 
     public function setDynamicFields(
         array $fields = []
-    ): PostRequest
-    {
+    ): self {
         $this->dynamic_fields = $fields;
 
         return $this;
@@ -34,8 +34,7 @@ class PostRequest extends Method
 
     public function setFields(
         array $fields
-    ): PostRequest
-    {
+    ): self {
         if (count($fields) > 0) {
             $this->fields = $fields;
         }
@@ -72,9 +71,9 @@ class PostRequest extends Method
             'description' => $this->description,
             'authentication' => [
                 'required' => $this->authentication,
-                'authenticated' => $this->authenticated
+                'authenticated' => $this->authenticated,
             ],
-            'fields' => $this->fields_after_localisation
+            'fields' => $this->fields_after_localisation,
         ];
     }
 }

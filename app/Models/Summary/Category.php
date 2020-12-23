@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Summary;
 
 use App\Models\Clause;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Category model
+ * Category model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -23,8 +24,7 @@ class Category extends Model
         int $resource_type_id,
         array $viewable_resource_types,
         array $search_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("COUNT(`{$this->table}`.`id`) AS total")
             ->selectRaw("
@@ -40,10 +40,10 @@ class Category extends Model
                         `{$this->table}`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
-            ->join("resource_type", "category.resource_type_id", "resource_type.id")
+            ->join('resource_type', 'category.resource_type_id', 'resource_type.id')
             ->where('category.resource_type_id', '=', $resource_type_id);
 
         $collection = Clause::applyViewableResourceTypes(

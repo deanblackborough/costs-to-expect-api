@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleExpense;
@@ -10,8 +11,7 @@ class ResourceTypeAllowedValue extends BaseResourceTypeAllowedValue
     public function __construct(
         int $resource_type_id,
         array $viewable_resource_types
-    )
-    {
+    ) {
         parent::__construct(
             $resource_type_id,
             $viewable_resource_types
@@ -38,7 +38,7 @@ class ResourceTypeAllowedValue extends BaseResourceTypeAllowedValue
         $this->values = [
             'category' => null,
             'subcategory' => null,
-            'currency_id' => null
+            'currency_id' => null,
         ];
     }
 }

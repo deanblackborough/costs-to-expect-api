@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\ItemType;
 use App\Option\ItemTypeCollection;
 use App\Option\ItemTypeItem;
-use App\Response\Cache;
-use App\Response\Header\Headers;
 use App\Request\Parameter;
 use App\Request\Route;
+use App\Response\Cache;
+use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
-use App\Transformers\ItemType as ItemTypeTransformer;
 use App\Response\Responses;
+use App\Transformers\ItemType as ItemTypeTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Manage the item types supported by the API
+ * Manage the item types supported by the API.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -27,7 +27,7 @@ class ItemTypeView extends Controller
     protected bool $allow_entire_collection = true;
 
     /**
-     * Return all the item types
+     * Return all the item types.
      *
      * @return JsonResponse
      */
@@ -40,7 +40,6 @@ class ItemTypeView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.item-type.searchable')
             );
@@ -65,7 +64,7 @@ class ItemTypeView extends Controller
             );
 
             $collection = array_map(
-                static function($item_type) {
+                static function ($item_type) {
                     return (new ItemTypeTransformer($item_type))->asArray();
                 },
                 $item_types
@@ -86,7 +85,7 @@ class ItemTypeView extends Controller
     }
 
     /**
-     * Return a single item type
+     * Return a single item type.
      *
      * @param string $item_type_id
      *
@@ -115,7 +114,7 @@ class ItemTypeView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the item type list
+     * Generate the OPTIONS request for the item type list.
      *
      * @return JsonResponse
      */
@@ -127,7 +126,7 @@ class ItemTypeView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for a specific item type
+     * Generate the OPTIONS request for a specific item type.
      *
      * @param string $item_type_id
      *

@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Parameter;
 
 /**
- * Fetch and validate any sort parameters
+ * Fetch and validate any sort parameters.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -16,7 +17,7 @@ class Sort
 
     /**
      * Check the URI for the sort parameter, if the format is valid split the
-     * string and set a sort array of field direction
+     * string and set a sort array of field direction.
      */
     private static function find()
     {
@@ -41,7 +42,7 @@ class Sort
 
     /**
      * Validate the supplied sort parameters array, if they aren't in the
-     * expected array they are silently rejected
+     * expected array they are silently rejected.
      *
      * @param array $fields
      */
@@ -56,7 +57,7 @@ class Sort
 
     /**
      * Return all the valid sort parameters, check the supplied array against
-     * the set sort parameters
+     * the set sort parameters.
      *
      * @param array $fields
      *
@@ -71,7 +72,7 @@ class Sort
     }
 
     /**
-     * Generate the X-Sort header string for the valid sort options
+     * Generate the X-Sort header string for the valid sort options.
      *
      * @return string|null
      */
@@ -80,7 +81,7 @@ class Sort
         $header = '';
 
         foreach (self::$fields as $key => $value) {
-            $header .= '|' . $key . ':' . urlencode($value);
+            $header .= '|'.$key.':'.urlencode($value);
         }
 
         if ($header !== '') {

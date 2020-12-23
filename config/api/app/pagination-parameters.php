@@ -9,7 +9,7 @@ return [
         'description' => 'app/pagination-parameters.description-offset',
         'default' => 0,
         'type' => 'integer',
-        'required' => false
+        'required' => false,
     ],
     'limit' => [
         'parameter' => 'limit',
@@ -17,6 +17,6 @@ return [
         'description' => 'app/pagination-parameters.description-limit',
         'default' => 10,
         'type' => 'integer',
-        'required' => false
-    ]
+        'required' => false,
+    ],
 ];

@@ -1,15 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Category model
+ * Category model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -26,7 +27,7 @@ class Category extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsTo(self::class, 'category_id', 'id');
     }
 
     /**
@@ -43,11 +44,10 @@ class Category extends Model
         int $resource_type_id,
         array $viewable_resource_types,
         array $search_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this
             ->select('category.id')
-            ->join("resource_type", "category.resource_type_id", "resource_type.id")
+            ->join('resource_type', 'category.resource_type_id', 'resource_type.id')
             ->where('category.resource_type_id', '=', $resource_type_id);
 
         $collection = Clause::applyViewableResourceTypes(
@@ -102,10 +102,10 @@ class Category extends Model
                         category.resource_type_id = ? 
                 ) AS last_updated',
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
-            ->join("resource_type", "category.resource_type_id", "resource_type.id")
+            ->join('resource_type', 'category.resource_type_id', 'resource_type.id')
             ->where('category.resource_type_id', '=', $resource_type_id);
 
         $collection = Clause::applyViewableResourceTypes(
@@ -123,7 +123,7 @@ class Category extends Model
                         break;
 
                     default:
-                        $collection->orderBy('category.' . $field, $direction);
+                        $collection->orderBy('category.'.$field, $direction);
                         break;
                 }
             }
@@ -138,16 +138,16 @@ class Category extends Model
     }
 
     /**
-     * Return a single item
+     * Return a single item.
      *
-     * @param integer $resource_type_id
-     * @param integer $category_id
+     * @param int $resource_type_id
+     * @param int $category_id
      *
      * @return array|null
      */
     public function single(int $resource_type_id, int $category_id): ?array
     {
-        $result = $this->join('resource_type', $this->table . '.resource_type_id', '=', 'resource_type.id')->
+        $result = $this->join('resource_type', $this->table.'.resource_type_id', '=', 'resource_type.id')->
             where('category.id', '=', $category_id)->
             where('category.resource_type_id', '=', $resource_type_id)->
             orderBy('category.name')->
@@ -171,27 +171,27 @@ class Category extends Model
     }
 
     /**
-     * Return an instance of a Category
+     * Return an instance of a Category.
      *
-     * @param integer $category_id
+     * @param int $category_id
      *
      * @return Category|null
      */
-    public function instance(int $category_id): ?Category
+    public function instance(int $category_id): ?self
     {
         return $this->find($category_id);
     }
 
     /**
-     * Fetch all the categories assigned to the resource type
+     * Fetch all the categories assigned to the resource type.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
      * @return array
      */
     public function categoriesByResourceType(int $resource_type_id): array
     {
-        return $this->join('resource_type', $this->table . '.resource_type_id', '=', 'resource_type.id')->
+        return $this->join('resource_type', $this->table.'.resource_type_id', '=', 'resource_type.id')->
             where('resource_type.id', '=', intval($resource_type_id))->
             orderBy('category.name')->
             select(
@@ -204,20 +204,20 @@ class Category extends Model
     }
 
     /**
-     * Convert the model instance to an array for use with the transformer
+     * Convert the model instance to an array for use with the transformer.
      *
      * @param Category $category
      *
      * @return array
      */
-    public function instanceToArray(Category $category): array
+    public function instanceToArray(self $category): array
     {
         return [
             'category_id' => $category->id,
             'category_name' => $category->name,
             'category_description' => $category->description,
             'category_created_at' => $category->created_at->toDateTimeString(),
-            'resource_type_id' => $category->resource_type_id
+            'resource_type_id' => $category->resource_type_id,
         ];
     }
 }

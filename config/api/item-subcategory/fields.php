@@ -9,8 +9,8 @@ return [
         'description' => 'item-subcategory/fields.description-subcategory_id',
         'type' => 'string',
         'validation' => [
-            'length' => 10
+            'length' => 10,
         ],
-        'required' => true
-    ]
+        'required' => true,
+    ],
 ];

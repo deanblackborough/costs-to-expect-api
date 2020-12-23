@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -8,7 +9,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Resource model
+ * Resource model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -47,10 +48,9 @@ class Resource extends Model
         int $resource_type_id,
         array $viewable_resource_types,
         array $search_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this
-            ->select("resource.id")
+            ->select('resource.id')
             ->join('resource_type', 'resource.resource_type_id', 'resource_type.id')
             ->where('resource_type.id', '=', $resource_type_id);
 
@@ -80,8 +80,7 @@ class Resource extends Model
         int $limit = 10,
         array $search_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->select(
                 'resource.id AS resource_id',
@@ -106,7 +105,7 @@ class Resource extends Model
                         `resource_type_id` = ? 
                 ) AS last_updated',
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->join('resource_item_subtype', 'resource_item_subtype.resource_id', 'resource.id')
@@ -123,7 +122,7 @@ class Resource extends Model
                         break;
 
                     default:
-                        $collection->orderBy('resource.' . $field, $direction);
+                        $collection->orderBy('resource.'.$field, $direction);
                         break;
                 }
             }
@@ -155,7 +154,7 @@ class Resource extends Model
             ->where('resource_type_id', '=', $resource_type_id);
 
         $result = $result
-            ->where($this->table . '.id', '=', $resource_id)
+            ->where($this->table.'.id', '=', $resource_id)
             ->get()
             ->toArray();
 
@@ -168,18 +167,17 @@ class Resource extends Model
 
     /**
      * Return the list of resources for the requested resource type and
-     * optionally exclude the provided resource id
+     * optionally exclude the provided resource id.
      *
-     * @param integer $resource_type_id
-     * @param integer|null $exclude_id
+     * @param int $resource_type_id
+     * @param int|null $exclude_id
      *
      * @return array
      */
     public function resourcesForResourceType(
         int $resource_type_id,
         int $exclude_id = null
-    ): array
-    {
+    ): array {
         $collection = $this->where('resource_type_id', '=', $resource_type_id);
 
         if ($exclude_id !== null) {
@@ -205,15 +203,14 @@ class Resource extends Model
             'resource_created_at' => $resource->created_at->toDateTimeString(),
             'resource_item_subtype_id' => $resource->item_subtype->id,
             'resource_item_subtype_name' => $resource->item_subtype->name,
-            'resource_item_subtype_description' => $resource->item_subtype->description
+            'resource_item_subtype_description' => $resource->item_subtype->description,
         ];
     }
 
     public function instance(
         int $resource_type_id,
         int $resource_id
-    ): ?Model
-    {
+    ): ?Model {
         return $this
             ->select(
                 'resource.id',

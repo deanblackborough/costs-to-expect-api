@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType;
@@ -31,8 +32,7 @@ abstract class ResourceTypeAllowedValue
     public function __construct(
         int $resource_type_id,
         array $viewable_resource_types
-    )
-    {
+    ) {
         $this->resource_type_id = $resource_type_id;
 
         $this->viewable_resource_types = $viewable_resource_types;
@@ -45,15 +45,14 @@ abstract class ResourceTypeAllowedValue
     public function setParameters(
         array $available_parameters,
         array $defined_parameters
-    ): ResourceTypeAllowedValue
-    {
+    ): self {
         $this->available_parameters = $available_parameters;
         $this->defined_parameters = $defined_parameters;
 
         return $this;
     }
 
-    abstract public function fetch(): ResourceTypeAllowedValue;
+    abstract public function fetch(): self;
 
     abstract protected function setAllowedValueFields(): void;
 
@@ -71,7 +70,6 @@ abstract class ResourceTypeAllowedValue
     protected function fetchValuesForCategory(): void
     {
         if (array_key_exists('category', $this->available_parameters) === true) {
-
             $allowed_values = [];
 
             $categories = (new Category())->paginatedCollection(
@@ -87,11 +85,11 @@ abstract class ResourceTypeAllowedValue
                 $allowed_values[$category_id] = [
                     'value' => $category_id,
                     'name' => $category['category_name'],
-                    'description' => trans('resource-type-item-type-' . $this->entity->type() .
-                            '/allowed-values.description-prefix-category') .
-                        $category['category_name'] .
-                        trans('resource-type-item-type-' . $this->entity->type() .
-                            '/allowed-values.description-suffix-category')
+                    'description' => trans('resource-type-item-type-'.$this->entity->type().
+                            '/allowed-values.description-prefix-category').
+                        $category['category_name'].
+                        trans('resource-type-item-type-'.$this->entity->type().
+                            '/allowed-values.description-suffix-category'),
                 ];
             }
 
@@ -102,16 +100,15 @@ abstract class ResourceTypeAllowedValue
     protected function fetchValuesForMonth(): void
     {
         if (array_key_exists('month', $this->available_parameters) === true) {
-
             $allowed_values = [];
 
             for ($i = 1; $i < 13; $i++) {
                 $allowed_values[$i] = [
                     'value' => $i,
-                    'name' => date("F", mktime(0, 0, 0, $i, 10)),
-                    'description' => trans('resource-type-item-type-' . $this->entity->type() .
-                            '/allowed-values.description-prefix-month') .
-                        date("F", mktime(0, 0, 0, $i, 1))
+                    'name' => date('F', mktime(0, 0, 0, $i, 10)),
+                    'description' => trans('resource-type-item-type-'.$this->entity->type().
+                            '/allowed-values.description-prefix-month').
+                        date('F', mktime(0, 0, 0, $i, 1)),
                 ];
             }
 
@@ -135,7 +132,7 @@ abstract class ResourceTypeAllowedValue
             $allowed_values[$id] = [
                 'value' => $id,
                 'name' => $currency['currency_name'],
-                'description' => $currency['currency_name']
+                'description' => $currency['currency_name'],
             ];
         }
 
@@ -150,7 +147,6 @@ abstract class ResourceTypeAllowedValue
             array_key_exists('category', $this->defined_parameters) === true &&
             $this->defined_parameters['category'] !== null
         ) {
-
             $allowed_values = [];
 
             $subcategories = (new Subcategory())->paginatedCollection(
@@ -164,8 +160,8 @@ abstract class ResourceTypeAllowedValue
                 $allowed_values[$subcategory_id] = [
                     'value' => $subcategory_id,
                     'name' => $subcategory['subcategory_name'],
-                    'description' => trans('resource-type-item-type-' . $this->entity->type() . '/allowed-values.description-prefix-subcategory') .
-                        $subcategory['subcategory_name'] . trans('resource-type-item-type-' . $this->entity->type() . '/allowed-values.description-suffix-subcategory')
+                    'description' => trans('resource-type-item-type-'.$this->entity->type().'/allowed-values.description-prefix-subcategory').
+                        $subcategory['subcategory_name'].trans('resource-type-item-type-'.$this->entity->type().'/allowed-values.description-suffix-subcategory'),
                 ];
             }
 
@@ -176,7 +172,6 @@ abstract class ResourceTypeAllowedValue
     protected function fetchValuesForYear(): void
     {
         if (array_key_exists('year', $this->available_parameters) === true) {
-
             $allowed_values = [];
 
             for (
@@ -195,8 +190,8 @@ abstract class ResourceTypeAllowedValue
                 $allowed_values[$i] = [
                     'value' => $i,
                     'name' => $i,
-                    'description' => trans('resource-type-item-type-' . $this->entity->type() .
-                            '/allowed-values.description-prefix-year') . $i
+                    'description' => trans('resource-type-item-type-'.$this->entity->type().
+                            '/allowed-values.description-prefix-year').$i,
                 ];
             }
 

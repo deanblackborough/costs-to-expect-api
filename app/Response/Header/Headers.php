@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Response\Header;
 
 /**
- * Headers helper, generate the necessary headers for the response
+ * Headers helper, generate the necessary headers for the response.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -21,14 +21,14 @@ class Headers
     }
 
     /**
-     * Add the cache control headers if we are caching locally
+     * Add the cache control headers if we are caching locally.
      *
      * @param string $visibility The visibility for Cache-Control header
      * @param int $ttl The TTL for the Cache-Control header
      *
      * @return Headers
      */
-    public function addCacheControl(string $visibility, int $ttl): Headers
+    public function addCacheControl(string $visibility, int $ttl): self
     {
         $this->headers->addCacheControl($visibility, $ttl);
 
@@ -36,11 +36,11 @@ class Headers
     }
 
     /**
-     * Add the ETag header
+     * Add the ETag header.
      *
      * @param array $content
      */
-    public function addETag(array $content): Headers
+    public function addETag(array $content): self
     {
         try {
             $this->headers->addETag($content);
@@ -52,13 +52,13 @@ class Headers
     }
 
     /**
-     * Add the X-Parameters header if the parameters exist
+     * Add the X-Parameters header if the parameters exist.
      *
      * @param string|null $parameters_header
      *
      * @return Headers
      */
-    public function addParameters(?string $parameters_header): Headers
+    public function addParameters(?string $parameters_header): self
     {
         if ($parameters_header !== null) {
             $this->headers->addParameters($parameters_header);
@@ -68,13 +68,13 @@ class Headers
     }
 
     /**
-     * Add the X-Search header if the parameters for a valid search exist
+     * Add the X-Search header if the parameters for a valid search exist.
      *
      * @param string|null $search_header
      *
      * @return Headers
      */
-    public function addSearch(?string $search_header): Headers
+    public function addSearch(?string $search_header): self
     {
         if ($search_header !== null) {
             $this->headers->addSearch($search_header);
@@ -84,13 +84,13 @@ class Headers
     }
 
     /**
-     * Add the X-Sort header if the parameters for a valid sort exist
+     * Add the X-Sort header if the parameters for a valid sort exist.
      *
      * @param string|null $sort_header
      *
      * @return Headers
      */
-    public function addSort(?string $sort_header): Headers
+    public function addSort(?string $sort_header): self
     {
         if ($sort_header !== null) {
             $this->headers->addSort($sort_header);
@@ -100,13 +100,13 @@ class Headers
     }
 
     /**
-     * Add the X-Total-Count header
+     * Add the X-Total-Count header.
      *
      * @param int $total
      *
      * @return Headers
      */
-    public function addTotalCount(int $total): Headers
+    public function addTotalCount(int $total): self
     {
         $this->headers->add('X-Total-Count', $total);
 
@@ -114,13 +114,13 @@ class Headers
     }
 
     /**
-     * Add the X-Filter header if the parameters for filtering exist
+     * Add the X-Filter header if the parameters for filtering exist.
      *
      * @param string|null $filter_header
      *
      * @return Headers
      */
-    public function addFilters(?string $filter_header): Headers
+    public function addFilters(?string $filter_header): self
     {
         if ($filter_header !== null) {
             $this->headers->addFilter($filter_header);
@@ -130,13 +130,13 @@ class Headers
     }
 
     /**
-     * Add the X-Last-Updated header
+     * Add the X-Last-Updated header.
      *
      * @param string|null $last_updated
      *
      * @return Headers
      */
-    public function addLastUpdated(?string $last_updated = null): Headers
+    public function addLastUpdated(?string $last_updated = null): self
     {
         $this->headers->add('X-Last-Updated', $last_updated);
 
@@ -144,7 +144,7 @@ class Headers
     }
 
     /**
-     * Generate the initial headers necessary for a collection
+     * Generate the initial headers necessary for a collection.
      *
      * @param array $pagination The Pagination data array
      * @param int $count The number of items in the returned collection
@@ -156,15 +156,14 @@ class Headers
         array $pagination,
         int $count,
         int $total_count
-    ): Headers
-    {
+    ): self {
         $this->headers->collection($pagination, $count, $total_count);
 
         return $this;
     }
 
     /**
-     * Return all the generated headers
+     * Return all the generated headers.
      *
      * @return array
      */
@@ -174,11 +173,11 @@ class Headers
     }
 
     /**
-     * Generate the initial headers necessary for an item
+     * Generate the initial headers necessary for an item.
      *
      * @return Headers
      */
-    public function item(): Headers
+    public function item(): self
     {
         $this->headers->item();
 

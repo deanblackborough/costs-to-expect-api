@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Validate;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 
 /**
- * Validation helper class for categories, returns the generated validator objects
+ * Validation helper class for categories, returns the generated validator objects.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -17,9 +18,9 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
 class Category extends BaseValidator
 {
     /**
-     * Create the validation rules for the create (POST) request
+     * Create the validation rules for the create (POST) request.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
      * @return array
      */
@@ -31,7 +32,7 @@ class Category extends BaseValidator
                     'required',
                     'string',
                     'max:255',
-                    'unique:category,name,null,id,resource_type_id,' . $resource_type_id
+                    'unique:category,name,null,id,resource_type_id,'.$resource_type_id,
                 ],
             ],
             Config::get('api.category.validation.POST.fields')
@@ -39,10 +40,10 @@ class Category extends BaseValidator
     }
 
     /**
-     * Create the validation rules for the update (PATCH) request
+     * Create the validation rules for the update (PATCH) request.
      *
-     * @param integer $category_id
-     * @param integer $resource_type_id
+     * @param int $category_id
+     * @param int $resource_type_id
      *
      * @return array
      */
@@ -54,7 +55,7 @@ class Category extends BaseValidator
                     'sometimes',
                     'string',
                     'max:255',
-                    'unique:category,name,'. $category_id . ',id,resource_type_id,' . $resource_type_id
+                    'unique:category,name,'.$category_id.',id,resource_type_id,'.$resource_type_id,
                 ],
             ],
             Config::get('api.category.validation.PATCH.fields')
@@ -63,7 +64,7 @@ class Category extends BaseValidator
 
     /**
      * Any fields which can't be defined via the configuration files because
-     * the validation rules are dynamic
+     * the validation rules are dynamic.
      *
      * @return array|string[]
      */
@@ -73,7 +74,7 @@ class Category extends BaseValidator
     }
 
     /**
-     * Return a valid validator object for a create (POST) request
+     * Return a valid validator object for a create (POST) request.
      *
      * @param array $options
      *
@@ -91,7 +92,7 @@ class Category extends BaseValidator
     }
 
     /**
-     * Return a valid validator object for a update (PATCH) request
+     * Return a valid validator object for a update (PATCH) request.
      *
      * @param array $options
      *

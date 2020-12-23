@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ResourceType;
 use App\Models\ResourceAccess;
+use App\Models\ResourceType;
 use App\Request\Hash;
 use App\Request\Validate\Boolean;
 use App\Response\Cache\Collection;
@@ -21,7 +21,7 @@ class Controller extends BaseController
     protected array $viewable_resource_types = [];
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     protected ?int $user_id = null;
 
@@ -60,7 +60,6 @@ class Controller extends BaseController
             $cache_collection->setFromCache($cache_control->getByKey('/v2/permitted-resource-types'));
 
             if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
                 $permitted_resource_types = (new ResourceAccess())->permittedResourceTypes($this->user_id);
 
                 $cache_collection->create(
@@ -89,13 +88,12 @@ class Controller extends BaseController
             $cache_control->setTtlOneWeek();
         }
 
-        $uri = '/v2/viewable-resource-types?exclude-public=' . ($this->include_public === true ? 'false' : 'true');
+        $uri = '/v2/viewable-resource-types?exclude-public='.($this->include_public === true ? 'false' : 'true');
 
         $cache_collection = new Collection();
         $cache_collection->setFromCache($cache_control->getByKey($uri));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $viewable_resource_types = array_merge(
                 ($this->include_public === true ? (new ResourceType())->publicResourceTypes() : []),
                 $this->permitted_resource_types
@@ -128,7 +126,7 @@ class Controller extends BaseController
     {
         return [
             'view' => $this->viewAccessToResourceType($resource_type_id),
-            'manage' => $this->writeAccessToResourceType($resource_type_id)
+            'manage' => $this->writeAccessToResourceType($resource_type_id),
         ];
     }
 }

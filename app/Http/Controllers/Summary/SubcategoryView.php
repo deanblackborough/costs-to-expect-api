@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Summary;
 use App\Http\Controllers\Controller;
 use App\Models\Summary\Subcategory;
 use App\Option\SummarySubcategoryCollection;
-use App\Response\Cache;
 use App\Request\Parameter;
+use App\Response\Cache;
 use App\Response\Header\Headers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Summary controller for the subcategories routes
+ * Summary controller for the subcategories routes.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Config;
 class SubcategoryView extends Controller
 {
     /**
-     * Return a summary of the subcategories
+     * Return a summary of the subcategories.
      *
      * @param $resource_type_id
      * @param $category_id
@@ -44,7 +44,6 @@ class SubcategoryView extends Controller
         $cache_summary->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_summary->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.subcategory.summary-searchable')
             );
@@ -66,7 +65,7 @@ class SubcategoryView extends Controller
             }
 
             $collection = [
-                'subcategories' => $total
+                'subcategories' => $total,
             ];
 
             $headers = new Headers();
@@ -86,9 +85,8 @@ class SubcategoryView extends Controller
         return response()->json($cache_summary->collection(), 200, $cache_summary->headers());
     }
 
-
     /**
-     * Generate the OPTIONS request for the subcategories summary
+     * Generate the OPTIONS request for the subcategories summary.
      *
      * @param $resource_type_id
      * @param $category_id

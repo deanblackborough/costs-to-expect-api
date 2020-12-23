@@ -6,7 +6,7 @@ namespace App\Response\Cache;
 
 /**
  * Cache helper, container for the cached data, gives us a simple
- * object to interact with
+ * object to interact with.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -21,7 +21,7 @@ class Collection
     private int $total;
 
     /**
-     * Create a cache response object
+     * Create a cache response object.
      */
     public function __construct()
     {
@@ -29,7 +29,7 @@ class Collection
     }
 
     /**
-     * Return the collection data array
+     * Return the collection data array.
      *
      * @return array
      */
@@ -39,7 +39,7 @@ class Collection
     }
 
     /**
-     * Return all the content, total, collection, headers and pagination
+     * Return all the content, total, collection, headers and pagination.
      *
      * @return array
      */
@@ -49,12 +49,12 @@ class Collection
             'total' => $this->total,
             'collection' => $this->collection,
             'headers' => $this->headers,
-            'pagination' => $this->pagination
+            'pagination' => $this->pagination,
         ];
     }
 
     /**
-     * Create the cache data object
+     * Create the cache data object.
      *
      * @param int $total
      * @param array $collection
@@ -74,7 +74,7 @@ class Collection
     }
 
     /**
-     * Return the headers data array
+     * Return the headers data array.
      *
      * @return array
      */
@@ -84,7 +84,7 @@ class Collection
     }
 
     /**
-     * Pass in the collection data
+     * Pass in the collection data.
      *
      * @param array $collection
      */
@@ -95,7 +95,7 @@ class Collection
 
     /**
      * Pass in the content from the cache table, the content will include
-     * four indexes, total, collection, headers and pagination
+     * four indexes, total, collection, headers and pagination.
      *
      * @param array|null $content
      */
@@ -111,7 +111,7 @@ class Collection
     }
 
     /**
-     * Set the headers for the collection
+     * Set the headers for the collection.
      *
      * @param array $headers
      */
@@ -121,7 +121,7 @@ class Collection
     }
 
     /**
-     * Set the pagination data for the collection
+     * Set the pagination data for the collection.
      *
      * @param array $pagination
      */
@@ -131,7 +131,7 @@ class Collection
     }
 
     /**
-     * Set the total count for the collection
+     * Set the total count for the collection.
      *
      * @param int $total
      */

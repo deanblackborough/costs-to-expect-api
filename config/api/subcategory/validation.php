@@ -5,22 +5,21 @@ declare(strict_types=1);
 return [
     'POST' => [
         'fields' => [
-            'description' => 'required|string'
+            'description' => 'required|string',
         ],
         'messages' => [
-            'name.unique' => 'subcategory/validation.name-unique'
-        ]
+            'name.unique' => 'subcategory/validation.name-unique',
+        ],
     ],
     'PATCH' => [
         'fields' => [
-            'description' =>
-                [
+            'description' => [
                     'sometimes',
-                    'string'
-                ]
+                    'string',
+                ],
         ],
         'messages' => [
-            'name.unique' => 'subcategory/validation.name-unique'
-        ]
-    ]
+            'name.unique' => 'subcategory/validation.name-unique',
+        ],
+    ],
 ];

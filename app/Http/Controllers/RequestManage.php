@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Manage categories
+ * Manage categories.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -17,9 +17,9 @@ use Illuminate\Http\JsonResponse;
  */
 class RequestManage extends Controller
 {
-     /**
+    /**
      * Log a request error, these are logged when the web app receives an unexpected
-     * http status code response
+     * http status code response.
      *
      * @return JsonResponse
      */
@@ -35,7 +35,7 @@ class RequestManage extends Controller
                 'expected_status_code' => request()->input('expected_status_code'),
                 'returned_status_code' => request()->input('returned_status_code'),
                 'request_uri' => request()->input('request_uri'),
-                'debug' => request()->input('debug')
+                'debug' => request()->input('debug'),
             ]);
             $request_error_log->save();
 
@@ -47,10 +47,9 @@ class RequestManage extends Controller
                     'returned_status_code' => request()->input('returned_status_code'),
                     'request_uri' => request()->input('request_uri'),
                     'referer' => request()->server('HTTP_REFERER', 'NOT SET!'),
-                    'debug' => request()->input('debug')
+                    'debug' => request()->input('debug'),
                 ]));
             }
-
         } catch (Exception $e) {
             return \App\Response\Responses::failedToSaveModelForCreate();
         }

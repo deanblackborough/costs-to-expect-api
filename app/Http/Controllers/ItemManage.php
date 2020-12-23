@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Manage items
+ * Manage items.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -24,8 +24,7 @@ class ItemManage extends Controller
     public function create(
         string $resource_type_id,
         string $resource_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.resource'));
         }
@@ -44,16 +43,16 @@ class ItemManage extends Controller
             ->setGroupKey(Cache\KeyGroup::ITEM_CREATE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'resource_id' => $resource_id
+                'resource_id' => $resource_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($user_id);
 
         try {
-            [$item, $item_type] = DB::transaction(static function() use ($resource_id, $user_id, $entity) {
+            [$item, $item_type] = DB::transaction(static function () use ($resource_id, $user_id, $entity) {
                 $item = new Item([
                     'resource_id' => $resource_id,
-                    'created_by' => $user_id
+                    'created_by' => $user_id,
                 ]);
                 $item->save();
 
@@ -63,7 +62,6 @@ class ItemManage extends Controller
             });
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return \App\Response\Responses::failedToSaveModelForCreate();
         }
@@ -78,8 +76,7 @@ class ItemManage extends Controller
         string $resource_type_id,
         string $resource_id,
         string $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }
@@ -98,7 +95,7 @@ class ItemManage extends Controller
             ->setGroupKey(Cache\KeyGroup::ITEM_DELETE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'resource_id' => $resource_id
+                'resource_id' => $resource_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -113,14 +110,13 @@ class ItemManage extends Controller
         try {
             $item->updated_by = $this->user_id;
 
-            DB::transaction(static function() use ($item, $entity, $item_type) {
+            DB::transaction(static function () use ($item, $entity, $item_type) {
                 if ($item->save() === true) {
                     $entity->update(request()->all(), $item_type);
                 }
             });
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return \App\Response\Responses::failedToSaveModelForUpdate();
         }
@@ -132,8 +128,7 @@ class ItemManage extends Controller
         string $resource_type_id,
         string $resource_id,
         string $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }
@@ -144,7 +139,7 @@ class ItemManage extends Controller
             ->setGroupKey(Cache\KeyGroup::ITEM_DELETE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'resource_id' => $resource_id
+                'resource_id' => $resource_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -160,11 +155,11 @@ class ItemManage extends Controller
 
         if (in_array($entity->type(), ['allocated-expense', 'simple-expense']) &&
             $item_model->hasCategoryAssignments($item_id) === true) {
-                return \App\Response\Responses::foreignKeyConstraintError();
+            return \App\Response\Responses::foreignKeyConstraintError();
         }
 
         try {
-            DB::transaction(static function() use ($item_id, $item_type, $item) {
+            DB::transaction(static function () use ($item_id, $item_type, $item) {
                 (new ItemTransfer())->deleteTransfers($item_id);
                 $item_type->delete();
                 $item->delete();

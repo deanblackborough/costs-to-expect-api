@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
@@ -7,7 +8,7 @@ use App\Request\Hash;
 
 /**
  * Our base transformer class, used to convert the results of our queries into
- * a useful structure and then the required format
+ * a useful structure and then the required format.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -36,7 +37,7 @@ abstract class Transformer
     }
 
     /**
-     * Format the data
+     * Format the data.
      *
      * @param array $to_transform
      */
@@ -70,7 +71,7 @@ abstract class Transformer
                 'category_id' => $this->hash->category()->encode($to_transform['category_id']),
                 'name' => $to_transform['category_name'],
                 'description' => $to_transform['category_description'],
-                "subcategories" => []
+                'subcategories' => [],
             ];
 
             if (
@@ -84,7 +85,7 @@ abstract class Transformer
                     'id' => $this->hash->itemSubcategory()->encode($to_transform['item_subcategory_id']),
                     'subcategory_id' => $this->hash->subcategory()->encode($to_transform['subcategory_id']),
                     'name' => $to_transform['subcategory_name'],
-                    'description' => $to_transform['subcategory_description']
+                    'description' => $to_transform['subcategory_description'],
                 ];
             }
 

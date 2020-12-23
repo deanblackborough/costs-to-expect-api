@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -19,7 +20,7 @@ class SummaryTransformerByResource extends Transformer
                 'id' => $this->hash->resource()->encode($summary['id']),
                 'name' => $summary['name'],
                 'count' => (int) $summary['total_count'],
-                'total' => (int) $summary['total']
+                'total' => (int) $summary['total'],
             ];
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -46,8 +47,8 @@ class ResourceTypeItem
             $parameters['year']['allowed_values'][$i] = [
                 'value' => $i,
                 'name' => $i,
-                'description' => trans('resource-type-item-type-' . $this->entity->type() .
-                        '/allowed-values.description-prefix-year') . $i
+                'description' => trans('resource-type-item-type-'.$this->entity->type().
+                        '/allowed-values.description-prefix-year').$i,
             ];
         }
 
@@ -58,13 +59,13 @@ class ResourceTypeItem
     {
         $parameters = ['month' => ['allowed_values' => []]];
 
-        for ($i=1; $i < 13; $i++) {
+        for ($i = 1; $i < 13; $i++) {
             $parameters['month']['allowed_values'][$i] = [
                 'value' => $i,
-                'name' => date("F", mktime(0, 0, 0, $i, 10)),
-                'description' => trans('resource-type-item-type-' . $this->entity->type() .
-                        '/allowed-values.description-prefix-month') .
-                    date("F", mktime(0, 0, 0, $i, 1))
+                'name' => date('F', mktime(0, 0, 0, $i, 10)),
+                'description' => trans('resource-type-item-type-'.$this->entity->type().
+                        '/allowed-values.description-prefix-month').
+                    date('F', mktime(0, 0, 0, $i, 1)),
             ];
         }
 
@@ -74,8 +75,7 @@ class ResourceTypeItem
     protected function allowedValuesForCategory(
         int $resource_type_id,
         array $viewable_resource_types
-    ): array
-    {
+    ): array {
         $parameters = ['category' => ['allowed_values' => []]];
 
         $categories = (new Category())->paginatedCollection(
@@ -91,11 +91,11 @@ class ResourceTypeItem
             $parameters['category']['allowed_values'][$category_id] = [
                 'value' => $category_id,
                 'name' => $category['category_name'],
-                'description' => trans('resource-type-item-type-' . $this->entity->type() .
-                        '/allowed-values.description-prefix-category') .
-                    $category['category_name'] .
-                    trans('resource-type-item-type-' . $this->entity->type() .
-                        '/allowed-values.description-suffix-category')
+                'description' => trans('resource-type-item-type-'.$this->entity->type().
+                        '/allowed-values.description-prefix-category').
+                    $category['category_name'].
+                    trans('resource-type-item-type-'.$this->entity->type().
+                        '/allowed-values.description-suffix-category'),
             ];
         }
 
@@ -105,8 +105,7 @@ class ResourceTypeItem
     protected function allowedValuesForSubcategory(
         int $resource_type_id,
         int $category_id
-    ): array
-    {
+    ): array {
         $parameters = ['subcategory' => ['allowed_values' => []]];
 
         $subcategories = (new Subcategory())->paginatedCollection(
@@ -115,14 +114,14 @@ class ResourceTypeItem
         );
 
         array_map(
-            function($subcategory) {
+            function ($subcategory) {
                 $subcategory_id = $this->hash->encode('subcategory', $subcategory['subcategory_id']);
 
                 $parameters['subcategory']['allowed_values'][$subcategory_id] = [
                     'value' => $subcategory_id,
                     'name' => $subcategory['subcategory_name'],
-                    'description' => trans('resource-type-item-type-' . $this->entity->type() . '/allowed-values.description-prefix-subcategory') .
-                        $subcategory['subcategory_name'] . trans('resource-type-item-type-' . $this->entity->type() . '/allowed-values.description-suffix-subcategory')
+                    'description' => trans('resource-type-item-type-'.$this->entity->type().'/allowed-values.description-prefix-subcategory').
+                        $subcategory['subcategory_name'].trans('resource-type-item-type-'.$this->entity->type().'/allowed-values.description-suffix-subcategory'),
                 ];
             },
             $subcategories
@@ -136,8 +135,7 @@ class ResourceTypeItem
         array $viewable_resource_types,
         array $available_parameters,
         array $defined_parameters
-    ): array
-    {
+    ): array {
         $years = [];
         if (array_key_exists('year', $available_parameters) === true) {
             $years = $this->allowedValuesForYear($resource_type_id);
@@ -149,7 +147,7 @@ class ResourceTypeItem
         }
 
         $categories = [];
-       if (array_key_exists('category', $available_parameters) === true) {
+        if (array_key_exists('category', $available_parameters) === true) {
             $categories = $this->allowedValuesForCategory(
                 $resource_type_id,
                 $viewable_resource_types

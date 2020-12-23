@@ -9,7 +9,7 @@ return [
             'title' => 'resource-type/parameters.title-include-resources',
             'description' => 'resource-type/parameters.description-include-resources',
             'type' => 'boolean',
-            'required' => false
-        ]
-    ]
+            'required' => false,
+        ],
+    ],
 ];

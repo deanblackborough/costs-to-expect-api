@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -38,8 +39,7 @@ class ItemSubtype extends Model
         int $limit = 10,
         array $search_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->select(
             "{$this->table}.id AS {$this->table}_id",
             "{$this->table}.name AS {$this->table}_name",
@@ -58,7 +58,7 @@ class ItemSubtype extends Model
                         break;
 
                     default:
-                        $collection->orderBy("{$this->table}." . $field, $direction);
+                        $collection->orderBy("{$this->table}.".$field, $direction);
                         break;
                 }
             }
@@ -89,7 +89,7 @@ class ItemSubtype extends Model
             ->where("{$this->table}.item_type_id", '=', $item_type_id);
 
         $result = $result
-            ->where($this->table . '.id', '=', $item_subtype_id)
+            ->where($this->table.'.id', '=', $item_subtype_id)
             ->get()
             ->toArray();
 

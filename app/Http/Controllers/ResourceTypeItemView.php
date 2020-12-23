@@ -7,7 +7,7 @@ use App\Option\ResourceTypeItemCollection;
 use Illuminate\Http\JsonResponse;
 
 /**
- * View items for all resources for a resource type
+ * View items for all resources for a resource type.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -7,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Item model
+ * Item model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -40,8 +41,7 @@ class ItemSubcategory extends Model
         int $resource_id,
         int $item_id,
         int $item_category_id
-    ): int
-    {
+    ): int {
         return $this
             ->join('item_category', 'item_sub_category.item_category_id', 'item_category.id')
             ->join('item', 'item_category.item_id', 'item.id')
@@ -60,8 +60,7 @@ class ItemSubcategory extends Model
         int $item_category_id,
         int $offset = 0,
         int $limit = 10
-    )
-    {
+    ) {
         return $this->join('sub_category', 'item_sub_category.sub_category_id', 'sub_category.id')->
             join('item_category', 'item_sub_category.item_category_id', 'item_category.id')->
             join('item', 'item_category.item_id', 'item.id')->
@@ -87,8 +86,7 @@ class ItemSubcategory extends Model
         int $item_id,
         int $item_category_id,
         int $item_subcategory_id
-    ): ?array
-    {
+    ): ?array {
         $result = $this
             ->join('sub_category', 'item_sub_category.sub_category_id', 'sub_category.id')
             ->join('item_category', 'item_sub_category.item_category_id', 'item_category.id')
@@ -107,7 +105,7 @@ class ItemSubcategory extends Model
             );
 
         $result = $result
-            ->where($this->table . '.id', '=', $item_subcategory_id)
+            ->where($this->table.'.id', '=', $item_subcategory_id)
             ->get()
             ->toArray();
 
@@ -124,8 +122,7 @@ class ItemSubcategory extends Model
         int $item_id,
         int $item_category_id,
         int $item_subcategory_id
-    ): ?ItemSubcategory
-    {
+    ): ?self {
         return $this->join('sub_category', 'item_sub_category.sub_category_id', 'sub_category.id')->
             join('item_category', 'item_sub_category.item_category_id', 'item_category.id')->
             join('item', 'item_category.item_id', 'item.id')->
@@ -146,20 +143,20 @@ class ItemSubcategory extends Model
     }
 
     /**
-     * Convert the model instance to an array for use with the transformer
+     * Convert the model instance to an array for use with the transformer.
      *
      * @param ItemSubcategory $item_sub_category
      *
      * @return array
      */
-    public function instanceToArray(ItemSubcategory $item_sub_category): array
+    public function instanceToArray(self $item_sub_category): array
     {
         return [
             'item_sub_category_id' => $item_sub_category->id,
             'item_sub_category_created_at' => $item_sub_category->created_at->toDateTimeString(),
             'item_sub_category_sub_category_id' => $item_sub_category->sub_category->id,
             'item_sub_category_sub_category_name' => $item_sub_category->sub_category->name,
-            'item_sub_category_sub_category_description' => $item_sub_category->sub_category->description
+            'item_sub_category_sub_category_description' => $item_sub_category->sub_category->description,
         ];
     }
 }

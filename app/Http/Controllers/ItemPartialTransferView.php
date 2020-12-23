@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\ItemType\Entity;
 use App\Models\ItemPartialTransfer;
-use App\Transformers\ItemPartialTransfer as ItemPartialTransferTransformer;
 use App\Option\ItemPartialTransferCollection;
 use App\Option\ItemPartialTransferItem;
 use App\Option\ItemPartialTransferTransfer;
@@ -12,11 +11,12 @@ use App\Request\Parameter;
 use App\Response\Cache;
 use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
+use App\Transformers\ItemPartialTransfer as ItemPartialTransferTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Partial transfer of items
+ * Partial transfer of items.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Config;
 class ItemPartialTransferView extends Controller
 {
     /**
-     * Return the partial transfer collection
+     * Return the partial transfer collection.
      *
      * @param string $resource_type_id
      *
@@ -52,7 +52,6 @@ class ItemPartialTransferView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $parameters = Parameter\Request::fetch(
                 array_keys(Config::get('api.item-partial-transfer.parameters.collection'))
             );
@@ -69,7 +68,7 @@ class ItemPartialTransferView extends Controller
                 parameters();
 
             $transfers = (new ItemPartialTransfer())->paginatedCollection(
-                (int)$resource_type_id,
+                (int) $resource_type_id,
                 $this->viewable_resource_types,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
@@ -96,7 +95,7 @@ class ItemPartialTransferView extends Controller
     }
 
     /**
-     * Return a single item partial transfer
+     * Return a single item partial transfer.
      *
      * @param $resource_type_id
      * @param $item_partial_transfer_id
@@ -106,8 +105,7 @@ class ItemPartialTransferView extends Controller
     public function show(
         $resource_type_id,
         $item_partial_transfer_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.resource-type'));
         }
@@ -153,7 +151,7 @@ class ItemPartialTransferView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for a specific item partial transfer
+     * Generate the OPTIONS request for a specific item partial transfer.
      *
      * @param $resource_type_id
      * @param $item_partial_transfer_id
@@ -180,8 +178,7 @@ class ItemPartialTransferView extends Controller
         string $resource_type_id,
         string $resource_id,
         string $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleExpense;
@@ -21,7 +22,7 @@ class SummaryTransformerByResource extends Transformer
                 $temporary[$summary['id']] = [
                     'id' => $this->hash->resource()->encode($summary['id']),
                     'name' => $summary['name'],
-                    'subtotals' => []
+                    'subtotals' => [],
                 ];
             }
 
@@ -30,7 +31,7 @@ class SummaryTransformerByResource extends Transformer
                     'code' => $summary['currency_code'],
                 ],
                 'count' => $summary['total_count'],
-                'subtotal' => number_format((float)$summary['total'], 2, '.', '')
+                'subtotal' => number_format((float) $summary['total'], 2, '.', ''),
             ];
         }
 

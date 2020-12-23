@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Method;
@@ -49,8 +50,7 @@ class GetRequest extends Method
 
     public function setFilterableParameters(
         array $parameters
-    ): GetRequest
-    {
+    ): self {
         if (count($parameters) > 0) {
             $this->filterable = true;
             $this->filterable_parameters = $parameters;
@@ -62,8 +62,7 @@ class GetRequest extends Method
     public function setPaginationStatus(
         bool $status = false,
         bool $override = false
-    ): GetRequest
-    {
+    ): self {
         if ($status === true) {
             $this->pagination = true;
 
@@ -79,8 +78,7 @@ class GetRequest extends Method
 
     public function setParameters(
         array $parameters
-    ): GetRequest
-    {
+    ): self {
         if (count($parameters) > 0) {
             $this->parameters = $parameters;
         }
@@ -90,8 +88,7 @@ class GetRequest extends Method
 
     public function setDynamicParameters(
         array $parameters = []
-    ): GetRequest
-    {
+    ): self {
         $this->dynamic_parameters = $parameters;
 
         return $this;
@@ -99,8 +96,7 @@ class GetRequest extends Method
 
     public function setSearchableParameters(
         array $parameters
-    ): GetRequest
-    {
+    ): self {
         if (count($parameters) > 0) {
             $this->searchable = true;
             $this->searchable_parameters = $parameters;
@@ -111,8 +107,7 @@ class GetRequest extends Method
 
     public function setSortableParameters(
         array $parameters
-    ): GetRequest
-    {
+    ): self {
         if (count($parameters) > 0) {
             $this->sortable = true;
             $this->sortable_parameters = $parameters;
@@ -154,12 +149,12 @@ class GetRequest extends Method
             'description' => $this->description,
             'authentication' => [
                 'required' => $this->authentication,
-                'authenticated' => $this->authenticated
+                'authenticated' => $this->authenticated,
             ],
             'sortable' => $this->sortable_parameters,
             'searchable' => $this->searchable_parameters,
             'filterable' => $this->filterable_parameters,
-            'parameters' => $this->parameters_after_localisation
+            'parameters' => $this->parameters_after_localisation,
         ];
     }
 }

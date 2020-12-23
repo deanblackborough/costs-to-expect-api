@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models\Summary;
 
 use App\Models\Clause;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
- * Sub category model
+ * Sub category model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -23,8 +24,7 @@ class Subcategory extends Model
         int $resource_type_id,
         int $category_id,
         array $search_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("COUNT(`{$this->table}`.`id`) AS total")
             ->selectRaw("
@@ -40,7 +40,7 @@ class Subcategory extends Model
                         `{$this->table}`.`category_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $category_id
+                    $category_id,
                 ]
             )
             ->join('category', 'sub_category.category_id', 'category.id')

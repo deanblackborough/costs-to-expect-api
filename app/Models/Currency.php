@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -34,8 +35,7 @@ class Currency extends Model
         int $limit = 10,
         array $search_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->select(
             "{$this->table}.id AS {$this->table}_id",
             "{$this->table}.code AS {$this->table}_code",
@@ -53,7 +53,7 @@ class Currency extends Model
                         break;
 
                     default:
-                        $collection->orderBy("{$this->table}." . $field, $direction);
+                        $collection->orderBy("{$this->table}.".$field, $direction);
                         break;
                 }
             }
@@ -77,7 +77,7 @@ class Currency extends Model
         );
 
         $result = $result
-            ->where($this->table . '.id', '=', $currency_id)
+            ->where($this->table.'.id', '=', $currency_id)
             ->get()
             ->toArray();
 

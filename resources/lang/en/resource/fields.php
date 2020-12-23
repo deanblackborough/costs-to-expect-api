@@ -13,5 +13,5 @@ return [
     'description-item_subtype_id' => 'The item subtype to use for this resource type',
 
     'title-effective_date' => 'Resource effective date',
-    'description-effective_date' => 'Enter an effective date for the resource (yyyy-mm-dd)'
+    'description-effective_date' => 'Enter an effective date for the resource (yyyy-mm-dd)',
 ];

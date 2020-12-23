@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Currency;
 use App\Option\CurrencyCollection;
 use App\Option\CurrencyItem;
+use App\Request\Parameter;
 use App\Response\Cache;
 use App\Response\Header\Headers;
-use App\Request\Parameter;
 use App\Response\Pagination as UtilityPagination;
 use App\Transformers\Currency as CurrencyTransformer;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +23,7 @@ class CurrencyView extends Controller
     protected bool $allow_entire_collection = true;
 
     /**
-     * Return all the currency
+     * Return all the currency.
      *
      * @return JsonResponse
      */
@@ -36,7 +36,6 @@ class CurrencyView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.currency.searchable')
             );
@@ -61,7 +60,7 @@ class CurrencyView extends Controller
             );
 
             $collection = array_map(
-                static function($currency) {
+                static function ($currency) {
                     return (new CurrencyTransformer($currency))->asArray();
                 },
                 $currencies
@@ -82,7 +81,7 @@ class CurrencyView extends Controller
     }
 
     /**
-     * Return a single currency
+     * Return a single currency.
      *
      * @param string $currency_id
      *
@@ -111,7 +110,7 @@ class CurrencyView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the currencies collection
+     * Generate the OPTIONS request for the currencies collection.
      *
      * @return JsonResponse
      */
@@ -123,7 +122,7 @@ class CurrencyView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for a specific currency
+     * Generate the OPTIONS request for a specific currency.
      *
      * @param string $currency_id
      *

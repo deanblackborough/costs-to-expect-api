@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -16,7 +17,7 @@ class ItemType
 
     /**
      * Generate the allowed values item type array, will be passed to the
-     * Option classes and merged with the fields/parameters
+     * Option classes and merged with the fields/parameters.
      *
      * @return array
      */
@@ -36,7 +37,7 @@ class ItemType
             $parameters['item_type_id']['allowed_values'][$id] = [
                 'value' => $id,
                 'name' => $item_type['item_type_name'],
-                'description' => $item_type['item_type_description']
+                'description' => $item_type['item_type_description'],
             ];
         }
 

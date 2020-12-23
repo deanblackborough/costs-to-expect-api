@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -16,9 +17,9 @@ class Category
 
     /**
      * Generate the allowed values categories array, will be passed to the
-     * Option classes and merged with the fields/parameters
+     * Option classes and merged with the fields/parameters.
      *
-     * @param integer $resource_type_id
+     * @param int $resource_type_id
      *
      * @return array
      */
@@ -38,7 +39,7 @@ class Category
             $parameters['category_id']['allowed_values'][$id] = [
                 'value' => $id,
                 'name' => $category['category_name'],
-                'description' => $category['category_description']
+                'description' => $category['category_description'],
             ];
         }
 

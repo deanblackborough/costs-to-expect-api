@@ -34,8 +34,7 @@ abstract class SummaryResourceTypeResponse
         int $resource_type_id,
         bool $permitted_user = false,
         int $user_id = null
-    )
-    {
+    ) {
         $this->resource_type_id = $resource_type_id;
 
         $this->permitted_user = $permitted_user;
@@ -49,8 +48,7 @@ abstract class SummaryResourceTypeResponse
         array $collection,
         Cache\Control $cache_control,
         Cache\Summary $cache_summary
-    ): Cache\Summary
-    {
+    ): Cache\Summary {
         $headers = new Headers();
 
         $headers
@@ -65,7 +63,7 @@ abstract class SummaryResourceTypeResponse
                 $headers->addLastUpdated($summary[0]['last_updated']);
             }
             if (array_key_exists('total_count', $summary[0]) === true) {
-                $headers->addTotalCount((int)$summary[0]['total_count']);
+                $headers->addTotalCount((int) $summary[0]['total_count']);
             }
         }
 

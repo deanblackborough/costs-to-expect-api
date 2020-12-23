@@ -5,5 +5,5 @@ declare(strict_types=1);
 return [
     'name',
     'description',
-    'created'
+    'created',
 ];

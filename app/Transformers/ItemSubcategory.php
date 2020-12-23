@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
@@ -6,7 +7,7 @@ namespace App\Transformers;
 use App\Transformers\Transformer;
 
 /**
- * Transform the data from our queries into the format we want to display
+ * Transform the data from our queries into the format we want to display.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -21,9 +22,9 @@ class ItemSubcategory extends Transformer
             'subcategory' => [
                 'id' => $this->hash->subcategory()->encode($to_transform['item_sub_category_sub_category_id']),
                 'name' => $to_transform['item_sub_category_sub_category_name'],
-                'description' => $to_transform['item_sub_category_sub_category_description']
+                'description' => $to_transform['item_sub_category_sub_category_description'],
             ],
-            'created' => $to_transform['item_sub_category_created_at']
+            'created' => $to_transform['item_sub_category_created_at'],
         ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -30,7 +31,7 @@ class ItemSubtype
             $parameters['item_subtype_id']['allowed_values'][$id] = [
                 'value' => $id,
                 'name' => $item_subtype['item_subtype_name'],
-                'description' => $item_subtype['item_subtype_description']
+                'description' => $item_subtype['item_subtype_description'],
             ];
         }
 

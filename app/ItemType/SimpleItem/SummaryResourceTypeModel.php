@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\SimpleItem;
@@ -19,7 +20,7 @@ class SummaryResourceTypeModel extends LaravelModel
     protected $sub_table = 'item_type_simple_item';
 
     /**
-     * Return the summary for all items for the resources in the requested resource type
+     * Return the summary for all items for the resources in the requested resource type.
      *
      * @param int $resource_type_id
      * @param array $parameters
@@ -29,8 +30,7 @@ class SummaryResourceTypeModel extends LaravelModel
     public function summary(
         int $resource_type_id,
         array $parameters
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 SUM({$this->sub_table}.quantity) AS total, 
@@ -55,7 +55,7 @@ class SummaryResourceTypeModel extends LaravelModel
                         `resource`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -70,7 +70,7 @@ class SummaryResourceTypeModel extends LaravelModel
 
     /**
      * Return the summary for all items for the resources in the requested resource
-     * type grouped by resource
+     * type grouped by resource.
      *
      * @param int $resource_type_id
      * @param array $parameters
@@ -80,8 +80,7 @@ class SummaryResourceTypeModel extends LaravelModel
     public function resourcesSummary(
         int $resource_type_id,
         array $parameters
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 resource.id AS id, 
@@ -116,8 +115,7 @@ class SummaryResourceTypeModel extends LaravelModel
         int $resource_type_id,
         array $parameters = [],
         array $search_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 SUM({$this->sub_table}.quantity) AS total, 
@@ -125,13 +123,13 @@ class SummaryResourceTypeModel extends LaravelModel
                 MAX({$this->sub_table}.created_at) AS last_updated
             ")
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->where("resource_type.id", "=", $resource_type_id);
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->where('resource_type.id', '=', $resource_type_id);
 
         if (count($search_parameters) > 0) {
             foreach ($search_parameters as $field => $search_term) {
-                $collection->where("{$this->sub_table}." . $field, 'LIKE', '%' . $search_term . '%');
+                $collection->where("{$this->sub_table}.".$field, 'LIKE', '%'.$search_term.'%');
             }
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\Game;
@@ -26,17 +27,16 @@ class ResourceTypeModel extends LaravelModel
         array $parameters_collection = [],
         array $search_parameters = [],
         array $filter_parameters = []
-    ): int
-    {
+    ): int {
         $collection = $this
             ->from($this->table)
-            ->join($this->item_table, 'item.id', $this->item_table . '.item_id')
+            ->join($this->item_table, 'item.id', $this->item_table.'.item_id')
             ->join('resource', 'item.resource_id', 'resource.id')
             ->join('resource_type', 'resource.resource_type_id', 'resource_type.id')
             ->where('resource_type.id', '=', $resource_type_id);
 
         if (array_key_exists('complete', $parameters_collection) === true) {
-            $collection->where($this->item_table . '.complete', '=', 1);
+            $collection->where($this->item_table.'.complete', '=', 1);
         }
 
         $collection = Clause::applySearch(
@@ -61,8 +61,7 @@ class ResourceTypeModel extends LaravelModel
         array $search_parameters = [],
         array $filter_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $select_fields = [
             'resource.id AS resource_id',
             'resource.name AS resource_name',
@@ -72,24 +71,24 @@ class ResourceTypeModel extends LaravelModel
             "{$this->item_table}.description AS item_description",
             "{$this->item_table}.game AS item_game",
             "{$this->item_table}.statistics AS item_statistics",
-            "category.id AS item_winner_id",
-            "category.name AS item_winner_name",
+            'category.id AS item_winner_id',
+            'category.name AS item_winner_name',
             "{$this->item_table}.score AS item_score",
             "{$this->item_table}.complete AS item_complete",
             "{$this->item_table}.created_at AS item_created_at",
-            "{$this->item_table}.updated_at AS item_updated_at"
+            "{$this->item_table}.updated_at AS item_updated_at",
         ];
 
         $collection = $this
             ->from('item')
-            ->join($this->item_table,  'item.id', "{$this->item_table}.item_id")
+            ->join($this->item_table, 'item.id', "{$this->item_table}.item_id")
             ->join('resource', 'item.resource_id', 'resource.id')
             ->join('resource_type', 'resource.resource_type_id', 'resource_type.id')
-            ->leftJoin('category', $this->item_table . '.winner', 'category.id')
+            ->leftJoin('category', $this->item_table.'.winner', 'category.id')
             ->where('resource_type.id', '=', $resource_type_id);
 
         if (array_key_exists('complete', $parameters_collection) === true) {
-            $collection->where($this->item_table . '.complete', '=', 1);
+            $collection->where($this->item_table.'.complete', '=', 1);
         }
 
         $collection = Clause::applySearch(
@@ -107,16 +106,16 @@ class ResourceTypeModel extends LaravelModel
             foreach ($sort_parameters as $field => $direction) {
                 switch ($field) {
                     case 'created':
-                        $collection->orderBy($this->item_table . '.created_at', $direction);
+                        $collection->orderBy($this->item_table.'.created_at', $direction);
                         break;
 
                     default:
-                        $collection->orderBy($this->item_table . '.' . $field, $direction);
+                        $collection->orderBy($this->item_table.'.'.$field, $direction);
                         break;
                 }
             }
         } else {
-            $collection->orderBy($this->item_table . '.created_at', 'desc');
+            $collection->orderBy($this->item_table.'.created_at', 'desc');
         }
 
         return $collection
@@ -142,7 +141,7 @@ class ResourceTypeModel extends LaravelModel
                         `resource`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->get()

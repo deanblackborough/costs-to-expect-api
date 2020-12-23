@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -7,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Item category model
+ * Item category model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -34,8 +35,7 @@ class ItemCategory extends Model
         int $resource_type_id,
         int $resource_id,
         int $item_id
-    ): int
-    {
+    ): int {
         return $this
             ->join('item', 'item_category.item_id', 'item.id')
             ->join('resource', 'item.resource_id', 'resource.id')
@@ -51,8 +51,7 @@ class ItemCategory extends Model
         int $item_id,
         int $offset = 0,
         int $limit = 10
-    )
-    {
+    ) {
         return $this->join('category', 'item_category.category_id', 'category.id')->
             join('item', 'item_category.item_id', 'item.id')->
             join('resource', 'item.resource_id', 'resource.id')->
@@ -75,8 +74,7 @@ class ItemCategory extends Model
         int $resource_id,
         int $item_id,
         int $item_category_id
-    ): ?array
-    {
+    ): ?array {
         $result = $this
             ->join('category', 'item_category.category_id', 'category.id')
             ->join('item', 'item_category.item_id', 'item.id')
@@ -93,7 +91,7 @@ class ItemCategory extends Model
             );
 
         $result = $result
-            ->where($this->table . '.id', '=', $item_category_id)
+            ->where($this->table.'.id', '=', $item_category_id)
             ->get()
             ->toArray();
 
@@ -109,8 +107,7 @@ class ItemCategory extends Model
         int $resource_id,
         int $item_id,
         int $item_category_id
-    ): ?ItemCategory
-    {
+    ): ?self {
         return $this->join('category', 'item_category.category_id', 'category.id')->
             join('item', 'item_category.item_id', 'item.id')->
             join('resource', 'item.resource_id', 'resource.id')->
@@ -129,20 +126,20 @@ class ItemCategory extends Model
     }
 
     /**
-     * Convert the model instance to an array for use with the transformer
+     * Convert the model instance to an array for use with the transformer.
      *
      * @param ItemCategory $item_category
      *
      * @return array
      */
-    public function instanceToArray(ItemCategory $item_category): array
+    public function instanceToArray(self $item_category): array
     {
         return [
             'item_category_id' => $item_category->id,
             'item_category_created_at' => $item_category->created_at->toDateTimeString(),
             'item_category_category_id' => $item_category->category->id,
             'item_category_category_name' => $item_category->category->name,
-            'item_category_category_description' => $item_category->category->description
+            'item_category_category_description' => $item_category->category->description,
         ];
     }
 }

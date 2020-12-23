@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\ItemType\Entity;
 use App\Jobs\ClearCache;
 use App\Models\ItemCategory;
-use App\Transformers\ItemCategory as ItemCategoryTransformer;
 use App\Request\Validate\ItemCategory as ItemCategoryValidator;
 use App\Response\Cache;
+use App\Transformers\ItemCategory as ItemCategoryTransformer;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Manage the category for an item row
+ * Manage the category for an item row.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -22,7 +22,7 @@ use Illuminate\Http\JsonResponse;
 class ItemCategoryManage extends Controller
 {
     /**
-     * Assign the category
+     * Assign the category.
      *
      * @param string $resource_type_id
      * @param string $resource_id
@@ -34,8 +34,7 @@ class ItemCategoryManage extends Controller
         string $resource_type_id,
         string $resource_id,
         string $item_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }
@@ -61,7 +60,7 @@ class ItemCategoryManage extends Controller
             ->setGroupKey(Cache\KeyGroup::ITEM_CATEGORY_CREATE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'resource_id' => $resource_id
+                'resource_id' => $resource_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);
@@ -75,12 +74,11 @@ class ItemCategoryManage extends Controller
 
             $item_category = new ItemCategory([
                 'item_id' => $item_id,
-                'category_id' => $category_id
+                'category_id' => $category_id,
             ]);
             $item_category->save();
 
             ClearCache::dispatch($cache_job_payload->payload());
-
         } catch (Exception $e) {
             return \App\Response\Responses::failedToSaveModelForCreate();
         }
@@ -92,7 +90,7 @@ class ItemCategoryManage extends Controller
     }
 
     /**
-     * Delete the assigned category
+     * Delete the assigned category.
      *
      * @param string $resource_type_id,
      * @param string $resource_id,
@@ -106,8 +104,7 @@ class ItemCategoryManage extends Controller
         string $resource_id,
         string $item_id,
         string $item_category_id
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->writeAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item-category'));
         }
@@ -127,7 +124,7 @@ class ItemCategoryManage extends Controller
             ->setGroupKey(Cache\KeyGroup::ITEM_CATEGORY_DELETE)
             ->setRouteParameters([
                 'resource_type_id' => $resource_type_id,
-                'resource_id' => $resource_id
+                'resource_id' => $resource_id,
             ])
             ->setPermittedUser($this->writeAccessToResourceType((int) $resource_type_id))
             ->setUserId($this->user_id);

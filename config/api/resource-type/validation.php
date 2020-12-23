@@ -6,22 +6,22 @@ return [
     'POST' => [
         'fields' => [
             'description' => 'required|string',
-            'public' => 'sometimes|boolean'
+            'public' => 'sometimes|boolean',
         ],
         'messages' => [
-            'name.unique' => 'resource-type/validation.name-unique'
-        ]
+            'name.unique' => 'resource-type/validation.name-unique',
+        ],
     ],
     'PATCH' => [
         'fields' => [
             'description' => [
                 'sometimes',
-                'string'
+                'string',
             ],
-            'public' => 'sometimes|boolean'
+            'public' => 'sometimes|boolean',
         ],
         'messages' => [
-            'name.unique' => 'resource-type/validation.name-unique'
-        ]
-    ]
+            'name.unique' => 'resource-type/validation.name-unique',
+        ],
+    ],
 ];

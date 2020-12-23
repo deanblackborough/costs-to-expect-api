@@ -10,7 +10,7 @@ return [
             'title' => 'category/parameters.title-include-subcategories',
             'description' => 'category/parameters.description-include-subcategories',
             'type' => 'boolean',
-            'required' => false
-        ]
-    ]
+            'required' => false,
+        ],
+    ],
 ];

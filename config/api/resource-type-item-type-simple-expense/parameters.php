@@ -9,31 +9,31 @@ return [
             'title' => 'resource-type-item-type-simple-expense/parameters.title-include-categories',
             'description' => 'resource-type-item-type-simple-expense/parameters.description-include-categories',
             'type' => 'boolean',
-            'required' => false
+            'required' => false,
         ],
         'include-subcategories' => [
             'parameter' => 'include-subcategories',
             'title' => 'resource-type-item-type-simple-expense/parameters.title-include-subcategories',
             'description' => 'resource-type-item-type-simple-expense/parameters.description-include-subcategories',
             'type' => 'boolean',
-            'required' => false
+            'required' => false,
         ],
         'category' => [
-            "parameter" => "category",
-            "title" => 'resource-type-item-type-simple-expense/parameters.title-category',
-            "description" => 'resource-type-item-type-simple-expense/parameters.description-category',
-            "default" => null,
-            "type" => "string",
-            "required" => false
+            'parameter' => 'category',
+            'title' => 'resource-type-item-type-simple-expense/parameters.title-category',
+            'description' => 'resource-type-item-type-simple-expense/parameters.description-category',
+            'default' => null,
+            'type' => 'string',
+            'required' => false,
         ],
         'subcategory' => [
-            "parameter" => "subcategory",
-            "title" => 'resource-type-item-type-simple-expense/parameters.title-subcategory',
-            "description" => 'resource-type-item-type-simple-expense/parameters.description-subcategory',
-            "default" => null,
-            "type" => "string",
-            "required" => false
-        ]
+            'parameter' => 'subcategory',
+            'title' => 'resource-type-item-type-simple-expense/parameters.title-subcategory',
+            'description' => 'resource-type-item-type-simple-expense/parameters.description-subcategory',
+            'default' => null,
+            'type' => 'string',
+            'required' => false,
+        ],
     ],
-    'item' => []
+    'item' => [],
 ];

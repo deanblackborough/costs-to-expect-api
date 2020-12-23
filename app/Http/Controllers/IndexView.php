@@ -18,13 +18,13 @@ use SplFileObject;
 class IndexView extends Controller
 {
     /**
-     * Return all routes
+     * Return all routes.
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        $routes_to_display = array();
+        $routes_to_display = [];
 
         $config = Config::get('api.app.version');
 
@@ -39,7 +39,7 @@ class IndexView extends Controller
                     $routes_to_display[$route->uri]['methods'] = $route->methods;
                 }
 
-                $routes_to_display[$route->uri]['uri'] = '/' . $route->uri;
+                $routes_to_display[$route->uri]['uri'] = '/'.$route->uri;
             }
         }
 
@@ -55,9 +55,9 @@ class IndexView extends Controller
                     'release_date' => $config['release_date'],
                     'changelog' => $config['changelog'],
                     'readme' => $config['readme'],
-                    'documentation' => $config['documentation']
+                    'documentation' => $config['documentation'],
                 ],
-                'routes' => $routes_to_display
+                'routes' => $routes_to_display,
             ],
             200,
             $headers->headers()
@@ -65,7 +65,7 @@ class IndexView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request
+     * Generate the OPTIONS request.
      */
     public function optionsIndex()
     {
@@ -75,7 +75,7 @@ class IndexView extends Controller
     }
 
     /**
-     * Generate the change log request
+     * Generate the change log request.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -83,19 +83,16 @@ class IndexView extends Controller
     {
         $changes = [];
 
-        $changelog = new SplFileObject(public_path() . '/../CHANGELOG.md');
+        $changelog = new SplFileObject(public_path().'/../CHANGELOG.md');
         $i = 0;
         $section = null;
 
-        while (!$changelog->eof()) {
-
+        while (! $changelog->eof()) {
             $line = trim($changelog->fgets());
 
             if ($line !== '') {
-
                 if (strpos($line, '## [v') !== false) {
-
-                    ++$i;
+                    $i++;
                     $changes[$i]['release'] = trim(str_replace('##', '', $line));
                     $section = null;
                 }
@@ -114,12 +111,12 @@ class IndexView extends Controller
 
         return response()->json(
             [
-                'releases' => array_values($changes)
+                'releases' => array_values($changes),
             ],
             200,
             array_merge(
                 [
-                    'X-Total-Count' => ($i + 1)
+                    'X-Total-Count' => ($i + 1),
                 ],
                 $headers->headers()
             )
@@ -127,7 +124,7 @@ class IndexView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for the change log
+     * Generate the OPTIONS request for the change log.
      */
     public function optionsChangeLog()
     {

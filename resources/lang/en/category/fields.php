@@ -7,5 +7,5 @@ return [
     'description-name' => 'Enter a name for the category',
 
     'title-description' => 'Category description',
-    'description-description' => 'Enter a description for the category'
+    'description-description' => 'Enter a description for the category',
 ];

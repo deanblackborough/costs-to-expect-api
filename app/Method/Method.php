@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Method;
@@ -31,8 +32,7 @@ abstract class Method
 
     public function setAuthenticationRequirement(
         bool $status = false
-    ): Method
-    {
+    ): self {
         $this->authentication = $status;
 
         return $this;
@@ -40,8 +40,7 @@ abstract class Method
 
     public function setAuthenticationStatus(
         bool $status = false
-    ): Method
-    {
+    ): self {
         $this->authenticated = $status;
 
         return $this;
@@ -49,8 +48,7 @@ abstract class Method
 
     public function setDescription(
         string $localisation_path
-    ): Method
-    {
+    ): self {
         $this->description = trans($localisation_path);
 
         return $this;

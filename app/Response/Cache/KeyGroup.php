@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Response\Cache;
@@ -63,7 +64,7 @@ class KeyGroup
                         (int) $this->parameters['resource_type_id'],
                         (int) $this->parameters['resource_id']
                     ),
-                    $this->key->resourceTypeItems((int) $this->parameters['resource_type_id'])
+                    $this->key->resourceTypeItems((int) $this->parameters['resource_type_id']),
                 ];
 
             case self::ITEM_PARTIAL_TRANSFER_CREATE:
@@ -71,7 +72,7 @@ class KeyGroup
                 return [
                     $this->key->partialTransfers(
                         (int) $this->parameters['resource_type_id']
-                    )
+                    ),
                 ];
 
             case self::CATEGORY_CREATE:
@@ -79,7 +80,7 @@ class KeyGroup
                 return [
                     $this->key->categories(
                         (int) $this->parameters['resource_type_id']
-                    )
+                    ),
                 ];
 
             case self::CATEGORY_UPDATE: // Item collections all need to be cleared
@@ -89,14 +90,14 @@ class KeyGroup
                 return [
                     $this->key->resourceType(
                         (int) $this->parameters['resource_type_id']
-                    )
+                    ),
                 ];
 
             case self::RESOURCE_CREATE:
             case self::RESOURCE_DELETE:
             case self::RESOURCE_TYPE_UPDATE:
                 return [
-                    $this->key->resourceTypes()
+                    $this->key->resourceTypes(),
                 ];
 
             case self::SUBCATEGORY_CREATE:
@@ -105,7 +106,7 @@ class KeyGroup
                     $this->key->subcategories(
                         (int) $this->parameters['resource_type_id'],
                         (int) $this->parameters['category_id']
-                    )
+                    ),
                 ];
 
             case self::RESOURCE_TYPE_CREATE:
@@ -113,7 +114,7 @@ class KeyGroup
                 return [
                     $this->key->resourceTypes(),
                     $this->key->permittedResourceTypes(),
-                    $this->key->viewableResourceTypes()
+                    $this->key->viewableResourceTypes(),
                 ];
 
             default:

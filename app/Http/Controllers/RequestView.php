@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Option\ErrorLog;
 use App\Models\RequestErrorLog;
-use App\Transformers\RequestErrorLog as RequestErrorLogTransformer;
+use App\Option\ErrorLog;
 use App\Response\Pagination as UtilityPagination;
+use App\Transformers\RequestErrorLog as RequestErrorLogTransformer;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Manage categories
+ * Manage categories.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -20,7 +20,7 @@ class RequestView extends Controller
     protected $collection_parameters = [];
 
     /**
-     * Return the paginated request log
+     * Return the paginated request log.
      *
      * @return JsonResponse
      */
@@ -47,7 +47,7 @@ class RequestView extends Controller
 
         return response()->json(
             array_map(
-                static function($log) {
+                static function ($log) {
                     return (new RequestErrorLogTransformer($log))->asArray();
                 },
                 $logs
@@ -58,7 +58,7 @@ class RequestView extends Controller
     }
 
     /**
-     * Generate the OPTIONS request for error log
+     * Generate the OPTIONS request for error log.
      *
      * @return JsonResponse
      */

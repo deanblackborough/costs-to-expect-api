@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\ItemSubtype;
 use App\Option\ItemSubtypeCollection;
 use App\Option\ItemSubtypeItem;
-use App\Response\Cache;
-use App\Response\Header\Header;
 use App\Request\Parameter;
 use App\Request\Route;
+use App\Response\Cache;
+use App\Response\Header\Header;
 use App\Response\Header\Headers;
 use App\Response\Pagination as UtilityPagination;
-use App\Transformers\ItemSubtype as ItemSubtypeTransformer;
 use App\Response\Responses;
+use App\Transformers\ItemSubtype as ItemSubtypeTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
@@ -38,7 +38,6 @@ class ItemSubtypeView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.item-subtype.searchable')
             );

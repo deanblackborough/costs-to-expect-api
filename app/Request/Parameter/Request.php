@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Parameter;
@@ -12,7 +13,7 @@ use App\Request\Validate\Boolean;
 
 /**
  * Fetch any GET parameters attached to the URI and validate them, silently
- * ignore any invalid parameters
+ * ignore any invalid parameters.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -23,7 +24,7 @@ class Request
     private static array $parameters = [];
 
     /**
-     * Fetch any GET parameters from the URI and alter the type if necessary
+     * Fetch any GET parameters from the URI and alter the type if necessary.
      *
      * @param array $parameter_names
      */
@@ -36,11 +37,10 @@ class Request
         foreach ($parameter_names as $parameter) {
             if (array_key_exists($parameter, $request_parameters) === true &&
                 $request_parameters[$parameter] !== null) {
-
                 switch ($parameter) {
-                    case 'include-resources';
+                    case 'include-resources':
                     case 'include-categories':
-                    case 'include-subcategories';
+                    case 'include-subcategories':
                         self::$parameters[$parameter] = Boolean::convertedValue($request_parameters[$parameter]);
                         break;
 
@@ -54,10 +54,10 @@ class Request
 
     /**
      * Validate the parameters array, check the set value to see if it is
-     * valid, invalid values are silently removed from the parameters array
+     * valid, invalid values are silently removed from the parameters array.
      *
-     * @param integer|null $resource_type_id
-     * @param integer|null $resource_id
+     * @param int|null $resource_type_id
+     * @param int|null $resource_id
      */
     private static function validate(?int $resource_type_id, ?int $resource_id): void
     {
@@ -68,7 +68,7 @@ class Request
                         array_key_exists($key, self::$parameters) === true &&
                         (new Category())->where('id', '=', self::$parameters[$key])->exists() === false
                     ) {
-                            unset(self::$parameters[$key]);
+                        unset(self::$parameters[$key]);
                     }
                     break;
 
@@ -90,9 +90,8 @@ class Request
 
                 case 'month':
                     if (array_key_exists($key, self::$parameters) === true &&
-                        (int)(self::$parameters[$key] > 0)) {
-
-                        self::$parameters[$key] = (int)self::$parameters[$key];
+                        (int) (self::$parameters[$key] > 0)) {
+                        self::$parameters[$key] = (int) self::$parameters[$key];
 
                         if (self::$parameters[$key] < 1 ||
                             self::$parameters[$key] > 12) {
@@ -106,7 +105,7 @@ class Request
                         array_key_exists($key, self::$parameters) === true &&
                         (new ResourceType())->where('id', '=', self::$parameters[$key])->exists() === false
                     ) {
-                            unset(self::$parameters[$key]);
+                        unset(self::$parameters[$key]);
                     }
                     break;
 
@@ -132,18 +131,17 @@ class Request
                         array_key_exists($key, self::$parameters) === true &&
                         Boolean::isConvertible(self::$parameters[$key]) === false
                     ) {
-                            unset(self::$parameters[$key]);
+                        unset(self::$parameters[$key]);
                     }
                     break;
 
                 case 'year':
                     if (array_key_exists($key, self::$parameters) === true &&
-                        (int)(self::$parameters[$key] > 0)) {
-
+                        (int) (self::$parameters[$key] > 0)) {
                         self::$parameters[$key] = (int) self::$parameters[$key];
 
-                        $min_year_limit = (int) Date('Y');
-                        $max_year_limit = (int) Date('Y');
+                        $min_year_limit = (int) date('Y');
+                        $max_year_limit = (int) date('Y');
 
                         $entity_model = new EntityLimits();
                         $entity = Entity::item($resource_type_id);
@@ -207,11 +205,11 @@ class Request
     }
 
     /**
-     * Return all the valid collection parameters
+     * Return all the valid collection parameters.
      *
      * @param array $parameter_names
-     * @param integer|null $resource_type_id
-     * @param integer|null $resource_id
+     * @param int|null $resource_type_id
+     * @param int|null $resource_id
      *
      * @return array
      */
@@ -219,8 +217,7 @@ class Request
         array $parameter_names = [],
         ?int $resource_type_id = null,
         ?int $resource_id = null
-    ): array
-    {
+    ): array {
         self::find($parameter_names);
         self::validate($resource_type_id, $resource_id);
 
@@ -228,7 +225,7 @@ class Request
     }
 
     /**
-     * Generate the X-Parameters header string for the valid request parameters
+     * Generate the X-Parameters header string for the valid request parameters.
      *
      * @return string|null
      */
@@ -241,11 +238,11 @@ class Request
                 case 'category':
                 case 'resource-type':
                 case 'subcategory':
-                    $header .= '|' . $key . ':' . urlencode((string) $_GET[$key]);
+                    $header .= '|'.$key.':'.urlencode((string) $_GET[$key]);
                     break;
 
                 default:
-                    $header .= '|' . $key . ':' . urlencode((string) $value);
+                    $header .= '|'.$key.':'.urlencode((string) $value);
                     break;
             }
         }

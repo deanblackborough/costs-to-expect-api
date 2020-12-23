@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\AllowedValue;
@@ -16,10 +17,10 @@ class Resource
 
     /**
      * Generate the allowed values resources array, will be passed to the
-     * Option classes and merged with the fields/parameters
+     * Option classes and merged with the fields/parameters.
      *
-     * @param integer $resource_type_id
-     * @param integer $exclude_resource_id
+     * @param int $resource_type_id
+     * @param int $exclude_resource_id
      *
      * @return array
      */
@@ -41,7 +42,7 @@ class Resource
             $parameters['resource_id']['allowed_values'][$id] = [
                 'value' => $id,
                 'name' => $resource['resource_name'],
-                'description' => $resource['resource_description']
+                'description' => $resource['resource_description'],
             ];
         }
 

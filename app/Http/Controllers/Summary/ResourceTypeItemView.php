@@ -9,7 +9,7 @@ use App\Response\Responses;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Summary for resource type items route
+ * Summary for resource type items route.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -19,11 +19,11 @@ class ResourceTypeItemView extends Controller
 {
     public function index(string $resource_type_id): JsonResponse
     {
-        if ($this->viewAccessToResourceType((int)$resource_type_id) === false) {
+        if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             Responses::notFoundOrNotAccessible(trans('entities.resource'));
         }
 
-        $entity = Entity::item((int)$resource_type_id);
+        $entity = Entity::item((int) $resource_type_id);
 
         $summary_class = $entity->resourceTypeSummaryClass();
         $summary = new $summary_class(

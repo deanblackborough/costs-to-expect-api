@@ -14,8 +14,7 @@ class SummaryResponse extends BaseSummaryResponse
         int $resource_id,
         bool $permitted_user = false,
         int $user_id = null
-    )
-    {
+    ) {
         parent::__construct(
             $resource_type_id,
             $resource_id,
@@ -39,14 +38,17 @@ class SummaryResponse extends BaseSummaryResponse
         $parameters = request()->getQueryString();
         if ($parameters === null) {
             $this->parameters = [];
+
             return $this->summary();
         }
         if ($parameters === 'categories=true') {
             $this->parameters = ['categories' => true];
+
             return $this->categoriesSummary();
         }
         if ($parameters === 'years=true') {
             $this->parameters = ['years' => true];
+
             return $this->yearsSummary();
         }
 
@@ -114,7 +116,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function categoriesSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->categoriesSummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -137,7 +138,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function categorySummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->categorySummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -167,7 +167,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function filteredSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->filteredSummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -199,7 +198,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function monthsSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->monthsSummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -223,7 +221,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function monthSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->monthSummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -313,7 +310,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function subcategoriesSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->subCategoriesSummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -337,7 +333,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function subcategorySummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->subCategorySummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -368,7 +363,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function summary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->summary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -394,7 +388,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function yearsSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->yearsSummary(
                 $this->resource_type_id,
                 $this->resource_id,
@@ -417,7 +410,6 @@ class SummaryResponse extends BaseSummaryResponse
     protected function yearSummary(): JsonResponse
     {
         if ($this->cache_control->isRequestCacheable() === false || $this->cache_summary->valid() === false) {
-
             $summary = $this->model->yearSummary(
                 $this->resource_type_id,
                 $this->resource_id,

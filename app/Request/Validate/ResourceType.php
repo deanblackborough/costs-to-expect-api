@@ -1,15 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request\Validate;
 
-use App\Rules\ResourceTypeName;
 use App\Request\Validate\Validator as BaseValidator;
+use App\Rules\ResourceTypeName;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 
 /**
- * Validation helper class for resource types, returns the generated validator objects
+ * Validation helper class for resource types, returns the generated validator objects.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -18,9 +19,9 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
 class ResourceType extends BaseValidator
 {
     /**
-     * Create the validation rules for the create (POST) request
+     * Create the validation rules for the create (POST) request.
      *
-     * @param integer $user_id
+     * @param int $user_id
      *
      * @return array
      */
@@ -32,22 +33,22 @@ class ResourceType extends BaseValidator
                     'required',
                     'string',
                     'max:255',
-                    new ResourceTypeName($user_id)
+                    new ResourceTypeName($user_id),
                 ],
                 'item_type_id' => [
                     'required',
-                    'exists:item_type,id'
-                ]
+                    'exists:item_type,id',
+                ],
             ],
             Config::get('api.resource-type.validation.POST.fields')
         );
     }
 
     /**
-     * Create the validation rules for the update (PATCH) request
+     * Create the validation rules for the update (PATCH) request.
      *
-     * @param integer $resource_type_id
-     * @param integer $user_id
+     * @param int $resource_type_id
+     * @param int $user_id
      *
      * @return array
      */
@@ -59,8 +60,8 @@ class ResourceType extends BaseValidator
                     'sometimes',
                     'string',
                     'max:255',
-                    new ResourceTypeName($user_id, $resource_type_id)
-                ]
+                    new ResourceTypeName($user_id, $resource_type_id),
+                ],
             ],
             Config::get('api.resource-type.validation.PATCH.fields')
         );
@@ -68,7 +69,7 @@ class ResourceType extends BaseValidator
 
     /**
      * Any fields which can't be defined via the configuration files because
-     * the validation rules are dynamic
+     * the validation rules are dynamic.
      *
      * @return array|string[]
      */
@@ -78,7 +79,7 @@ class ResourceType extends BaseValidator
     }
 
     /**
-     * Return a valid validator object for a create (POST) request
+     * Return a valid validator object for a create (POST) request.
      *
      * @param array $options
      *
@@ -104,7 +105,7 @@ class ResourceType extends BaseValidator
     }
 
     /**
-     * Return a valid validator object for a update (PATCH) request
+     * Return a valid validator object for a update (PATCH) request.
      *
      * @param array $options
      *

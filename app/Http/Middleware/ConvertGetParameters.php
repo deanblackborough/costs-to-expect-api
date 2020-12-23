@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Convert hashed GET params, decode the value and reset in the request
+ * Convert hashed GET params, decode the value and reset in the request.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -30,7 +30,7 @@ class ConvertGetParameters
             'category',
             'subcategory',
             'resource-type',
-            'item'
+            'item',
         ];
 
         foreach ($params_to_convert as $param) {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
@@ -20,8 +21,8 @@ class SummaryTransformerByMonth extends Transformer
             if (array_key_exists($summary['month'], $temporary) === false) {
                 $temporary[$summary['month']] = [
                     'id' => $summary['month'],
-                    'month' => date("F", mktime(0, 0, 0, $summary['month'], 1)),
-                    'subtotals' => []
+                    'month' => date('F', mktime(0, 0, 0, $summary['month'], 1)),
+                    'subtotals' => [],
                 ];
             }
 
@@ -30,7 +31,7 @@ class SummaryTransformerByMonth extends Transformer
                     'code' => $summary['currency_code'],
                 ],
                 'count' => $summary['total_count'],
-                'subtotal' => number_format((float)$summary['total'], 2, '.', '')
+                'subtotal' => number_format((float) $summary['total'], 2, '.', ''),
             ];
         }
 

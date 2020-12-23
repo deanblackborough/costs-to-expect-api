@@ -9,8 +9,8 @@ return [
             'title' => 'item-transfer/parameters.title-item',
             'description' => 'item-transfer/parameters.description-item',
             'type' => 'string',
-            'required' => false
-        ]
+            'required' => false,
+        ],
     ],
-    'item' => []
+    'item' => [],
 ];

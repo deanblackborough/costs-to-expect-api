@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
@@ -21,7 +22,7 @@ class SummaryModel extends LaravelModel
     protected $sub_table = 'item_type_allocated_expense';
 
     /**
-     * Return the summary of items, grouped by category
+     * Return the summary of items, grouped by category.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -33,8 +34,7 @@ class SummaryModel extends LaravelModel
         int $resource_type_id,
         int $resource_id,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->
             selectRaw("
                 category.id, 
@@ -60,30 +60,30 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->join("item_category", "item_category.item_id", "item.id")
-            ->join("category", "category.id", "item_category.category_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->join('item_category', 'item_category.item_id', 'item.id')
+            ->join('category', 'category.id', 'item_category.category_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("category.resource_type_id", "=", $resource_type_id)
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id);
+            ->where('category.resource_type_id', '=', $resource_type_id)
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id);
 
         $collection = Clause::applyExcludeFutureUnpublished($collection, $parameters);
 
         return $collection
             ->groupBy('item_category.category_id', 'currency.code')
-            ->orderBy("name")
+            ->orderBy('name')
             ->get()
             ->toArray();
     }
 
     /**
-     * Return the summary for a specific category
+     * Return the summary for a specific category.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -97,8 +97,7 @@ class SummaryModel extends LaravelModel
         int $resource_id,
         int $category_id,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 category.id, 
@@ -124,25 +123,25 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->join("item_category", "item_category.item_id", "item.id")
-            ->join("category", "category.id", "item_category.category_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->join('item_category', 'item_category.item_id', 'item.id')
+            ->join('category', 'category.id', 'item_category.category_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("category.resource_type_id", "=", $resource_type_id)
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id)
-            ->where("category.id", "=", $category_id);
+            ->where('category.resource_type_id', '=', $resource_type_id)
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id)
+            ->where('category.id', '=', $category_id);
 
         $collection = Clause::applyExcludeFutureUnpublished($collection, $parameters);
 
         return $collection
             ->groupBy('item_category.category_id', 'currency.code')
-            ->orderBy("name")
+            ->orderBy('name')
             ->get()
             ->toArray();
     }
@@ -157,8 +156,7 @@ class SummaryModel extends LaravelModel
         array $parameters = [],
         array $search_parameters = [],
         array $filter_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 currency.code AS currency_code,
@@ -181,26 +179,26 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', 'item_type_allocated_expense.item_id')
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->join("item_category", "item_category.item_id", "item.id")
-            ->join("item_sub_category", "item_sub_category.item_category_id", "item_category.id")
-            ->join("category", "category.id", "item_category.category_id")
-            ->join("sub_category", "sub_category.id", "item_sub_category.sub_category_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->join('item_category', 'item_category.item_id', 'item.id')
+            ->join('item_sub_category', 'item_sub_category.item_category_id', 'item_category.id')
+            ->join('category', 'category.id', 'item_category.category_id')
+            ->join('sub_category', 'sub_category.id', 'item_sub_category.sub_category_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id)
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id)
             ->groupBy('currency.code');
 
         if ($category_id !== null) {
-            $collection->where("category.id", "=", $category_id);
+            $collection->where('category.id', '=', $category_id);
         }
         if ($subcategory_id !== null) {
-            $collection->where("sub_category.id", "=", $subcategory_id);
+            $collection->where('sub_category.id', '=', $subcategory_id);
         }
         if ($year !== null) {
             $collection->whereRaw(DB::raw("YEAR({$this->sub_table}.effective_date) = {$year}"));
@@ -229,7 +227,7 @@ class SummaryModel extends LaravelModel
     }
 
     /**
-     * Return a monthly summary
+     * Return a monthly summary.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -243,8 +241,7 @@ class SummaryModel extends LaravelModel
         int $resource_id,
         int $year,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 MONTH({$this->sub_table}.effective_date) as month,
@@ -268,15 +265,15 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id)
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id)
             ->whereRaw(DB::raw("YEAR({$this->sub_table}.effective_date) = '{$year}'"));
 
         $collection = Clause::applyExcludeFutureUnpublished($collection, $parameters);
@@ -289,7 +286,7 @@ class SummaryModel extends LaravelModel
     }
 
     /**
-     * Return a summary for a specific month
+     * Return a summary for a specific month.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -305,8 +302,7 @@ class SummaryModel extends LaravelModel
         int $year,
         int $month,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 MONTH({$this->sub_table}.effective_date) as month, 
@@ -330,15 +326,15 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id)
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id)
             ->whereRaw(DB::raw("YEAR({$this->sub_table}.effective_date) = '{$year}'"))
             ->whereRaw(DB::raw("MONTH({$this->sub_table}.effective_date) = '{$month}'"));
 
@@ -352,7 +348,7 @@ class SummaryModel extends LaravelModel
     }
 
     /**
-     * Subcategories summary
+     * Subcategories summary.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -366,8 +362,7 @@ class SummaryModel extends LaravelModel
         int $resource_id,
         int $category_id,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 sub_category.id, 
@@ -393,20 +388,20 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->join("item_category", "item_category.item_id", "item.id")
-            ->join("item_sub_category", "item_sub_category.item_category_id", "item_category.id")
-            ->join("category", "category.id", "item_category.category_id")
-            ->join("sub_category", "sub_category.id", "item_sub_category.sub_category_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->join('item_category', 'item_category.item_id', 'item.id')
+            ->join('item_sub_category', 'item_sub_category.item_category_id', 'item_category.id')
+            ->join('category', 'category.id', 'item_category.category_id')
+            ->join('sub_category', 'sub_category.id', 'item_sub_category.sub_category_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id)
-            ->where("category.id", "=", $category_id);
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id)
+            ->where('category.id', '=', $category_id);
 
         $collection = Clause::applyExcludeFutureUnpublished($collection, $parameters);
 
@@ -418,7 +413,7 @@ class SummaryModel extends LaravelModel
     }
 
     /**
-     * Subcategory summary
+     * Subcategory summary.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -434,8 +429,7 @@ class SummaryModel extends LaravelModel
         int $category_id,
         int $subcategory_id,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 sub_category.id, 
@@ -461,33 +455,33 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->join("item_category", "item_category.item_id", "item.id")
-            ->join("item_sub_category", "item_sub_category.item_category_id", "item_category.id")
-            ->join("category", "category.id", "item_category.category_id")
-            ->join("sub_category", "sub_category.id", "item_sub_category.sub_category_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->join('item_category', 'item_category.item_id', 'item.id')
+            ->join('item_sub_category', 'item_sub_category.item_category_id', 'item_category.id')
+            ->join('category', 'category.id', 'item_category.category_id')
+            ->join('sub_category', 'sub_category.id', 'item_sub_category.sub_category_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id)
-            ->where("category.id", "=", $category_id)
-            ->where("sub_category.id", "=", $subcategory_id);
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id)
+            ->where('category.id', '=', $category_id)
+            ->where('sub_category.id', '=', $subcategory_id);
 
         $collection = Clause::applyExcludeFutureUnpublished($collection, $parameters);
 
         return $collection
             ->groupBy('item_sub_category.sub_category_id', 'currency.code')
-            ->orderBy("name")
+            ->orderBy('name')
             ->get()
             ->toArray();
     }
 
     /**
-     * Return the total summary for all items
+     * Return the total summary for all items.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -499,8 +493,7 @@ class SummaryModel extends LaravelModel
         int $resource_type_id,
         int $resource_id,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->selectRaw("
                 currency.code AS currency_code,
                 SUM({$this->sub_table}.actualised_total) AS total,
@@ -522,7 +515,7 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -540,7 +533,7 @@ class SummaryModel extends LaravelModel
     }
 
     /**
-     * Return the summary grouped by years
+     * Return the summary grouped by years.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -552,8 +545,7 @@ class SummaryModel extends LaravelModel
         int $resource_type_id,
         int $resource_id,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 YEAR({$this->sub_table}.effective_date) as year, 
@@ -577,15 +569,15 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id);
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id);
 
         $collection = Clause::applyExcludeFutureUnpublished($collection, $parameters);
 
@@ -597,7 +589,7 @@ class SummaryModel extends LaravelModel
     }
 
     /**
-     * Return a summary for a specific year
+     * Return a summary for a specific year.
      *
      * @param int $resource_type_id
      * @param int $resource_id
@@ -611,8 +603,7 @@ class SummaryModel extends LaravelModel
         int $resource_id,
         int $year,
         array $parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 YEAR({$this->sub_table}.effective_date) as year, 
@@ -636,15 +627,15 @@ class SummaryModel extends LaravelModel
                         `item`.`resource_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_id
+                    $resource_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
-            ->where("resource_type.id", "=", $resource_type_id)
-            ->where("resource.id", "=", $resource_id)
+            ->where('resource_type.id', '=', $resource_type_id)
+            ->where('resource.id', '=', $resource_id)
             ->whereRaw(DB::raw("YEAR({$this->sub_table}.effective_date) = '{$year}'"));
 
         $collection = Clause::applyExcludeFutureUnpublished($collection, $parameters);

@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Models\ResourceType;
 use App\Models\ResourceAccess;
+use App\Models\ResourceType;
 use App\Response\Cache\Control;
 use App\Response\Cache\Job;
 use App\Response\Cache\KeyGroup;
@@ -15,7 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Clear the requested cache keys
+ * Clear the requested cache keys.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020

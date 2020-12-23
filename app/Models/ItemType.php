@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -7,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Item type model
+ * Item type model.
  *
  * @mixin QueryBuilder
  * @author Dean Blackborough <dean@g3d-development.com>
@@ -21,7 +22,7 @@ class ItemType extends Model
     protected $guarded = ['id', 'name', 'description', 'example', 'created_at', 'updated_at'];
 
     /**
-     * Fetch the item types, id, name and description only
+     * Fetch the item types, id, name and description only.
      *
      * @return array
      */
@@ -37,10 +38,10 @@ class ItemType extends Model
     }
 
     /**
-     * Return the paginated collection
+     * Return the paginated collection.
      *
-     * @param integer $offset Paging offset
-     * @param integer $limit Paging limit
+     * @param int $offset Paging offset
+     * @param int $limit Paging limit
      * @param array $search_parameters
      * @param array $sort_parameters
      *
@@ -51,8 +52,7 @@ class ItemType extends Model
         int $limit = 10,
         array $search_parameters = [],
         array $sort_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this->select(
             'item_type.id AS item_type_id',
             'item_type.name AS item_type_name',
@@ -72,7 +72,7 @@ class ItemType extends Model
                         break;
 
                     default:
-                        $collection->orderBy('item_type.' . $field, $direction);
+                        $collection->orderBy('item_type.'.$field, $direction);
                         break;
                 }
             }
@@ -99,7 +99,7 @@ class ItemType extends Model
             );
 
         $result = $result
-            ->where($this->table . '.id', '=', $item_type_id)
+            ->where($this->table.'.id', '=', $item_type_id)
             ->get()
             ->toArray();
 
@@ -111,15 +111,15 @@ class ItemType extends Model
     }
 
     /**
-     * Return the total number of item types
+     * Return the total number of item types.
      *
      * @param array $search_parameters = []
      *
-     * @return integer
+     * @return int
      */
     public function totalCount(array $search_parameters = []): int
     {
-        $collection = $this->select("item_type.id");
+        $collection = $this->select('item_type.id');
 
         $collection = Clause::applySearch($collection, $this->table, $search_parameters);
 

@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Summary;
 
 use App\Http\Controllers\Controller;
-use App\Option\SummaryResourceCollection;
-use App\Response\Cache;
-use App\Request\Parameter;
 use App\Models\Summary\Resource;
+use App\Option\SummaryResourceCollection;
+use App\Request\Parameter;
+use App\Response\Cache;
 use App\Response\Header\Headers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Summary controller for the resource routes
+ * Summary controller for the resource routes.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Config;
 class ResourceView extends Controller
 {
     /**
-     * Return a summary of the resources
+     * Return a summary of the resources.
      *
      * @param string $resource_type_id
      *
@@ -43,7 +43,6 @@ class ResourceView extends Controller
         $cache_summary->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_summary->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.resource.summary-searchable')
             );
@@ -65,7 +64,7 @@ class ResourceView extends Controller
             }
 
             $collection = [
-                'resources' => $total
+                'resources' => $total,
             ];
 
             $headers = new Headers();
@@ -85,9 +84,8 @@ class ResourceView extends Controller
         return response()->json($cache_summary->collection(), 200, $cache_summary->headers());
     }
 
-
     /**
-     * Generate the OPTIONS request for the resource summary
+     * Generate the OPTIONS request for the resource summary.
      *
      * @param string $resource_type_id
      *

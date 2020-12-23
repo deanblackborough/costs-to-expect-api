@@ -77,7 +77,7 @@ class Handler extends ExceptionHandler
                 if (App::environment() === 'local') {
                     $response = [
                         'message' => $exception->getMessage(),
-                        'trace' => $exception->getTraceAsString()
+                        'trace' => $exception->getTraceAsString(),
                     ];
                 } else {
                     try {
@@ -85,7 +85,7 @@ class Handler extends ExceptionHandler
                             'message' => $exception->getMessage(),
                             'file' => $exception->getFile(),
                             'line' => $exception->getLine(),
-                            'trace' => $exception->getTraceAsString()
+                            'trace' => $exception->getTraceAsString(),
                         ];
 
                         $error = new ErrorLog($error_data);
@@ -97,7 +97,7 @@ class Handler extends ExceptionHandler
                     }
 
                     $response = [
-                        'message' => trans('responses.error')
+                        'message' => trans('responses.error'),
                     ];
                 }
 
@@ -112,7 +112,7 @@ class Handler extends ExceptionHandler
         }
 
         $response = [
-            'message' => $message
+            'message' => $message,
         ];
 
         if (App::environment() === 'local') {

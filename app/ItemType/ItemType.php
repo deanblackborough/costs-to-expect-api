@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType;
 
-use App\Transformers\Transformer;
 use App\Request\Parameter\Request;
 use App\Request\Validate\Validator;
+use App\Transformers\Transformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config as LaravelConfig;
 
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\Config as LaravelConfig;
  @todo We will need a console command to create the config files for a new type
  * Add the ticket to Pivotal when/if happy with this.
  */
-
 abstract class ItemType
 {
     protected string $base_path;
@@ -31,8 +31,7 @@ abstract class ItemType
         int $resource_type_id,
         int $resource_id,
         array $viewable_resource_types = []
-    ): array
-    {
+    ): array {
         $available_parameters = $this->requestParameters();
         $defined_parameters = Request::fetch(
             array_keys($available_parameters),
@@ -59,8 +58,7 @@ abstract class ItemType
     public function allowedValuesForResourceTypeItemCollection(
         int $resource_type_id,
         array $viewable_resource_types = []
-    ): array
-    {
+    ): array {
         $available_parameters = $this->resourceTypeRequestParameters();
         $defined_parameters = Request::fetch(
             array_keys($available_parameters),
@@ -101,14 +99,14 @@ abstract class ItemType
 
     public function filterParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.filterable', []);
+        return LaravelConfig::get($this->base_path.'.filterable', []);
     }
 
     abstract public function instance(int $id): Model;
 
     public function itemRequestParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.parameters.item', []); // We need to split this
+        return LaravelConfig::get($this->base_path.'.parameters.item', []); // We need to split this
     }
 
     abstract public function model();
@@ -120,62 +118,62 @@ abstract class ItemType
 
     public function patchValidation(): array // We need to split validation config files
     {
-        return LaravelConfig::get($this->base_path . '.validation.PATCH.fields', []);
+        return LaravelConfig::get($this->base_path.'.validation.PATCH.fields', []);
     }
 
     public function patchValidationMessages(): array // We need to split validation config files
     {
-        return LaravelConfig::get($this->base_path . '.validation.PATCH.messages', []);
+        return LaravelConfig::get($this->base_path.'.validation.PATCH.messages', []);
     }
 
     public function postFields(): array // We need post fields and patch fields
     {
-        return LaravelConfig::get($this->base_path . '.fields', []);
+        return LaravelConfig::get($this->base_path.'.fields', []);
     }
 
     public function postValidation(): array // We need to split validation config files
     {
-        return LaravelConfig::get($this->base_path . '.validation.POST.fields', []);
+        return LaravelConfig::get($this->base_path.'.validation.POST.fields', []);
     }
 
     public function postValidationMessages(): array // We need to split validation config files
     {
-        return LaravelConfig::get($this->base_path . '.validation.POST.messages', []);
+        return LaravelConfig::get($this->base_path.'.validation.POST.messages', []);
     }
 
     public function requestParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.parameters.collection', []); // We need to split this
+        return LaravelConfig::get($this->base_path.'.parameters.collection', []); // We need to split this
     }
 
     public function resourceTypeFilterParameters(): array
     {
-        return LaravelConfig::get($this->resource_type_base_path . '.filterable', []);
+        return LaravelConfig::get($this->resource_type_base_path.'.filterable', []);
     }
 
     public function resourceTypeRequestParameters(): array
     {
-        return LaravelConfig::get($this->resource_type_base_path . '.parameters.collection', []);
+        return LaravelConfig::get($this->resource_type_base_path.'.parameters.collection', []);
     }
 
     public function resourceTypeSearchParameters(): array
     {
-        return LaravelConfig::get($this->resource_type_base_path . '.searchable', []);
+        return LaravelConfig::get($this->resource_type_base_path.'.searchable', []);
     }
 
     public function resourceTypeSortParameters(): array
     {
-        return LaravelConfig::get($this->resource_type_base_path . '.sortable', []);
+        return LaravelConfig::get($this->resource_type_base_path.'.sortable', []);
     }
 
     public function searchParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.searchable', []);
+        return LaravelConfig::get($this->base_path.'.searchable', []);
     }
 
     public function sortParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.sortable', []);
+        return LaravelConfig::get($this->base_path.'.sortable', []);
     }
 
     public function subcategoryAssignmentLimit(): int
@@ -186,37 +184,39 @@ abstract class ItemType
     abstract public function summaryClass(): string;
 
     abstract public function resourceTypeSummaryClass(): string;
+
     abstract public function viewClass(): string;
+
     abstract public function resourceTypeItemCollectionClass(): string;
 
     public function summaryFilterParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.summary-filterable', []);
+        return LaravelConfig::get($this->base_path.'.summary-filterable', []);
     }
 
     public function summaryRequestParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.summary-parameters', []);
+        return LaravelConfig::get($this->base_path.'.summary-parameters', []);
     }
 
     public function summaryResourceTypeFilterParameters(): array
     {
-        return LaravelConfig::get($this->resource_type_base_path . '.summary-filterable', []);
+        return LaravelConfig::get($this->resource_type_base_path.'.summary-filterable', []);
     }
 
     public function summaryResourceTypeRequestParameters(): array
     {
-        return LaravelConfig::get($this->resource_type_base_path . '.summary-parameters', []);
+        return LaravelConfig::get($this->resource_type_base_path.'.summary-parameters', []);
     }
 
     public function summaryResourceTypeSearchParameters(): array
     {
-        return LaravelConfig::get($this->resource_type_base_path . '.summary-searchable', []);
+        return LaravelConfig::get($this->resource_type_base_path.'.summary-searchable', []);
     }
 
     public function summarySearchParameters(): array
     {
-        return LaravelConfig::get($this->base_path . '.summary-searchable', []);
+        return LaravelConfig::get($this->base_path.'.summary-searchable', []);
     }
 
     abstract public function table(): string;
@@ -230,5 +230,6 @@ abstract class ItemType
     abstract public function validator(): Validator;
 
     abstract protected function allowedValuesItemCollectionClass(): string;
+
     abstract protected function allowedValuesResourceTypeItemCollectionClass(): string;
 }

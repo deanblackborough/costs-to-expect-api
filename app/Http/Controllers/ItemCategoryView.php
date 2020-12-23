@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\ItemType\Entity;
 use App\Models\ItemCategory;
-use App\Transformers\ItemCategory as ItemCategoryTransformer;
 use App\Option\ItemCategoryCollection;
 use App\Option\ItemCategoryItem;
 use App\Response\Cache;
 use App\Response\Header\Header;
+use App\Transformers\ItemCategory as ItemCategoryTransformer;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Manage the category for an item row
+ * Manage the category for an item row.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -36,7 +36,6 @@ class ItemCategoryView extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $item_category = (new ItemCategory())->paginatedCollection(
                 $resource_type_id,
                 $resource_id,
@@ -71,8 +70,7 @@ class ItemCategoryView extends Controller
         string $resource_id,
         string $item_id,
         string $item_category_id = null
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }
@@ -123,8 +121,7 @@ class ItemCategoryView extends Controller
         string $resource_id,
         string $item_id,
         string $item_category_id = null
-    ): JsonResponse
-    {
+    ): JsonResponse {
         if ($this->viewAccessToResourceType((int) $resource_type_id) === false) {
             \App\Response\Responses::notFoundOrNotAccessible(trans('entities.item'));
         }

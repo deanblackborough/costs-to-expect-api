@@ -10,15 +10,15 @@ return [
         'type' => 'string',
         'validation' => [
             'unique-for' => 'category_id',
-            'max-length' => 255
+            'max-length' => 255,
         ],
-        'required' => true
+        'required' => true,
     ],
     'description' => [
         'field' => 'description',
         'title' => 'subcategory/fields.title-description',
         'description' => 'subcategory/fields.description-description',
         'type' => 'string',
-        'required' => true
-    ]
+        'required' => true,
+    ],
 ];

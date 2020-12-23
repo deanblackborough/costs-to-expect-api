@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
@@ -23,13 +24,13 @@ class Transformer extends BaseTransformer
                 'code' => $to_transform['item_currency_code'],
                 'name' => $to_transform['item_currency_name'],
             ],
-            'total' => number_format((float) $to_transform['item_total'],2, '.', ''),
+            'total' => number_format((float) $to_transform['item_total'], 2, '.', ''),
             'percentage' => $to_transform['item_percentage'],
             'actualised_total' => number_format((float) $to_transform['item_actualised_total'], 2, '.', ''),
             'effective_date' => $to_transform['item_effective_date'],
             'categories' => [],
             'created' => $to_transform['item_created_at'],
-            'updated' => $to_transform['item_updated_at']
+            'updated' => $to_transform['item_updated_at'],
         ];
 
         $this->assignCategories($to_transform);

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request;
@@ -7,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Request utility class, helper methods for PATCH and POST methods
+ * Request utility class, helper methods for PATCH and POST methods.
  *
  * As with all utility classes, eventually they may be moved into libraries if
  * they gain more than a few functions and the creation of a library makes
@@ -22,7 +23,7 @@ class BodyValidation
     /**
      * Check to see if any of the provided fields are invalid, we throw an error
      * if there are any invalid fields in the request, simpler to fail hard than
-     * simply ignore invalid values
+     * simply ignore invalid values.
      *
      * @param array $patchable_fields
      *
@@ -46,7 +47,7 @@ class BodyValidation
 
     /**
      * Check the request to see if there are any fields in the request, if not
-     * we simply throw an error
+     * we simply throw an error.
      *
      * @return JsonResponse|null
      */
@@ -60,7 +61,7 @@ class BodyValidation
     }
 
     /**
-     * Return the errors from the validator
+     * Return the errors from the validator.
      *
      * @param $validator
      * @param array $allowed_values
@@ -70,8 +71,7 @@ class BodyValidation
     public static function validateAndReturnErrors(
         Validator $validator,
         array $allowed_values = []
-    ): ?JsonResponse
-    {
+    ): ?JsonResponse {
         if ($validator->fails() === true) {
             $validation_errors = [];
 

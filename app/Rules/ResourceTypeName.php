@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Rules;
@@ -15,8 +16,8 @@ class ResourceTypeName implements Rule
     /**
      * Create a new rule instance.
      *
-     * @param integer $user_id
-     * @param integer|null $resource_type_id
+     * @param int $user_id
+     * @param int|null $resource_type_id
      *
      * @return void
      */
@@ -37,12 +38,12 @@ class ResourceTypeName implements Rule
     {
         $where_clauses = [
             ['permitted_user.user_id', '=', $this->user_id],
-            ['resource_type.name', '=', $value]
+            ['resource_type.name', '=', $value],
         ];
 
         if ($this->resource_type_id !== null) {
             $where_clauses[] = [
-                'resource_type.id', '!=', $this->resource_type_id
+                'resource_type.id', '!=', $this->resource_type_id,
             ];
         }
 

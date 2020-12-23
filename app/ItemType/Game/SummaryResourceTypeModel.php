@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\Game;
@@ -21,8 +22,7 @@ class SummaryResourceTypeModel extends LaravelModel
     public function summary(
         int $resource_type_id,
         array $parameters
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 `resource_type`.`id` AS resource_type_id, 
@@ -49,7 +49,7 @@ class SummaryResourceTypeModel extends LaravelModel
                         `resource`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -66,8 +66,7 @@ class SummaryResourceTypeModel extends LaravelModel
     public function resourcesSummary(
         int $resource_type_id,
         array $parameters
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 `resource`.`id` AS resource_id, 
@@ -97,7 +96,7 @@ class SummaryResourceTypeModel extends LaravelModel
                         `resource`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -108,7 +107,7 @@ class SummaryResourceTypeModel extends LaravelModel
             ->where('resource_type.id', '=', $resource_type_id);
 
         if (array_key_exists('complete', $parameters) === true) {
-            $collection->where($this->sub_table . '.complete', '=', 1);
+            $collection->where($this->sub_table.'.complete', '=', 1);
         }
 
         return $collection
@@ -122,8 +121,7 @@ class SummaryResourceTypeModel extends LaravelModel
         int $resource_type_id,
         array $parameters = [],
         array $search_parameters = []
-    ): array
-    {
+    ): array {
         $collection = $this
             ->selectRaw("
                 COUNT({$this->sub_table}.item_id) AS count
@@ -147,21 +145,21 @@ class SummaryResourceTypeModel extends LaravelModel
                         `resource`.`resource_type_id` = ? 
                 ) AS `last_updated`",
                 [
-                    $resource_type_id
+                    $resource_type_id,
                 ]
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
-            ->join("resource", "resource.id", "item.resource_id")
-            ->join("resource_type", "resource_type.id", "resource.resource_type_id")
-            ->where("resource_type.id", "=", $resource_type_id);
+            ->join('resource', 'resource.id', 'item.resource_id')
+            ->join('resource_type', 'resource_type.id', 'resource.resource_type_id')
+            ->where('resource_type.id', '=', $resource_type_id);
 
         if (array_key_exists('complete', $parameters) === true) {
-            $collection->where($this->sub_table . '.complete', '=', 1);
+            $collection->where($this->sub_table.'.complete', '=', 1);
         }
 
         if (count($search_parameters) > 0) {
             foreach ($search_parameters as $field => $search_term) {
-                $collection->where("{$this->sub_table}." . $field, 'LIKE', '%' . $search_term . '%');
+                $collection->where("{$this->sub_table}.".$field, 'LIKE', '%'.$search_term.'%');
             }
         }
 

@@ -12,13 +12,13 @@ class Entity
 {
     public static function item(int $resource_type_id): ItemType
     {
-        $type =(new ResourceTypeItemType())->itemType($resource_type_id);
+        $type = (new ResourceTypeItemType())->itemType($resource_type_id);
 
         if ($type !== null) {
             return self::byType($type);
         }
 
-        throw new \RuntimeException('No entity definition for ' . $type, 500);
+        throw new \RuntimeException('No entity definition for '.$type, 500);
     }
 
     public static function byType(string $item_type): ItemType
@@ -37,7 +37,7 @@ class Entity
                 return new GameItem();
 
             default:
-                throw new \OutOfRangeException('No entity definition for ' . $item_type, 500);
+                throw new \OutOfRangeException('No entity definition for '.$item_type, 500);
         }
     }
 }

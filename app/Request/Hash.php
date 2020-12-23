@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Request;
@@ -7,7 +8,7 @@ use Hashids\Hashids;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Utility hash class to encode and decode strings by type
+ * Utility hash class to encode and decode strings by type.
  *
  * As with all utility classes, eventually they may be moved into libraries if
  * they gain more than a few functions and the creation of a library makes
@@ -73,7 +74,7 @@ class Hash
      * @param string $type
      * @param string $parameter
      *
-     * @return false|integer
+     * @return false|int
      */
     public function decode(string $type, string $parameter)
     {

@@ -6,7 +6,7 @@ namespace App\Response\Cache;
 
 /**
  * Cache helper, container for the cached data, gives us a simple
- * object to interact with
+ * object to interact with.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -19,7 +19,7 @@ class Summary
     private array $headers;
 
     /**
-     * Create a cache response object
+     * Create a cache response object.
      */
     public function __construct()
     {
@@ -27,7 +27,7 @@ class Summary
     }
 
     /**
-     * Return the collection data array
+     * Return the collection data array.
      *
      * @return array
      */
@@ -37,7 +37,7 @@ class Summary
     }
 
     /**
-     * Return all the content, total, collection, headers and pagination
+     * Return all the content, total, collection, headers and pagination.
      *
      * @return array
      */
@@ -45,12 +45,12 @@ class Summary
     {
         return [
             'collection' => $this->collection,
-            'headers' => $this->headers
+            'headers' => $this->headers,
         ];
     }
 
     /**
-     * Create the cache data object
+     * Create the cache data object.
      *
      * @param array $collection
      * @param array $headers
@@ -64,7 +64,7 @@ class Summary
     }
 
     /**
-     * Return the headers data array
+     * Return the headers data array.
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class Summary
     }
 
     /**
-     * Pass in the collection data
+     * Pass in the collection data.
      *
      * @param array $collection
      */
@@ -85,7 +85,7 @@ class Summary
 
     /**
      * Pass in the content from the cache table, the content will include
-     * four indexes, total, collection, headers and pagination
+     * four indexes, total, collection, headers and pagination.
      *
      * @param array $content
      */
@@ -99,7 +99,7 @@ class Summary
     }
 
     /**
-     * Set the headers for the collection
+     * Set the headers for the collection.
      *
      * @param array $headers
      */

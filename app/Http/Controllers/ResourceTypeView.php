@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Resource;
 use App\AllowedValue\ItemType;
+use App\Models\Resource;
+use App\Models\ResourceType;
 use App\Option\ResourceTypeCollection;
 use App\Option\ResourceTypeItem;
+use App\Request\Parameter;
 use App\Response\Cache;
 use App\Response\Header\Headers;
-use App\Request\Parameter;
 use App\Response\Pagination as UtilityPagination;
-use App\Models\ResourceType;
 use App\Transformers\ResourceType as ResourceTypeTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Config;
 
 /**
- * Manage resource types
+ * Manage resource types.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -28,14 +28,13 @@ class ResourceTypeView extends Controller
 
     public function index(): JsonResponse
     {
-        $cache_control = new Cache\Control( true, $this->user_id);
+        $cache_control = new Cache\Control(true, $this->user_id);
         $cache_control->setTtlOneWeek();
 
         $cache_collection = new Cache\Collection();
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-
             $search_parameters = Parameter\Search::fetch(
                 Config::get('api.resource-type.searchable')
             );

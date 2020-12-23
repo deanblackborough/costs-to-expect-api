@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\AllocatedExpense;
 
-use App\ItemType\ResourceTypeResponse as BaseResourceTypeResponse;
 use App\ItemType\AllocatedExpense\ResourceTypeTransformer as Transformer;
+use App\ItemType\ResourceTypeResponse as BaseResourceTypeResponse;
 use App\Response\Cache;
 use Illuminate\Http\JsonResponse;
 

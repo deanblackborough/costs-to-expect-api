@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
@@ -6,7 +7,7 @@ namespace App\Transformers;
 use App\Transformers\Transformer;
 
 /**
- * Transform the data from our queries into the format we want to display
+ * Transform the data from our queries into the format we want to display.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -19,7 +20,7 @@ class Queue extends Transformer
         $this->transformed = [
             'id' => $this->hash->queue()->encode($to_transform['jobs_id']),
             'queue' => $to_transform['jobs_queue'],
-            'created' => $to_transform['jobs_created_at']
+            'created' => $to_transform['jobs_created_at'],
         ];
     }
 }

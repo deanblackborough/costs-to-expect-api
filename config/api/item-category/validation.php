@@ -7,12 +7,12 @@ return [
         'fields' => [
             'category_id' => [
                 'required',
-                'exists:category,id'
-            ]
+                'exists:category,id',
+            ],
         ],
         'messages' => [
             'category_id.required' => 'item-category/validation.category_id-required',
-            'category_id.exists' => 'item-category/validation.category_id-exists'
-        ]
-    ]
+            'category_id.exists' => 'item-category/validation.category_id-exists',
+        ],
+    ],
 ];

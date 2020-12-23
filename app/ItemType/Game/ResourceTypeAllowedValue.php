@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ItemType\Game;
@@ -11,8 +12,7 @@ class ResourceTypeAllowedValue extends BaseResourceTypeAllowedValue
     public function __construct(
         int $resource_type_id,
         array $viewable_resource_types
-    )
-    {
+    ) {
         parent::__construct(
             $resource_type_id,
             $viewable_resource_types
@@ -33,14 +33,13 @@ class ResourceTypeAllowedValue extends BaseResourceTypeAllowedValue
     protected function setAllowedValueFields(): void
     {
         $this->values = [
-            'winner_id' => null
+            'winner_id' => null,
         ];
     }
 
     protected function fetchValuesForWinner(): void
     {
         if (array_key_exists('winner_id', $this->available_parameters) === true) {
-
             $allowed_values = [];
 
             $winners = (new Category())->paginatedCollection(
@@ -56,11 +55,11 @@ class ResourceTypeAllowedValue extends BaseResourceTypeAllowedValue
                 $allowed_values[$winner_id] = [
                     'value' => $winner_id,
                     'name' => $winner['category_name'],
-                    'description' => trans('resource-type-item-type-' . $this->entity->type() .
-                            '/allowed-values.description-prefix-winner_id') .
-                        $winner['category_name'] .
-                        trans('resource-type-item-type-' . $this->entity->type() .
-                            '/allowed-values.description-suffix-winner_id')
+                    'description' => trans('resource-type-item-type-'.$this->entity->type().
+                            '/allowed-values.description-prefix-winner_id').
+                        $winner['category_name'].
+                        trans('resource-type-item-type-'.$this->entity->type().
+                            '/allowed-values.description-suffix-winner_id'),
                 ];
             }
 

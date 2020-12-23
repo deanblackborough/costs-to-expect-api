@@ -14,14 +14,14 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'Laravel\Passport\Events\AccessTokenCreated' => [
             'App\Listeners\RevokeTokens',
-            'App\Listeners\PruneTokens'
+            'App\Listeners\PruneTokens',
         ],
         'App\Events\RequestError' => [
-            'App\Listeners\CaptureAndSendRequestError'
+            'App\Listeners\CaptureAndSendRequestError',
         ],
         'App\Events\InternalError' => [
-            'App\Listeners\CaptureAndSendInternalError'
-        ]
+            'App\Listeners\CaptureAndSendInternalError',
+        ],
     ];
 
     /**

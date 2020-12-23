@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Transformers;
@@ -6,7 +7,7 @@ namespace App\Transformers;
 use App\Transformers\Transformer;
 
 /**
- * Transform the data from our queries into the format we want to display
+ * Transform the data from our queries into the format we want to display.
  *
  * @author Dean Blackborough <dean@g3d-development.com>
  * @copyright Dean Blackborough 2018-2020
@@ -21,7 +22,7 @@ class ItemSubtype extends Transformer
             'name' => $to_transform['item_subtype_name'],
             'friendly_name' => $to_transform['item_subtype_friendly_name'],
             'description' => $to_transform['item_subtype_description'],
-            'created' => $to_transform['item_subtype_created_at']
+            'created' => $to_transform['item_subtype_created_at'],
         ];
     }
 }

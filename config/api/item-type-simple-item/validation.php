@@ -5,40 +5,39 @@ declare(strict_types=1);
 return [
     'POST' => [
         'fields' => [
-            'name' =>
-                'required',
+            'name' => 'required',
                 'string',
-                'max:255'
+                'max:255',
             ],
             'description' => [
                 'sometimes',
-                'string'
+                'string',
             ],
             'quantity' => [
                 'required',
                 'integer',
-                'min:0'
+                'min:0',
             ],
-        'messages' => []
+        'messages' => [],
     ],
     'PATCH' => [
         'fields' => [
             'name' => [
                 'sometimes',
                 'string',
-                'max:255'
+                'max:255',
             ],
             'description' => [
                 'sometimes',
                 'nullable',
-                'string'
+                'string',
             ],
             'quantity' => [
                 'sometimes',
                 'integer',
                 'min:0',
-            ]
+            ],
         ],
-        'messages' => []
-    ]
+        'messages' => [],
+    ],
 ];
