@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('description');
             $table->string('example')->nullable();
             $table->timestamps();
+            
+            $table->index('name');
         });
 
         Schema::create('item_subtype', static function (Blueprint $table) {
@@ -41,6 +43,11 @@ return new class extends Migration
             $table->string('friendly_name')->nullable();
             $table->text('description');
             $table->timestamps();
+            
+            $table->foreign('item_type_id')
+                ->references('id')
+                ->on('item_type');
+            $table->index('name');
         });
 
         Schema::create('resource_type', static function (Blueprint $table) {
@@ -156,6 +163,15 @@ return new class extends Migration
             $table->tinyInteger('percentage');
             $table->decimal('actualised_total', 15, 2);
             $table->timestamps();
+            
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currency');
+            $table->index('effective_date');
+            $table->index('publish_after');
         });
 
         Schema::create('item_type_budget', static function (Blueprint $table) {
@@ -239,6 +255,10 @@ return new class extends Migration
             $table->string('message');
             $table->json('parameters')->nullable();
             $table->timestamps();
+
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
         });
 
         Schema::create('item_partial_transfer', static function (Blueprint $table) {
@@ -250,6 +270,23 @@ return new class extends Migration
             $table->unsignedTinyInteger('percentage');
             $table->unsignedBigInteger('transferred_by');
             $table->timestamps();
+
+            $table->foreign('resource_type_id')
+                ->references('id')
+                ->on('resource_type');
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
+            $table->foreign('from')
+                ->references('id')
+                ->on('resource');
+            $table->foreign('to')
+                ->references('id')
+                ->on('resource');
+            $table->foreign('transferred_by')
+                ->references('id')
+                ->on('users');
+            $table->unique(['resource_type_id', 'from', 'item_id']);
         });
 
         Schema::create('item_sub_category', static function (Blueprint $table) {
@@ -257,6 +294,14 @@ return new class extends Migration
             $table->unsignedBigInteger('item_category_id');
             $table->unsignedBigInteger('sub_category_id');
             $table->timestamps();
+            
+            $table->foreign('sub_category_id')
+                ->references('id')
+                ->on('sub_category');
+            $table->foreign('item_category_id')
+                ->references('id')
+                ->on('item_category');
+            $table->unique(['item_category_id', 'sub_category_id']);
         });
 
         Schema::create('item_transfer', static function (Blueprint $table) {
@@ -267,6 +312,22 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('transferred_by');
             $table->timestamps();
+
+            $table->foreign('resource_type_id')
+                ->references('id')
+                ->on('resource_type');
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
+            $table->foreign('from')
+                ->references('id')
+                ->on('resource');
+            $table->foreign('to')
+                ->references('id')
+                ->on('resource');
+            $table->foreign('transferred_by')
+                ->references('id')
+                ->on('users');
         });
 
         Schema::create('password_creates', static function (Blueprint $table) {
