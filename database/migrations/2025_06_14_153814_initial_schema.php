@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('expiration');
         });
 
-        Schema::create('cache_locks', function (Blueprint $table) {
+        Schema::create('cache_locks', static function (Blueprint $table) {
             $table->string('key')->unique();
             $table->string('owner');
             $table->integer('expiration');
@@ -81,6 +81,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->timestamps();
+            
+            $table->unique(['name', 'resource_type_id']);
+            $table->foreign('resource_type_id')
+                ->references('id')
+                ->on('resource_type');
         });
 
         Schema::create('sub_category', static function (Blueprint $table) {
@@ -129,10 +134,14 @@ return new class extends Migration
         Schema::create('item', static function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('resource_id');
-            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('created_by')->index();
             $table->timestamp('created_at')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable()->index();
             $table->timestamp('updated_at')->nullable();
+            
+            $table->foreign('resource_id')
+                ->references('id')
+                ->on('resource');
         });
 
         Schema::create('item_type_allocated_expense', static function (Blueprint $table) {
@@ -202,6 +211,14 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
+            
+            $table->unique(['item_id', 'category_id']);
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('category');
         });
 
         Schema::create('item_data', static function (Blueprint $table) {
@@ -210,6 +227,10 @@ return new class extends Migration
             $table->string('key');
             $table->json('value')->nullable();
             $table->timestamps();
+            
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
         });
 
         Schema::create('item_log', static function (Blueprint $table) {
