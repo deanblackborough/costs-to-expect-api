@@ -13,6 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::create('users', static function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('remember_token', 100)->nullable();
+            $table->string('registered_via')->default('api');
+            $table->timestamps();
+        });
+        
         Schema::create('cache', static function (Blueprint $table) {
             $table->string('key')->unique();
             $table->text('value');
@@ -57,6 +67,8 @@ return new class extends Migration
             $table->text('description');
             $table->longText('data')->nullable();
             $table->timestamps();
+            
+            $table->index('public');
         });
 
         Schema::create('resource_type_item_type', static function (Blueprint $table) {
@@ -64,6 +76,13 @@ return new class extends Migration
             $table->unsignedBigInteger('resource_type_id');
             $table->unsignedInteger('item_type_id');
             $table->timestamps();
+            
+            $table->foreign('resource_type_id')
+                ->references('id')
+                ->on('resource_type');
+            $table->foreign('item_type_id')
+                ->references('id')
+                ->on('item_type');
         });
 
         Schema::create('resource', static function (Blueprint $table) {
@@ -73,6 +92,11 @@ return new class extends Migration
             $table->text('description');
             $table->longText('data')->nullable();
             $table->timestamps();
+            
+            $table->foreign('resource_type_id')
+                ->references('id')
+                ->on('resource_type');
+            $table->unique('name', 'resource_type_id');
         });
 
         Schema::create('resource_item_subtype', static function (Blueprint $table) {
@@ -80,6 +104,13 @@ return new class extends Migration
             $table->unsignedInteger('resource_id');
             $table->unsignedInteger('item_subtype_id');
             $table->timestamps();
+            
+            $table->foreign('resource_id')
+                ->references('id')
+                ->on('resource');
+            $table->foreign('item_subtype_id')
+                ->references('id')
+                ->on('item_subtype');
         });
 
         Schema::create('category', static function (Blueprint $table) {
@@ -101,6 +132,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->timestamps();
+            
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('category');
+            $table->unique(['name', 'category_id']);
         });
 
         Schema::create('currency', static function (Blueprint $table) {
@@ -127,6 +163,8 @@ return new class extends Migration
             $table->unsignedInteger('reserved_at')->nullable();
             $table->unsignedInteger('available_at');
             $table->unsignedInteger('created_at');
+            
+            $table->index('queue');
         });
 
         Schema::create('failed_jobs', static function (Blueprint $table) {
@@ -189,6 +227,13 @@ return new class extends Migration
             $table->tinyInteger('disabled')->default(0);
             $table->json('frequency');
             $table->timestamps();
+
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currency');
         });
 
         Schema::create('item_type_budget_pro', static function (Blueprint $table) {
@@ -207,6 +252,15 @@ return new class extends Migration
             $table->tinyInteger('deleted')->default(0);
             $table->json('frequency');
             $table->timestamps();
+
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currency');
+            $table->index('deleted');
+            $table->index('disabled');
         });
 
         Schema::create('item_type_game', static function (Blueprint $table) {
@@ -220,6 +274,10 @@ return new class extends Migration
             $table->unsignedInteger('score')->default(0);
             $table->tinyInteger('complete')->default(0);
             $table->timestamps();
+
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('item');
         });
 
         Schema::create('item_category', static function (Blueprint $table) {
@@ -334,12 +392,16 @@ return new class extends Migration
             $table->string('email');
             $table->string('token');
             $table->timestamp('created_at')->nullable();
+            
+            $table->index('email');
         });
 
         Schema::create('password_resets', static function (Blueprint $table) {
             $table->string('email');
             $table->string('token');
             $table->timestamp('created_at')->nullable();
+
+            $table->index('email');
         });
 
         Schema::create('permitted_user', static function (Blueprint $table) {
@@ -348,6 +410,16 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('added_by');
             $table->timestamps();
+            
+            $table->foreign('resource_type_id')
+                ->references('id')
+                ->on('resource_type');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+            $table->foreign('added_by')
+                ->references('id')
+                ->on('users');
         });
 
         Schema::create('personal_access_tokens', static function (Blueprint $table) {
@@ -369,6 +441,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('returned_status_code');
             $table->string('request_uri');
             $table->timestamps();
+            
+            $table->index('source');
         });
 
         Schema::create('sessions', static function (Blueprint $table) {
@@ -378,16 +452,6 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->text('payload');
             $table->integer('last_activity');
-        });
-
-        Schema::create('users', static function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('remember_token', 100)->nullable();
-            $table->string('registered_via')->default('api');
-            $table->timestamps();
         });
     }
 
