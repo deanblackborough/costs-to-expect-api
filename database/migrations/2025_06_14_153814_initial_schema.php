@@ -61,7 +61,7 @@ return new class extends Migration
         });
 
         Schema::create('resource_type', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->boolean('public')->default(false);
             $table->string('name');
             $table->text('description');
@@ -72,9 +72,9 @@ return new class extends Migration
         });
 
         Schema::create('resource_type_item_type', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedBigInteger('resource_type_id');
-            $table->unsignedInteger('item_type_id');
+            $table->unsignedBigInteger('item_type_id');
             $table->timestamps();
             
             $table->foreign('resource_type_id')
@@ -86,8 +86,8 @@ return new class extends Migration
         });
 
         Schema::create('resource', static function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('resource_type_id');
+            $table->id();
+            $table->unsignedBigInteger('resource_type_id');
             $table->string('name');
             $table->text('description');
             $table->longText('data')->nullable();
@@ -100,9 +100,9 @@ return new class extends Migration
         });
 
         Schema::create('resource_item_subtype', static function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('resource_id');
-            $table->unsignedInteger('item_subtype_id');
+            $table->id();
+            $table->unsignedBigInteger('resource_id');
+            $table->unsignedBigInteger('item_subtype_id');
             $table->timestamps();
             
             $table->foreign('resource_id')
@@ -114,7 +114,7 @@ return new class extends Migration
         });
 
         Schema::create('category', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedBigInteger('resource_type_id');
             $table->string('name');
             $table->text('description');
@@ -127,7 +127,7 @@ return new class extends Migration
         });
 
         Schema::create('sub_category', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->text('description');
@@ -140,14 +140,14 @@ return new class extends Migration
         });
 
         Schema::create('currency', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->char('3');
             $table->string('name');
             $table->timestamps();
         });
 
         Schema::create('error_log', static function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('message');
             $table->string('file');
             $table->string('line');
@@ -163,8 +163,6 @@ return new class extends Migration
             $table->unsignedInteger('reserved_at')->nullable();
             $table->unsignedInteger('available_at');
             $table->unsignedInteger('created_at');
-            
-            $table->index('queue');
         });
 
         Schema::create('failed_jobs', static function (Blueprint $table) {
@@ -420,16 +418,6 @@ return new class extends Migration
             $table->foreign('added_by')
                 ->references('id')
                 ->on('users');
-        });
-
-        Schema::create('personal_access_tokens', static function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamps();
         });
 
         Schema::create('request_error_log', static function (Blueprint $table) {
