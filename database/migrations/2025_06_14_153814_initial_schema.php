@@ -25,18 +25,18 @@ return new class extends Migration
         
         Schema::create('cache', static function (Blueprint $table) {
             $table->string('key')->unique();
-            $table->text('value');
+            $table->mediumText('value');
             $table->integer('expiration');
         });
 
         Schema::create('cache_locks', static function (Blueprint $table) {
-            $table->string('key')->unique();
+            $table->string('key')->primary();
             $table->string('owner');
             $table->integer('expiration');
         });
 
         Schema::create('item_type', static function (Blueprint $table) {
-            $table->id();
+            $table->increments('id')->primary();
             $table->string('name');
             $table->string('friendly_name')->nullable();
             $table->string('description');
@@ -47,11 +47,11 @@ return new class extends Migration
         });
 
         Schema::create('item_subtype', static function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('item_type_id');
+            $table->tinyIncrements('id')->primary();
+            $table->unsignedInteger('item_type_id');
             $table->string('name');
             $table->string('friendly_name')->nullable();
-            $table->text('description');
+            $table->string('description');
             $table->timestamps();
             
             $table->foreign('item_type_id')
@@ -73,8 +73,8 @@ return new class extends Migration
 
         Schema::create('resource_type_item_type', static function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('resource_type_id');
-            $table->unsignedBigInteger('item_type_id');
+            $table->unsignedBigInteger('resource_type_id')->nullable();
+            $table->unsignedInteger('item_type_id')->nullable();
             $table->timestamps();
             
             $table->foreign('resource_type_id')
@@ -96,13 +96,13 @@ return new class extends Migration
             $table->foreign('resource_type_id')
                 ->references('id')
                 ->on('resource_type');
-            $table->unique('name', 'resource_type_id');
+            $table->unique(['resource_type_id', 'name']);
         });
 
         Schema::create('resource_item_subtype', static function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('resource_id');
-            $table->unsignedBigInteger('item_subtype_id');
+            $table->unsignedTinyInteger('item_subtype_id');
             $table->timestamps();
             
             $table->foreign('resource_id')
@@ -140,8 +140,8 @@ return new class extends Migration
         });
 
         Schema::create('currency', static function (Blueprint $table) {
-            $table->id();
-            $table->char('3');
+            $table->tinyIncrements('id')->primary();
+            $table->char('code');
             $table->string('name');
             $table->timestamps();
         });
@@ -159,7 +159,7 @@ return new class extends Migration
             $table->id();
             $table->string('queue')->index();
             $table->longText('payload');
-            $table->unsignedInteger('attempts');
+            $table->unsignedTinyInteger('attempts');
             $table->unsignedInteger('reserved_at')->nullable();
             $table->unsignedInteger('available_at');
             $table->unsignedInteger('created_at');
@@ -194,10 +194,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('effective_date');
             $table->date('publish_after')->nullable();
-            $table->unsignedBigInteger('currency_id');
-            $table->decimal('total', 15, 2);
+            $table->unsignedTinyInteger('currency_id');
+            $table->decimal('total', 13, 2);
             $table->tinyInteger('percentage');
-            $table->decimal('actualised_total', 15, 2);
+            $table->decimal('actualised_total', 13, 2);
             $table->timestamps();
             
             $table->foreign('item_id')
@@ -217,8 +217,8 @@ return new class extends Migration
             $table->char('account', 36);
             $table->char('target_account', 36)->nullable() ;
             $table->text('description')->nullable();
-            $table->decimal('amount', 15, 2);
-            $table->unsignedBigInteger('currency_id');
+            $table->decimal('amount', 13, 2);
+            $table->unsignedTinyInteger('currency_id');
             $table->enum('category', ['income', 'fixed', 'flexible', 'savings']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
@@ -241,13 +241,13 @@ return new class extends Migration
             $table->char('account', 36);
             $table->char('target_account', 36)->nullable() ;
             $table->text('description')->nullable();
-            $table->decimal('amount', 15, 2);
-            $table->unsignedBigInteger('currency_id');
+            $table->decimal('amount', 13, 2);
+            $table->unsignedTinyInteger('currency_id');
             $table->enum('category', ['income', 'fixed', 'flexible', 'savings', 'transfer']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->tinyInteger('disabled')->default(0);
-            $table->tinyInteger('deleted')->default(0);
+            $table->boolean('disabled')->default(0);
+            $table->boolean('deleted')->default(0);
             $table->json('frequency');
             $table->timestamps();
 
@@ -265,12 +265,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
             $table->longText('game');
             $table->longText('statistics');
             $table->char('winner', 10)->nullable();
             $table->unsignedInteger('score')->default(0);
-            $table->tinyInteger('complete')->default(0);
+            $table->unsignedTinyInteger('complete')->default(0);
             $table->timestamps();
 
             $table->foreign('item_id')
@@ -329,19 +329,24 @@ return new class extends Migration
 
             $table->foreign('resource_type_id')
                 ->references('id')
-                ->on('resource_type');
+                ->on('resource_type')
+                ->onDelete('cascade');
             $table->foreign('item_id')
                 ->references('id')
-                ->on('item');
+                ->on('item')
+                ->onDelete('cascade');
             $table->foreign('from')
                 ->references('id')
-                ->on('resource');
+                ->on('resource')
+                ->onDelete('cascade');
             $table->foreign('to')
                 ->references('id')
-                ->on('resource');
+                ->on('resource')
+                ->onDelete('cascade');
             $table->foreign('transferred_by')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');
             $table->unique(['resource_type_id', 'from', 'item_id']);
         });
 
@@ -371,19 +376,24 @@ return new class extends Migration
 
             $table->foreign('resource_type_id')
                 ->references('id')
-                ->on('resource_type');
+                ->on('resource_type')
+                ->onDelete('cascade');
             $table->foreign('item_id')
                 ->references('id')
-                ->on('item');
+                ->on('item')
+                ->onDelete('cascade');
             $table->foreign('from')
                 ->references('id')
-                ->on('resource');
+                ->on('resource')
+                ->onDelete('cascade');;
             $table->foreign('to')
                 ->references('id')
-                ->on('resource');
+                ->on('resource')
+                ->onDelete('cascade');;
             $table->foreign('transferred_by')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onDelete('cascade');;
         });
 
         Schema::create('password_creates', static function (Blueprint $table) {
