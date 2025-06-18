@@ -766,6 +766,8 @@ final class AuthenticationTest extends TestCase
     /** @test */
     public function updatePasswordSuccess(): void
     {
+        $this->createUser();
+        
         $this->actingAs(User::find($this->fetchRandomUser()->id));
 
         $new_password = $this->faker->password(12);
@@ -812,6 +814,8 @@ final class AuthenticationTest extends TestCase
     /** @test */
     public function updateProfileSuccess(): void
     {
+        $this->createUser();
+        
         $this->actingAs(User::find($this->fetchRandomUser()->id));
 
         $response = $this->post(

@@ -17,10 +17,8 @@
         <server name="APP_DEBUG" value="true"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="database"/>
-        <server name="DB_CONNECTION" value="mysql"/>
-        <server name="DB_HOST" value="costs.api.mysql"/>
-        <server name="DB_DATABASE" value="api"/>
-        <server name="DB_PORT" value="3306"/>
+        <server name="DB_CONNECTION" value="sqlite"/>
+        <server name="DB_DATABASE" value="database/database.sqlite"/>
         <server name="MAIL_MAILER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
