@@ -7,22 +7,19 @@ use Tests\TestCase;
 
 final class AuthenticationTest extends TestCase
 {
-    /** @test */
-    public function checkSuccess(): void
+    public function testCheckSuccess(): void
     {
         $this->actingAs(User::find(1));
 
         $this->get('v3/auth/check')->assertExactJson(['auth'=>true]);
     }
 
-    /** @test */
-    public function checkFalse(): void
+    public function testCheckFalse(): void
     {
         $this->get('v3/auth/check')->assertExactJson(['auth'=>false]);
     }
 
-    /** @test */
-    public function createNewPasswordErrorsWithInvalidEmail(): void
+    public function testCreateNewPasswordErrorsWithInvalidEmail(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -71,8 +68,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(404);
     }
 
-    /** @test */
-    public function createNewPasswordErrorsWithInvalidToken(): void
+    public function testCreateNewPasswordErrorsWithInvalidToken(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -119,8 +115,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(404);
     }
 
-    /** @test */
-    public function createNewPasswordErrorsWithInvalidTokenAndEmail(): void
+    public function testCreateNewPasswordErrorsWithInvalidTokenAndEmail(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -167,8 +162,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(404);
     }
 
-    /** @test */
-    public function createNewPasswordErrorsWithNoPayload(): void
+    public function testCreateNewPasswordErrorsWithNoPayload(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -214,8 +208,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function createNewPasswordSuccess(): void
+    public function testCreateNewPasswordSuccess(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -264,8 +257,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(204);
     }
 
-    /** @test */
-    public function createPasswordErrorsWithInvalidEmail(): void
+    public function testCreatePasswordErrorsWithInvalidEmail(): void
     {
         $response = $this->post(
             route('auth.register'),
@@ -290,8 +282,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(401);
     }
 
-    /** @test */
-    public function createPasswordErrorsWithInvalidToken(): void
+    public function tesCreatePasswordErrorsWithInvalidToken(): void
     {
         $email = $this->faker->email;
 
@@ -316,8 +307,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(401);
     }
 
-    /** @test */
-    public function createPasswordErrorsWithInvalidTokenAndEmail(): void
+    public function testCreatePasswordErrorsWithInvalidTokenAndEmail(): void
     {
         $response = $this->post(
             route('auth.create-password', ['email' => $this->faker->email, 'token' => $this->faker->uuid]),
@@ -327,8 +317,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(401);
     }
 
-    /** @test */
-    public function createPasswordFailsWithNoPayload(): void
+    public function testCreatePasswordFailsWithNoPayload(): void
     {
         $email = $this->faker->email;
 
@@ -353,8 +342,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function createPasswordFailsWithInvalidPayload(): void
+    public function testCreatePasswordFailsWithInvalidPayload(): void
     {
         $email = $this->faker->email;
 
@@ -381,8 +369,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function createPasswordSuccess(): void
+    public function testCreatePasswordSuccess(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -410,8 +397,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(204);
     }
 
-    /** @test */
-    public function forgotPasswordErrorsWithBadEmail(): void
+    public function testForgotPasswordErrorsWithBadEmail(): void
     {
         $response = $this->post(
             route('auth.forgot-password'),
@@ -423,8 +409,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function forgotPasswordErrorsWithNoPayload(): void
+    public function testForgotPasswordErrorsWithNoPayload(): void
     {
         $response = $this->post(
             route('auth.forgot-password'),
@@ -434,8 +419,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function forgotPasswordSuccess(): void
+    public function testForgotPasswordSuccess(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -472,8 +456,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(201);
     }
 
-    /** @test */
-    public function loginErrorsWithBadEmail(): void
+    public function testLoginErrorsWithBadEmail(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -511,8 +494,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function loginErrorsWithBadPassword(): void
+    public function testLoginErrorsWithBadPassword(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -550,8 +532,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function loginSuccess(): void
+    public function testLoginSuccess(): void
     {
         $email = $this->faker->email;
         $password = $this->faker->password(12);
@@ -589,8 +570,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(201);
     }
 
-    /** @test */
-    public function loginErrorsWithNoEmail(): void
+    public function testLoginErrorsWithNoEmail(): void
     {
         $response = $this->post(
             route('auth.login'),
@@ -602,8 +582,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function loginErrorsWithNoName(): void
+    public function testLoginErrorsWithNoName(): void
     {
         $response = $this->post(
             route('auth.login'),
@@ -615,8 +594,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function loginErrorsWithNoPayload(): void
+    public function testLoginErrorsWithNoPayload(): void
     {
         $response = $this->post(
             route('auth.login'),
@@ -627,8 +605,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function registrationErrorsWithBadEmail(): void
+    public function testRegistrationErrorsWithBadEmail(): void
     {
         $response = $this->post(
             route('auth.register'),
@@ -641,8 +618,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function registrationErrorsWithNoEmail(): void
+    public function testRegistrationErrorsWithNoEmail(): void
     {
         $response = $this->post(
             route('auth.register'),
@@ -654,8 +630,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function registrationErrorsWithNoName(): void
+    public function testRegistrationErrorsWithNoName(): void
     {
         $response = $this->post(
             route('auth.register'),
@@ -667,8 +642,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function registrationErrorsWithNonUniqueEmail(): void
+    public function testRegistrationErrorsWithNonUniqueEmail(): void
     {
         $email = $this->faker->email;
 
@@ -693,8 +667,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function registrationErrorsWithNoPayload(): void
+    public function testRegistrationErrorsWithNoPayload(): void
     {
         $response = $this->post(
             route('auth.register'),
@@ -704,8 +677,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function registrationSuccess(): void
+    public function testRegistrationSuccess(): void
     {
         $response = $this->post(
             route('auth.register'),
@@ -718,8 +690,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(201);
     }
 
-    /** @test */
-    public function registrationSuccessSetRegisteredVia(): void
+    public function testRegistrationSuccessSetRegisteredVia(): void
     {
         $response = $this->post(
             route('auth.register'),
@@ -733,8 +704,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(201);
     }
 
-    /** @test */
-    public function updatePasswordFailsMismatchedPasswords(): void
+    public function testUpdatePasswordFailsMismatchedPasswords(): void
     {
         $this->actingAs(User::find(1));
 
@@ -749,8 +719,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function updatePasswordFailsNoPayload(): void
+    public function testUpdatePasswordFailsNoPayload(): void
     {
         $this->actingAs(User::find(1));
 
@@ -763,8 +732,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function updatePasswordSuccess(): void
+    public function testUpdatePasswordSuccess(): void
     {
         $this->createUser();
         
@@ -783,8 +751,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(204);
     }
 
-    /** @test */
-    public function updateProfileFailsBadEmail(): void
+    public function testUpdateProfileFailsBadEmail(): void
     {
         $this->actingAs(User::find(1));
 
@@ -798,8 +765,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    /** @test */
-    public function updateProfileFailsNoPayload(): void
+    public function testUpdateProfileFailsNoPayload(): void
     {
         $this->actingAs(User::find(1));
 
@@ -811,8 +777,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(400);
     }
 
-    /** @test */
-    public function updateProfileSuccess(): void
+    public function testUpdateProfileSuccess(): void
     {
         $this->createUser();
         
@@ -828,8 +793,7 @@ final class AuthenticationTest extends TestCase
         $response->assertStatus(204);
     }
 
-    /** @test */
-    public function userSuccess(): void
+    public function testUserSuccess(): void
     {
         $this->actingAs(User::find(1));
 

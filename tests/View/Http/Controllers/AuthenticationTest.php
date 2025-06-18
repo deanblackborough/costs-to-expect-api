@@ -6,8 +6,7 @@ use Tests\TestCase;
 
 final class AuthenticationTest extends TestCase
 {
-    /** @test */
-    public function optionsRequestForCreatePassword(): void
+    public function testOptionsRequestForCreatePassword(): void
     {
         $response = $this->fetchOptionsForCreatePassword();
         $response->assertStatus(200);
@@ -15,8 +14,7 @@ final class AuthenticationTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/auth/options/create-password.json');
     }
 
-    /** @test */
-    public function optionsRequestForMigrateBudgetProRequestDelete(): void
+    public function testOptionsRequestForMigrateBudgetProRequestDelete(): void
     {
         $response = $this->fetchOptionsForMigrateBudgetProRequestDelete();
         $response->assertStatus(200);
@@ -24,8 +22,7 @@ final class AuthenticationTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/auth/options/migrate-budget-pro-request-delete.json');
     }
 
-    /** @test */
-    public function optionsRequestForRegister(): void
+    public function testOptionsRequestForRegister(): void
     {
         $response = $this->fetchOptionsForRegister();
         $response->assertStatus(200);
@@ -33,8 +30,7 @@ final class AuthenticationTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/auth/options/register.json');
     }
 
-    /** @test */
-    public function optionsRequestForUpdatePassword(): void
+    public function testOptionsRequestForUpdatePassword(): void
     {
         $response = $this->fetchOptionsForUpdatePassword();
         $response->assertStatus(200);
@@ -42,8 +38,7 @@ final class AuthenticationTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/auth/options/update-password.json');
     }
 
-    /** @test */
-    public function optionsRequestForUpdateProfile(): void
+    public function testOptionsRequestForUpdateProfile(): void
     {
         $response = $this->fetchOptionsForUpdateProfile();
         $response->assertStatus(200);
