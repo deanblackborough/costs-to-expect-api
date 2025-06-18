@@ -36,18 +36,16 @@ return new class extends Migration
         });
 
         Schema::create('item_type', static function (Blueprint $table) {
-            $table->increments('id')->primary();
-            $table->string('name');
+            $table->increments('id');
+            $table->string('name', 25)->index();
             $table->string('friendly_name')->nullable();
             $table->string('description');
             $table->string('example')->nullable();
             $table->timestamps();
-            
-            $table->index('name');
         });
 
         Schema::create('item_subtype', static function (Blueprint $table) {
-            $table->tinyIncrements('id')->primary();
+            $table->tinyIncrements('id');
             $table->unsignedInteger('item_type_id');
             $table->string('name');
             $table->string('friendly_name')->nullable();
@@ -111,11 +109,12 @@ return new class extends Migration
             $table->foreign('item_subtype_id')
                 ->references('id')
                 ->on('item_subtype');
+            $table->unique(['resource_id', 'item_subtype_id']);
         });
 
         Schema::create('category', static function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('resource_type_id');
+            $table->unsignedBigInteger('resource_type_id')->default(1);
             $table->string('name');
             $table->text('description');
             $table->timestamps();
@@ -140,8 +139,8 @@ return new class extends Migration
         });
 
         Schema::create('currency', static function (Blueprint $table) {
-            $table->tinyIncrements('id')->primary();
-            $table->char('code');
+            $table->tinyIncrements('id');
+            $table->char('code', 3);
             $table->string('name');
             $table->timestamps();
         });
@@ -177,14 +176,20 @@ return new class extends Migration
         Schema::create('item', static function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('resource_id');
-            $table->unsignedBigInteger('created_by')->index();
+            $table->unsignedBigInteger('created_by');
             $table->timestamp('created_at')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable()->index();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamp('updated_at')->nullable();
             
             $table->foreign('resource_id')
                 ->references('id')
                 ->on('resource');
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users');
+            $table->foreign('updated_by')
+                ->references('id')
+                ->on('users');
         });
 
         Schema::create('item_type_allocated_expense', static function (Blueprint $table) {
@@ -194,7 +199,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('effective_date');
             $table->date('publish_after')->nullable();
-            $table->unsignedTinyInteger('currency_id');
+            $table->unsignedTinyInteger('currency_id')->default(1);
             $table->decimal('total', 13, 2);
             $table->tinyInteger('percentage');
             $table->decimal('actualised_total', 13, 2);
@@ -222,7 +227,7 @@ return new class extends Migration
             $table->enum('category', ['income', 'fixed', 'flexible', 'savings']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->tinyInteger('disabled')->default(0);
+            $table->boolean('disabled')->default(0);
             $table->json('frequency');
             $table->timestamps();
 

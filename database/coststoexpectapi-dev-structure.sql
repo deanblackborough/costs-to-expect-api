@@ -9,7 +9,7 @@
 
 CREATE TABLE `cache` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   UNIQUE KEY `cache_key_unique` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -18,7 +18,7 @@ CREATE TABLE `cache_locks` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
-  UNIQUE KEY `cache_locks_key_unique` (`key`)
+  PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `category` (
@@ -35,13 +35,13 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `currency` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `3` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` tinyint unsigned NOT NULL AUTO_INCREMENT,
+  `code` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `error_log` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -131,11 +131,11 @@ CREATE TABLE `item_partial_transfer` (
   KEY `item_partial_transfer_from_foreign` (`from`),
   KEY `item_partial_transfer_to_foreign` (`to`),
   KEY `item_partial_transfer_transferred_by_foreign` (`transferred_by`),
-  CONSTRAINT `item_partial_transfer_from_foreign` FOREIGN KEY (`from`) REFERENCES `resource` (`id`),
-  CONSTRAINT `item_partial_transfer_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`),
-  CONSTRAINT `item_partial_transfer_resource_type_id_foreign` FOREIGN KEY (`resource_type_id`) REFERENCES `resource_type` (`id`),
-  CONSTRAINT `item_partial_transfer_to_foreign` FOREIGN KEY (`to`) REFERENCES `resource` (`id`),
-  CONSTRAINT `item_partial_transfer_transferred_by_foreign` FOREIGN KEY (`transferred_by`) REFERENCES `users` (`id`)
+  CONSTRAINT `item_partial_transfer_from_foreign` FOREIGN KEY (`from`) REFERENCES `resource` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_partial_transfer_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_partial_transfer_resource_type_id_foreign` FOREIGN KEY (`resource_type_id`) REFERENCES `resource_type` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_partial_transfer_to_foreign` FOREIGN KEY (`to`) REFERENCES `resource` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_partial_transfer_transferred_by_foreign` FOREIGN KEY (`transferred_by`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `item_sub_category` (
@@ -152,18 +152,18 @@ CREATE TABLE `item_sub_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `item_subtype` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `item_type_id` bigint unsigned NOT NULL,
+  `id` tinyint unsigned NOT NULL AUTO_INCREMENT,
+  `item_type_id` int unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `friendly_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `item_subtype_item_type_id_foreign` (`item_type_id`),
   KEY `item_subtype_name_index` (`name`),
   CONSTRAINT `item_subtype_item_type_id_foreign` FOREIGN KEY (`item_type_id`) REFERENCES `item_type` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `item_transfer` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -180,24 +180,23 @@ CREATE TABLE `item_transfer` (
   KEY `item_transfer_from_foreign` (`from`),
   KEY `item_transfer_to_foreign` (`to`),
   KEY `item_transfer_transferred_by_foreign` (`transferred_by`),
-  CONSTRAINT `item_transfer_from_foreign` FOREIGN KEY (`from`) REFERENCES `resource` (`id`),
-  CONSTRAINT `item_transfer_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`),
-  CONSTRAINT `item_transfer_resource_type_id_foreign` FOREIGN KEY (`resource_type_id`) REFERENCES `resource_type` (`id`),
-  CONSTRAINT `item_transfer_to_foreign` FOREIGN KEY (`to`) REFERENCES `resource` (`id`),
-  CONSTRAINT `item_transfer_transferred_by_foreign` FOREIGN KEY (`transferred_by`) REFERENCES `users` (`id`)
+  CONSTRAINT `item_transfer_from_foreign` FOREIGN KEY (`from`) REFERENCES `resource` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_transfer_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_transfer_resource_type_id_foreign` FOREIGN KEY (`resource_type_id`) REFERENCES `resource_type` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_transfer_to_foreign` FOREIGN KEY (`to`) REFERENCES `resource` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `item_transfer_transferred_by_foreign` FOREIGN KEY (`transferred_by`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `item_type` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `friendly_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `example` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `item_type_name_index` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `item_type_allocated_expense` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -206,10 +205,10 @@ CREATE TABLE `item_type_allocated_expense` (
   `description` text COLLATE utf8mb4_unicode_ci,
   `effective_date` date NOT NULL,
   `publish_after` date DEFAULT NULL,
-  `currency_id` bigint unsigned NOT NULL,
-  `total` decimal(15,2) NOT NULL,
+  `currency_id` tinyint unsigned NOT NULL,
+  `total` decimal(13,2) NOT NULL,
   `percentage` tinyint NOT NULL,
-  `actualised_total` decimal(15,2) NOT NULL,
+  `actualised_total` decimal(13,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -228,8 +227,8 @@ CREATE TABLE `item_type_budget` (
   `account` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `target_account` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
-  `amount` decimal(15,2) NOT NULL,
-  `currency_id` bigint unsigned NOT NULL,
+  `amount` decimal(13,2) NOT NULL,
+  `currency_id` tinyint unsigned NOT NULL,
   `category` enum('income','fixed','flexible','savings') COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL,
@@ -251,13 +250,13 @@ CREATE TABLE `item_type_budget_pro` (
   `account` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `target_account` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
-  `amount` decimal(15,2) NOT NULL,
-  `currency_id` bigint unsigned NOT NULL,
+  `amount` decimal(13,2) NOT NULL,
+  `currency_id` tinyint unsigned NOT NULL,
   `category` enum('income','fixed','flexible','savings','transfer') COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL,
-  `disabled` tinyint NOT NULL DEFAULT '0',
-  `deleted` tinyint NOT NULL DEFAULT '0',
+  `disabled` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `frequency` json NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -274,12 +273,12 @@ CREATE TABLE `item_type_game` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `item_id` bigint unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `game` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `statistics` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `winner` char(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `score` int unsigned NOT NULL DEFAULT '0',
-  `complete` tinyint NOT NULL DEFAULT '0',
+  `complete` tinyint unsigned NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -291,7 +290,7 @@ CREATE TABLE `jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attempts` int unsigned NOT NULL,
+  `attempts` tinyint unsigned NOT NULL,
   `reserved_at` int unsigned DEFAULT NULL,
   `available_at` int unsigned NOT NULL,
   `created_at` int unsigned NOT NULL,
@@ -375,15 +374,14 @@ CREATE TABLE `resource` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `resource_type_id` (`name`),
-  KEY `resource_resource_type_id_foreign` (`resource_type_id`),
+  UNIQUE KEY `resource_resource_type_id_name_unique` (`resource_type_id`,`name`),
   CONSTRAINT `resource_resource_type_id_foreign` FOREIGN KEY (`resource_type_id`) REFERENCES `resource_type` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `resource_item_subtype` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `resource_id` bigint unsigned NOT NULL,
-  `item_subtype_id` bigint unsigned NOT NULL,
+  `item_subtype_id` tinyint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -407,8 +405,8 @@ CREATE TABLE `resource_type` (
 
 CREATE TABLE `resource_type_item_type` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `resource_type_id` bigint unsigned NOT NULL,
-  `item_type_id` bigint unsigned NOT NULL,
+  `resource_type_id` bigint unsigned DEFAULT NULL,
+  `item_type_id` int unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
