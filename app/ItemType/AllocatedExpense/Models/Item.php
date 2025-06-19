@@ -229,16 +229,16 @@ class Item extends LaravelModel
             array_key_exists('year', $parameters) === true &&
             $parameters['year'] !== null
         ) {
-            $expression = DB::raw("YEAR(item_type_allocated_expense.effective_date) = '{$parameters['year']}'");
-            $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()));
+            $expression = DB::raw("YEAR(item_type_allocated_expense.effective_date) = ?");
+            $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()), [$parameters['year']]);
         }
 
         if (
             array_key_exists('month', $parameters) === true &&
             $parameters['month'] !== null
         ) {
-            $expression = DB::raw("MONTH(item_type_allocated_expense.effective_date) = '{$parameters['month']}'");
-            $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()));
+            $expression = DB::raw("MONTH(item_type_allocated_expense.effective_date) = ?");
+            $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()), $parameters['month']);
         }
 
         if (
