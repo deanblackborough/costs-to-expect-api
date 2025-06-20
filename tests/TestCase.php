@@ -828,16 +828,6 @@ abstract class TestCase extends BaseTestCase
     {
         return number_format($this->faker->randomFloat(2, 0.01, 99999999999.99), 2, '.', '');
     }
-    
-    public static function setUpBeforeClass(): void
-    {
-        $database = __DIR__ . '/../database/database.sqlite';
-
-        if (file_exists($database) === false) {
-            touch($database);
-            chmod($database, 0777);
-        }
-    }
 
     protected function setUp(): void
     {

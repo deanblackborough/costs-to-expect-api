@@ -7,10 +7,7 @@ use Tests\TestCase;
 
 final class CategoryTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function allocatedExpenseCategoryCollection(): void
+    public function testAllocatedExpenseCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -38,12 +35,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function allocatedExpenseCategoryCollectionPagination(): void
+    public function testAllocatedExpenseCategoryCollectionPagination(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -77,12 +69,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function allocatedExpenseCategoryCollectionPaginationPrevious(): void
+    public function testAllocatedExpenseCategoryCollectionPaginationPrevious(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -116,12 +103,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function allocatedExpenseCategoryCollectionSearchDescription(): void
+    public function testAllocatedExpenseCategoryCollectionSearchDescription(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -153,12 +135,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function allocatedExpenseCategoryCollectionSearchName(): void
+    public function testAllocatedExpenseCategoryCollectionSearchName(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -190,12 +167,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function allocatedExpenseCategoryCollectionSortCreated(): void
+    public function testAllocatedExpenseCategoryCollectionSortCreated(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -226,12 +198,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function allocatedExpenseCategoryCollectionSortDescription(): void
+    public function testAllocatedExpenseCategoryCollectionSortDescription(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -260,14 +227,8 @@ final class CategoryTest extends TestCase
             $this->assertJsonMatchesCategorySchema($json);
         }
     }
-
-
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function allocatedExpenseCategoryCollectionSortName(): void
+    
+    public function testAllocatedExpenseCategoryCollectionSortName(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -297,8 +258,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /** @test */
-    public function allocatedExpenseCategoryShow(): void
+    public function testAllocatedExpenseCategoryShow(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -336,12 +296,7 @@ final class CategoryTest extends TestCase
         $this->assertJsonMatchesCategorySchemaWhichIncludesSubcategories($response->getContent());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function budgetCategoryCollection(): void
+    public function testBudgetCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -371,8 +326,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /** @test */
-    public function budgetCategoryShow(): void
+    public function testBudgetCategoryShow(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -389,8 +343,7 @@ final class CategoryTest extends TestCase
         $this->assertJsonMatchesCategorySchema($response->getContent());
     }
 
-    /** @test */
-    public function budgetCategoryShowIncludeSubcategories(): void
+    public function testBudgetCategoryShowIncludeSubcategories(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -410,12 +363,7 @@ final class CategoryTest extends TestCase
         $this->assertJsonMatchesCategorySchemaWhichIncludesSubcategories($response->getContent());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function budgetProCategoryCollection(): void
+    public function testBudgetProCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -445,8 +393,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /** @test */
-    public function budgetProCategoryShow(): void
+    public function testBudgetProCategoryShow(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -463,8 +410,7 @@ final class CategoryTest extends TestCase
         $this->assertJsonMatchesCategorySchema($response->getContent());
     }
 
-    /** @test */
-    public function budgetProCategoryShowIncludeSubcategories(): void
+    public function testBudgetProCategoryShowIncludeSubcategories(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -484,12 +430,7 @@ final class CategoryTest extends TestCase
         $this->assertJsonMatchesCategorySchemaWhichIncludesSubcategories($response->getContent());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
-    public function gameCategoryCollection(): void
+    public function testGameCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -517,8 +458,7 @@ final class CategoryTest extends TestCase
         }
     }
 
-    /** @test */
-    public function gameCategoryShow(): void
+    public function testGameCategoryShow(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -535,8 +475,7 @@ final class CategoryTest extends TestCase
         $this->assertJsonMatchesCategorySchema($response->getContent());
     }
 
-    /** @test */
-    public function gameCategoryShowIncludeSubcategories(): void
+    public function testGameCategoryShowIncludeSubcategories(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -556,8 +495,7 @@ final class CategoryTest extends TestCase
         $this->assertJsonMatchesCategorySchemaWhichIncludesSubcategories($response->getContent());
     }
 
-    /** @test */
-    public function optionsRequestForAllocatedExpenseCategory(): void
+    public function testOptionsRequestForAllocatedExpenseCategory(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -573,8 +511,7 @@ final class CategoryTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/options/category.json');
     }
 
-    /** @test */
-    public function optionsRequestForAllocatedExpenseCategoryCollection(): void
+    public function testOptionsRequestForAllocatedExpenseCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -589,8 +526,7 @@ final class CategoryTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/options/category-collection.json');
     }
 
-    /** @test */
-    public function optionsRequestForBudgetCategory(): void
+    public function testOptionsRequestForBudgetCategory(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -608,8 +544,7 @@ final class CategoryTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/options/category.json');
     }
 
-    /** @test */
-    public function optionsRequestForBudgetCategoryCollection(): void
+    public function testOptionsRequestForBudgetCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -626,8 +561,7 @@ final class CategoryTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/options/category-collection.json');
     }
 
-    /** @test */
-    public function optionsRequestForBudgetProCategory(): void
+    public function testOptionsRequestForBudgetProCategory(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -645,8 +579,7 @@ final class CategoryTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/options/category.json');
     }
 
-    /** @test */
-    public function optionsRequestForBudgetProCategoryCollection(): void
+    public function testOptionsRequestForBudgetProCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -663,8 +596,7 @@ final class CategoryTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/options/category-collection.json');
     }
 
-    /** @test */
-    public function optionsRequestForGameCategory(): void
+    public function testOptionsRequestForGameCategory(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
@@ -680,8 +612,7 @@ final class CategoryTest extends TestCase
         $this->assertProvidedJsonMatchesDefinedSchema($response->content(), 'api/schema/options/category.json');
     }
 
-    /** @test */
-    public function optionsRequestForGameCategoryCollection(): void
+    public function testOptionsRequestForGameCategoryCollection(): void
     {
         $this->actingAs(User::find($this->createUser()));
 
