@@ -16,20 +16,13 @@ use Illuminate\Support\Facades\Config;
 
 /**
  * @author Dean Blackborough <dean@g3d-development.com>
- * @copyright Dean Blackborough 2018-2023
+ * @copyright Dean Blackborough 2018-2025
  * @license https://github.com/costs-to-expect/api/blob/master/LICENSE
  */
 class CategoryController extends Controller
 {
     protected bool $allow_entire_collection = true;
 
-    /**
-     * Return the categories collection
-     *
-     * @param string $resource_type_id
-     *
-     * @return JsonResponse
-     */
     public function index(Request $request, $resource_type_id): JsonResponse
     {
         if ($this->hasViewAccessToResourceType((int) $resource_type_id) === false) {
@@ -43,10 +36,10 @@ class CategoryController extends Controller
         $cache_collection->setFromCache($cache_control->getByKey($request->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-            $search_parameters = Parameter\Search::fetch(
-                Config::get('api.category.searchable')
-            );
-
+            
+            $searchRequestService = new Parameter\Search($request->get('search'));
+            $searchParameters = $searchRequestService->fetch(Config::get('api.category.searchable'));
+            
             $sort_parameters = Parameter\Sort::fetch(
                 Config::get('api.category.sortable')
             );
@@ -54,12 +47,12 @@ class CategoryController extends Controller
             $total = (new Category())->total(
                 (int) $resource_type_id,
                 $this->viewable_resource_types,
-                $search_parameters
+                $searchParameters
             );
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination->allowPaginationOverride($this->allow_entire_collection)->
-                setSearchParameters($search_parameters)->
+                setSearchParameters($searchParameters)->
                 setSortParameters($sort_parameters)->
                 parameters();
 
@@ -68,7 +61,7 @@ class CategoryController extends Controller
                 $this->viewable_resource_types,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $search_parameters,
+                $searchParameters,
                 $sort_parameters
             );
 
@@ -89,7 +82,7 @@ class CategoryController extends Controller
                 ->collection($pagination_parameters, count($categories), $total)
                 ->addCacheControl($cache_control->visibility(), $cache_control->ttl())
                 ->addETag($collection)
-                ->addSearch(Parameter\Search::xHeader())
+                ->addSearch($searchRequestService->xHeader())
                 ->addSort(Parameter\Sort::xHeader());
 
             if ($last_updated !== null) {
