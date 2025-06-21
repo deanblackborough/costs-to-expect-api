@@ -93,9 +93,8 @@ class ResourceTypeItem extends ApiResourceTypeItemResponse
             $this->resource_type_id
         );
 
-        $this->search_parameters = Search::fetch(
-            LaravelConfig::get($base_path . '.searchable', [])
-        );
+        $searchParameterService = new Search(request()->get('search'));
+        $this->search_parameters = $searchParameterService->fetch(LaravelConfig::get($base_path . '.searchable', []));
 
         $this->filter_parameters = Filter::fetch(
             LaravelConfig::get($base_path . '.filterable', [])

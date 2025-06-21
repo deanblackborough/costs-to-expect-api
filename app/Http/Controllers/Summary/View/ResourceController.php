@@ -40,14 +40,14 @@ class ResourceController extends Controller
         $cache_summary->setFromCache($cache_control->getByKey($request->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_summary->valid() === false) {
-            $search_parameters = Parameter\Search::fetch(
-                Config::get('api.resource.summary-searchable')
-            );
+
+            $searchRequestService = new Parameter\Search($request->get('search'));
+            $searchParameters = $searchRequestService->fetch(Config::get('api.resource.summary-searchable'));
 
             $summary = (new Resource())->totalCount(
                 $resource_type_id,
                 $this->viewable_resource_types,
-                $search_parameters
+                $searchParameters
             );
 
             $total = 0;
@@ -68,7 +68,7 @@ class ResourceController extends Controller
             $headers
                 ->addCacheControl($cache_control->visibility(), $cache_control->ttl())
                 ->addETag($collection)
-                ->addSearch(Parameter\Search::xHeader());
+                ->addSearch($searchRequestService->xHeader());
 
             if ($last_updated !== null) {
                 $headers->addLastUpdated($last_updated);

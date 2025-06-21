@@ -3,6 +3,7 @@
 namespace App\ItemType\AllocatedExpense\HttpResponse;
 
 use App\HttpRequest\Parameter;
+use App\HttpRequest\Parameter\Search;
 use App\HttpRequest\Validate\Boolean;
 use App\ItemType\HttpResponse\ApiSummaryResponse;
 use Illuminate\Http\JsonResponse;
@@ -459,9 +460,8 @@ class Summary extends ApiSummaryResponse
             $this->resource_id
         );
 
-        $this->search_parameters = Parameter\Search::fetch(
-            LaravelConfig::get($base_path . '.summary-searchable', [])
-        );
+        $searchParameterService = new Search(request()->get('search'));
+        $this->search_parameters = $searchParameterService->fetch(LaravelConfig::get($base_path . '.summary-searchable', []));
 
         $this->filter_parameters = Parameter\Filter::fetch(
             LaravelConfig::get($base_path . '.summary-filterable', [])
