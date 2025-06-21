@@ -37,10 +37,10 @@ class SubcategoryController extends Controller
         $cache_collection->setFromCache($cache_control->getByKey($request->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-            $search_parameters = Parameter\Search::fetch(
-                Config::get('api.subcategory.searchable')
-            );
 
+            $searchRequestService = new Parameter\Search($request->get('search'));
+            $searchParameters = $searchRequestService->fetch(Config::get('api.subcategory.searchable'));
+            
             $sort_parameters = Parameter\Sort::fetch(
                 Config::get('api.subcategory.sortable')
             );
@@ -48,12 +48,12 @@ class SubcategoryController extends Controller
             $total = (new Subcategory())->totalCount(
                 (int)$resource_type_id,
                 (int)$category_id,
-                $search_parameters
+                $searchParameters
             );
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination->allowPaginationOverride($this->allow_entire_collection)->
-                setSearchParameters($search_parameters)->
+                setSearchParameters($searchParameters)->
                 setSortParameters($sort_parameters)->
                 parameters();
 
@@ -62,7 +62,7 @@ class SubcategoryController extends Controller
                 (int)$category_id,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $search_parameters,
+                $searchParameters,
                 $sort_parameters
             );
 
@@ -83,7 +83,7 @@ class SubcategoryController extends Controller
                 ->collection($pagination_parameters, count($subcategories), $total)
                 ->addCacheControl($cache_control->visibility(), $cache_control->ttl())
                 ->addETag($collection)
-                ->addSearch(Parameter\Search::xHeader())
+                ->addSearch($searchRequestService->xHeader())
                 ->addSort(Parameter\Sort::xHeader());
 
             if ($last_updated !== null) {

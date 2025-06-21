@@ -40,26 +40,26 @@ class ItemTypeController extends Controller
         $cache_collection->setFromCache($cache_control->getByKey($request->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-            $search_parameters = Parameter\Search::fetch(
-                Config::get('api.item-type.searchable')
-            );
+
+            $searchRequestService = new Parameter\Search($request->get('search'));
+            $searchParameters = $searchRequestService->fetch(Config::get('api.item-type.searchable'));
 
             $sort_parameters = Parameter\Sort::fetch(
                 Config::get('api.item-type.sortable')
             );
 
-            $total = (new ItemType())->totalCount($search_parameters);
+            $total = (new ItemType())->totalCount($searchParameters);
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination->allowPaginationOverride($this->allow_entire_collection)->
-                setSearchParameters($search_parameters)->
+                setSearchParameters($searchParameters)->
                 setSortParameters($sort_parameters)->
                 parameters();
 
             $item_types = (new ItemType())->paginatedCollection(
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $search_parameters,
+                $searchParameters,
                 $sort_parameters
             );
 
@@ -74,7 +74,7 @@ class ItemTypeController extends Controller
             $headers->collection($pagination_parameters, count($item_types), $total)->
                 addCacheControl($cache_control->visibility(), $cache_control->ttl())->
                 addETag($collection)->
-                addSearch(Parameter\Search::xHeader())->
+                addSearch($searchRequestService->xHeader())->
                 addSort(Parameter\Sort::xHeader());
 
             $cache_collection->create($total, $collection, $pagination_parameters, $headers->headers());

@@ -55,9 +55,7 @@ class QueueController extends Controller
             $headers = new Header();
             $headers->collection($pagination_parameters, count($jobs), $total)->
                 addCacheControl($cache_control->visibility(), $cache_control->ttl())->
-                addETag($collection)->
-                addSearch(Parameter\Search::xHeader())->
-                addSort(Parameter\Sort::xHeader());
+                addETag($collection);
 
             $cache_collection->create($total, $collection, $pagination_parameters, $headers->headers());
             $cache_control->putByKey($request->getRequestUri(), $cache_collection->content());

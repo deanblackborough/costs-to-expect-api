@@ -35,9 +35,9 @@ class PermittedUserController extends Controller
         $cache_collection->setFromCache($cache_control->getByKey($request->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-            $search_parameters = Parameter\Search::fetch(
-                Config::get('api.permitted-user.searchable')
-            );
+
+            $searchRequestService = new Parameter\Search($request->get('search'));
+            $searchParameters = $searchRequestService->fetch(Config::get('api.permitted-user.searchable'));
 
             $sort_parameters = Parameter\Sort::fetch(
                 Config::get('api.permitted-user.sortable')
@@ -45,12 +45,12 @@ class PermittedUserController extends Controller
 
             $total = (new PermittedUser())->totalCount(
                 $resource_type_id,
-                $search_parameters
+                $searchParameters
             );
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination->allowPaginationOverride($this->allow_entire_collection)->
-                setSearchParameters($search_parameters)->
+                setSearchParameters($searchParameters)->
                 setSortParameters($sort_parameters)->
                 parameters();
 
@@ -58,7 +58,7 @@ class PermittedUserController extends Controller
                 $resource_type_id,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $search_parameters,
+                $searchParameters,
                 $sort_parameters
             );
 
@@ -73,7 +73,7 @@ class PermittedUserController extends Controller
             $headers->collection($pagination_parameters, count($permitted_users), $total)->
                 addCacheControl($cache_control->visibility(), $cache_control->ttl())->
                 addETag($collection)->
-                addSearch(Parameter\Search::xHeader())->
+                addSearch($searchRequestService->xHeader())->
                 addSort(Parameter\Sort::xHeader());
 
             $cache_collection->create($total, $collection, $pagination_parameters, $headers->headers());

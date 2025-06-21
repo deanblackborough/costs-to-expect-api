@@ -50,9 +50,8 @@ class ResourceController extends Controller
                 array_keys(Config::get('api.resource.parameters'))
             );
 
-            $search_parameters = Parameter\Search::fetch(
-                Config::get('api.resource.searchable')
-            );
+            $searchRequestService = new Parameter\Search($request->get('search'));
+            $searchParameters = $searchRequestService->fetch(Config::get('api.resource.searchable'));
 
             $sort_parameters = Parameter\Sort::fetch(
                 Config::get('api.resource.sortable')
@@ -61,12 +60,12 @@ class ResourceController extends Controller
             $total = (new Resource())->totalCount(
                 $resource_type_id,
                 $this->viewable_resource_types,
-                $search_parameters
+                $searchParameters
             );
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination->allowPaginationOverride($this->allow_entire_collection)
-                ->setSearchParameters($search_parameters)
+                ->setSearchParameters($searchParameters)
                 ->setSortParameters($sort_parameters)
                 ->setParameters($request_parameters)
                 ->parameters();
@@ -75,7 +74,7 @@ class ResourceController extends Controller
                 $resource_type_id,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $search_parameters,
+                $searchParameters,
                 $sort_parameters,
                 $request_parameters
             );
@@ -97,7 +96,7 @@ class ResourceController extends Controller
                 ->collection($pagination_parameters, count($resources), $total)
                 ->addCacheControl($cache_control->visibility(), $cache_control->ttl())
                 ->addETag($collection)
-                ->addSearch(Parameter\Search::xHeader())
+                ->addSearch($searchRequestService->xHeader())
                 ->addSort(Parameter\Sort::xHeader());
 
             if ($last_updated !== null) {
