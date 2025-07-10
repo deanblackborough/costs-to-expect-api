@@ -14,7 +14,7 @@ final class ResourceTypeTest extends TestCase
      */
     public function allocatedExpenseResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $this->createAllocatedExpenseResourceType();
         $this->createAllocatedExpenseResourceType();
@@ -139,7 +139,7 @@ final class ResourceTypeTest extends TestCase
      */
     public function allocatedExpenseResourceTypeCollectionSortCreated(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $this->createAllocatedExpenseResourceType();
         $this->createAllocatedExpenseResourceType();
@@ -173,7 +173,7 @@ final class ResourceTypeTest extends TestCase
      */
     public function allocatedExpenseResourceTypeCollectionSortName(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $this->createAllocatedExpenseResourceType();
         $this->createAllocatedExpenseResourceType(['name' => 'AAAAAAAAAAAA']);
@@ -254,7 +254,7 @@ final class ResourceTypeTest extends TestCase
      */
     public function budgetResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $this->createBudgetResourceType();
         $this->createBudgetResourceType();
@@ -279,7 +279,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetResourceTypeShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
 
@@ -330,7 +330,7 @@ final class ResourceTypeTest extends TestCase
      */
     public function budgetProResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $this->createBudgetProResourceType();
         $this->createBudgetProResourceType();
@@ -355,7 +355,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetProResourceTypeShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
 
@@ -406,7 +406,7 @@ final class ResourceTypeTest extends TestCase
      */
     public function gameResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $this->createGameResourceType();
         $this->createGameResourceType();
@@ -431,7 +431,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function gameResourceTypeShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
 

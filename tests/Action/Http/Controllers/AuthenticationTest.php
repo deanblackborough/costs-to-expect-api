@@ -734,7 +734,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdatePasswordSuccess(): void
     {
-        $this->createUser();
+        $this->createUserAndReturnId();
         
         $this->actingAs(User::find($this->fetchRandomUser()->id));
 
@@ -779,7 +779,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdateProfileSuccess(): void
     {
-        $this->createUser();
+        $this->createUserAndReturnId();
         
         $this->actingAs(User::find($this->fetchRandomUser()->id));
 

@@ -14,7 +14,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -49,7 +49,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubcategoryCollectionPagination(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -90,7 +90,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubcategoryCollectionPaginationPrevious(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -131,7 +131,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubcategoryCollectionSearchDescription(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $search_string = $this->faker->text(100);
 
@@ -170,7 +170,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubcategoryCollectionSearchName(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $search_string = $this->faker->text(25);
 
@@ -209,7 +209,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubCategoryCollectionSortCreated(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -248,7 +248,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubCategoryCollectionSortDescription(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -286,7 +286,7 @@ final class SubcategoryTest extends TestCase
      */
     public function allocatedExpenseSubCategoryCollectionSortName(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -320,7 +320,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function allocatedExpenseSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -343,7 +343,7 @@ final class SubcategoryTest extends TestCase
      */
     public function budgetProSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -374,7 +374,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function budgetProSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -397,7 +397,7 @@ final class SubcategoryTest extends TestCase
      */
     public function budgetSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -428,7 +428,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function budgetSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -451,7 +451,7 @@ final class SubcategoryTest extends TestCase
      */
     public function gameSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -482,7 +482,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function gameSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -501,7 +501,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForAllocatedExpenseSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -520,7 +520,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForAllocatedExpenseSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -537,7 +537,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -558,7 +558,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -577,7 +577,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -598,7 +598,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -617,7 +617,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForGameSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -638,7 +638,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForGameSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);

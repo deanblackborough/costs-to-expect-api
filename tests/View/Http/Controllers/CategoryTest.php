@@ -9,7 +9,7 @@ final class CategoryTest extends TestCase
 {
     public function testAllocatedExpenseCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -37,7 +37,7 @@ final class CategoryTest extends TestCase
 
     public function testAllocatedExpenseCategoryCollectionPagination(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -71,7 +71,7 @@ final class CategoryTest extends TestCase
 
     public function testAllocatedExpenseCategoryCollectionPaginationPrevious(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -105,7 +105,7 @@ final class CategoryTest extends TestCase
 
     public function testAllocatedExpenseCategoryCollectionSearchDescription(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $search_string = $this->faker->text(100);
 
@@ -137,7 +137,7 @@ final class CategoryTest extends TestCase
 
     public function testAllocatedExpenseCategoryCollectionSearchName(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $search_string = $this->faker->text(25);
 
@@ -169,7 +169,7 @@ final class CategoryTest extends TestCase
 
     public function testAllocatedExpenseCategoryCollectionSortCreated(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -200,7 +200,7 @@ final class CategoryTest extends TestCase
 
     public function testAllocatedExpenseCategoryCollectionSortDescription(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -230,7 +230,7 @@ final class CategoryTest extends TestCase
     
     public function testAllocatedExpenseCategoryCollectionSortName(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -260,7 +260,7 @@ final class CategoryTest extends TestCase
 
     public function testAllocatedExpenseCategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -278,7 +278,7 @@ final class CategoryTest extends TestCase
     /** @test */
     public function allocatedExpenseCategoryShowIncludeSubcategories(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -298,7 +298,7 @@ final class CategoryTest extends TestCase
 
     public function testBudgetCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         // This test will change later when we remove access to categories for
         // the Budget and Budget pro item types, for now it is accessible
@@ -328,7 +328,7 @@ final class CategoryTest extends TestCase
 
     public function testBudgetCategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -345,7 +345,7 @@ final class CategoryTest extends TestCase
 
     public function testBudgetCategoryShowIncludeSubcategories(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -365,7 +365,7 @@ final class CategoryTest extends TestCase
 
     public function testBudgetProCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         // This test will change later when we remove access to categories for
         // the Budget and Budget pro item types, for now it is accessible
@@ -395,7 +395,7 @@ final class CategoryTest extends TestCase
 
     public function testBudgetProCategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -412,7 +412,7 @@ final class CategoryTest extends TestCase
 
     public function testBudgetProCategoryShowIncludeSubcategories(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -432,7 +432,7 @@ final class CategoryTest extends TestCase
 
     public function testGameCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -460,7 +460,7 @@ final class CategoryTest extends TestCase
 
     public function testGameCategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -477,7 +477,7 @@ final class CategoryTest extends TestCase
 
     public function testGameCategoryShowIncludeSubcategories(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -497,7 +497,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForAllocatedExpenseCategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -513,7 +513,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForAllocatedExpenseCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -528,7 +528,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForBudgetCategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -546,7 +546,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForBudgetCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -563,7 +563,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForBudgetProCategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -581,7 +581,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForBudgetProCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $this->createRandomCategory($resource_type_id);
@@ -598,7 +598,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForGameCategory(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $category_id = $this->createRandomCategory($resource_type_id);
@@ -614,7 +614,7 @@ final class CategoryTest extends TestCase
 
     public function testOptionsRequestForGameCategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $this->createRandomCategory($resource_type_id);

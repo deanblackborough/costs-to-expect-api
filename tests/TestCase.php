@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Routing\Middleware\ThrottleRequests;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
@@ -19,6 +18,8 @@ abstract class TestCase extends BaseTestCase
 
     protected string $email_for_expected_test_user = 'test-account-email@email.com';
     protected string $password_for_expected_test_user = 'test-account-secret-password';
+    
+    protected User $primary_user;
 
     protected array $item_types = [
         'allocated-expense' => 'OqZwKX16bW',
@@ -504,7 +505,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the ' . $this->item_types[$item_type] . ' resource type');
     }
 
-    protected function createUser(): int
+    protected function createUserAndReturnId(): int
     {
         $user = new User();
         $user->name = $this->faker->name;
@@ -513,6 +514,17 @@ abstract class TestCase extends BaseTestCase
         $user->save();
 
         return $user->id;
+    }
+    
+    protected function createUser(): User
+    {
+        $user = new User();
+        $user->name = $this->faker->name;
+        $user->email = $this->faker->email;
+        $user->password = Hash::make($this->faker->password);
+        $user->save();
+
+        return $user;
     }
 
     protected function createYahtzeeGameItem(
@@ -852,6 +864,8 @@ abstract class TestCase extends BaseTestCase
         $user->email = $this->email_for_expected_test_user;
         $user->password = Hash::make($this->password_for_expected_test_user);
         $user->save();
+        
+        $this->primary_user = $user;
     }
 
     protected function updateRequestedCategory(string $resource_type_id, string $category_id, array $payload): TestResponse

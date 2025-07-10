@@ -14,7 +14,7 @@ final class ResourceTest extends TestCase
      */
     public function allocatedExpenseResourceCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $this->createAllocatedExpenseResource($resource_type_id);
@@ -43,7 +43,7 @@ final class ResourceTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
@@ -64,7 +64,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetProResourceCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $this->createBudgetProResource($resource_type_id);
@@ -93,7 +93,7 @@ final class ResourceTest extends TestCase
     /** @test */
     public function budgetProResourceShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetProResourceType();
         $resource_id = $this->createBudgetProResource($resource_type_id);
@@ -114,7 +114,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $this->createBudgetResource($resource_type_id);
@@ -147,7 +147,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollectionPagination(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $this->createBudgetResource($resource_type_id);
@@ -186,7 +186,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollectionPaginationPrevious(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $this->createBudgetResource($resource_type_id);
@@ -225,7 +225,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollectionSearchDescription(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $search_string = $this->faker->text(100);
 
@@ -261,7 +261,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollectionSearchName(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $search_string = $this->faker->text(25);
 
@@ -297,7 +297,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollectionSortCreated(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $this->createBudgetResource($resource_type_id);
@@ -333,7 +333,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollectionSortDescription(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $this->createBudgetResource($resource_type_id);
@@ -368,7 +368,7 @@ final class ResourceTest extends TestCase
      */
     public function budgetResourceCollectionSortName(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $this->createBudgetResource($resource_type_id);
@@ -399,7 +399,7 @@ final class ResourceTest extends TestCase
     /** @test */
     public function budgetResourceShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createBudgetResourceType();
         $resource_id = $this->createBudgetResource($resource_type_id);
@@ -590,7 +590,7 @@ final class ResourceTest extends TestCase
      */
     public function yahtzeeResourceCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $this->createYahtzeeResource($resource_type_id);
@@ -619,7 +619,7 @@ final class ResourceTest extends TestCase
     /** @test */
     public function yahtzeeResourceShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $resource_id = $this->createYahtzeeResource($resource_type_id);
@@ -640,7 +640,7 @@ final class ResourceTest extends TestCase
      */
     public function yatzyResourceCollection(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $this->createYatzyResource($resource_type_id);
@@ -669,7 +669,7 @@ final class ResourceTest extends TestCase
     /** @test */
     public function yatzyResourceShow(): void
     {
-        $this->actingAs(User::find($this->createUser()));
+        $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->createGameResourceType();
         $resource_id = $this->createYatzyResource($resource_type_id);
