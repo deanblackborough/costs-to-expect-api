@@ -40,9 +40,8 @@ class CategoryController extends Controller
             $searchRequestService = new Parameter\Search($request->get('search'));
             $searchParameters = $searchRequestService->fetch(Config::get('api.category.searchable'));
             
-            $sort_parameters = Parameter\Sort::fetch(
-                Config::get('api.category.sortable')
-            );
+            $sort_request_service = new Parameter\Sort($request->get('sort'));
+            $sort_parameters = $sort_request_service->fetch(Config::get('api.category.sortable'));
 
             $total = (new Category())->total(
                 (int) $resource_type_id,
@@ -83,7 +82,7 @@ class CategoryController extends Controller
                 ->addCacheControl($cache_control->visibility(), $cache_control->ttl())
                 ->addETag($collection)
                 ->addSearch($searchRequestService->xHeader())
-                ->addSort(Parameter\Sort::xHeader());
+                ->addSort($sort_request_service->xHeader());
 
             if ($last_updated !== null) {
                 $headers->addLastUpdated($last_updated);
@@ -98,11 +97,6 @@ class CategoryController extends Controller
 
     /**
      * Return a single category
-     *
-     * @param $resource_type_id
-     * @param $category_id
-     *
-     * @return JsonResponse
      */
     public function show(Request $request, $resource_type_id, $category_id): JsonResponse
     {
