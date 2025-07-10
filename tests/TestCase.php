@@ -410,7 +410,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function createRandomSubcategory(
+    protected function quickCreateRandomSubcategory(
         string $resource_type_id,
         string $category_id,
         array $override = []
@@ -689,12 +689,12 @@ abstract class TestCase extends BaseTestCase
         return $this->route('permitted-user.list', $parameters);
     }
 
-    protected function fetchCategory(array $parameters = []): TestResponse
+    protected function getToCategoryShow(array $parameters = []): TestResponse
     {
         return $this->route('category.show', $parameters);
     }
 
-    protected function fetchCategoryCollection(array $parameters = []): TestResponse
+    protected function getToCategoryList(array $parameters = []): TestResponse
     {
         return $this->route('category.list', $parameters);
     }
