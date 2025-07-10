@@ -2,6 +2,9 @@
 
 namespace Tests;
 
+use App\Models\PermittedUser;
+use App\Models\ResourceType;
+use App\Models\ResourceTypeItemType;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -127,7 +130,7 @@ abstract class TestCase extends BaseTestCase
         }
     }
 
-    protected function createRandomCategory(
+    protected function quickCreateRandomCategory(
         string $resource_type_id,
         array $override = []
     ): string
@@ -141,7 +144,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createCategory($resource_type_id, $payload);
+        $response = $this->postToCategoryCreate($resource_type_id, $payload);
 
         if ($response->assertStatus(201)) {
             return $response->json('id');
@@ -183,7 +186,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createAllocatedExpenseResource(string $resource_type_id): string
     {
-        $response = $this->createResource(
+        $response = $this->postToRecoureCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -199,7 +202,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the resource');
     }
 
-    protected function createAllocatedExpenseResourceType(array $override = []): string
+    protected function quickCreateAllocatedExpenseResourceType(array $override = []): string
     {
         $payload = [
             'name' => $this->faker->text(255),
@@ -290,7 +293,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the budget pro item');
     }
 
-    protected function createBudgetProResourceType(): string
+    protected function quickCreateBudgetProResourceType(): string
     {
         $response = $this->createResourceType(
             [
@@ -311,7 +314,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createBudgetProResource(string $resource_type_id): string
     {
-        $response = $this->createResource(
+        $response = $this->postToRecoureCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -342,7 +345,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createResource($resource_type_id, $payload);
+        $response = $this->postToRecoureCreate($resource_type_id, $payload);
 
         if ($response->assertStatus(201)) {
             return $response->json('id');
@@ -351,7 +354,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the resource');
     }
 
-    protected function createBudgetResourceType(): string
+    protected function quickCreateBudgetResourceType(): string
     {
         $response = $this->createResourceType(
             [
@@ -370,7 +373,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the budget resource type');
     }
 
-    protected function createGameResourceType(): string
+    protected function quickCreateGameResourceType(): string
     {
         $response = $this->createResourceType(
             [
@@ -435,7 +438,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the subcategory');
     }
 
-    protected function createCategory(string $resource_type_id, array $payload): TestResponse
+    protected function postToCategoryCreate(string $resource_type_id, array $payload): TestResponse
     {
         return $this->post(
             route('category.create', ['resource_type_id' => $resource_type_id]),
@@ -451,7 +454,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function createResource(string $resource_type_id, array $payload): TestResponse
+    protected function postToRecoureCreate(string $resource_type_id, array $payload): TestResponse
     {
         return $this->post(
             route('resource.create', ['resource_type_id' => $resource_type_id]),
@@ -585,7 +588,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createYahtzeeResource(string $resource_type_id): string
     {
-        $response = $this->createResource(
+        $response = $this->postToRecoureCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -603,7 +606,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createYatzyResource(string $resource_type_id): string
     {
-        $response = $this->createResource(
+        $response = $this->postToRecoureCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -633,7 +636,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function deleteRequestedCategory(string $resource_type_id, $category_id): TestResponse
+    protected function deleteToCategoryDelete(string $resource_type_id, $category_id): TestResponse
     {
         return $this->delete(
             route('category.delete', ['resource_type_id' => $resource_type_id, 'category_id' => $category_id]), []
@@ -858,17 +861,37 @@ abstract class TestCase extends BaseTestCase
         }
         
         $this->artisan('migrate:fresh');
+
+        $hash = new \App\HttpRequest\Hash();
         
+        // Set the primary user
         $user = new User();
-        $user->name = $this->faker->name;
+        $user->name = $this->faker->text;
         $user->email = $this->email_for_expected_test_user;
         $user->password = Hash::make($this->password_for_expected_test_user);
         $user->save();
         
         $this->primary_user = $user;
+        
+        // Create the allocated expense resource type for the primary user
+        $resource_type = new ResourceType();
+        $resource_type->name = $this->faker->text;
+        $resource_type->description = $this->faker->text;
+        $resource_type->data = '{"field":true}';
+        $resource_type->save();
+        
+        $resource_type_item_type = new ResourceTypeItemType();
+        $resource_type_item_type->resource_type_id = $resource_type->id;
+        $resource_type_item_type->item_type_id = $hash->decode('item-type', $this->item_types['allocated-expense']);
+        
+        $permitted_user = new PermittedUser();
+        $permitted_user->resource_type_id = $resource_type->id;
+        $permitted_user->user_id = $user->id;
+        $permitted_user->added_by = $user->id;
+        $permitted_user->save();
     }
 
-    protected function updateRequestedCategory(string $resource_type_id, string $category_id, array $payload): TestResponse
+    protected function patchToCategoryUpdate(string $resource_type_id, string $category_id, array $payload): TestResponse
     {
         return $this->patch(
             route(

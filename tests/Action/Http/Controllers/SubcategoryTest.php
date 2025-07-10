@@ -12,8 +12,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->createSubcategory(
             $resource_type_id,
@@ -31,8 +31,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->createSubcategory(
             $resource_type_id,
@@ -48,8 +48,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $name = $this->faker->text();
 
         $response = $this->createSubcategory(
@@ -81,7 +81,7 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->createSubcategory(
             $resource_type_id,
@@ -99,8 +99,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->createSubcategory(
             $resource_type_id,
@@ -119,8 +119,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->createSubcategory(
             $resource_type_id,
@@ -139,8 +139,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetProResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->createSubcategory(
             $resource_type_id,
@@ -159,8 +159,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createGameResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->createSubcategory(
             $resource_type_id,
@@ -179,8 +179,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->deleteSubcategory(
@@ -197,8 +197,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->deleteSubcategory(
@@ -215,8 +215,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetProResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->deleteSubcategory(
@@ -233,8 +233,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createGameResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->deleteSubcategory(
@@ -251,8 +251,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(
@@ -272,8 +272,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(
@@ -291,8 +291,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         // Create first subcategory
         $name = $this->faker->text(200);
@@ -340,8 +340,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(
@@ -361,8 +361,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(
@@ -382,8 +382,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(
@@ -404,8 +404,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(
@@ -426,8 +426,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetProResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(
@@ -448,8 +448,8 @@ final class SubcategoryTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createGameResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->createRandomSubcategory($resource_type_id, $category_id);
 
         $response = $this->updateSubcategory(

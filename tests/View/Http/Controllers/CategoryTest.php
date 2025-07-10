@@ -11,10 +11,10 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id
@@ -39,10 +39,10 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id,
@@ -73,10 +73,10 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id,
@@ -109,10 +109,10 @@ final class CategoryTest extends TestCase
 
         $search_string = $this->faker->text(100);
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id, ['description' => $search_string]);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id, ['description' => $search_string]);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id,
@@ -141,10 +141,10 @@ final class CategoryTest extends TestCase
 
         $search_string = $this->faker->text(25);
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id, ['name' => $search_string]);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id, ['name' => $search_string]);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id,
@@ -171,11 +171,11 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
         sleep(2); // Ensure the created_at timestamps are different
-        $this->createRandomCategory($resource_type_id, ['name' => 'created-last']);
+        $this->quickCreateRandomCategory($resource_type_id, ['name' => 'created-last']);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id,
@@ -202,10 +202,10 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id, ['description' => 'ZZZZZZZZZZZZA']);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id, ['description' => 'ZZZZZZZZZZZZA']);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id,
@@ -232,10 +232,10 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id, ['name' => 'AAAAAAAAAAAAB']);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id, ['name' => 'AAAAAAAAAAAAB']);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id,
@@ -262,8 +262,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategory([
             'resource_type_id' => $resource_type_id,
@@ -280,8 +280,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
@@ -302,10 +302,10 @@ final class CategoryTest extends TestCase
 
         // This test will change later when we remove access to categories for
         // the Budget and Budget pro item types, for now it is accessible
-        $resource_type_id = $this->createBudgetResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id
@@ -330,8 +330,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategory([
             'resource_type_id' => $resource_type_id,
@@ -347,8 +347,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
@@ -369,10 +369,10 @@ final class CategoryTest extends TestCase
 
         // This test will change later when we remove access to categories for
         // the Budget and Budget pro item types, for now it is accessible
-        $resource_type_id = $this->createBudgetProResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id
@@ -397,8 +397,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategory([
             'resource_type_id' => $resource_type_id,
@@ -414,8 +414,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetProResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
@@ -434,10 +434,10 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createGameResourceType();
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategoryCollection([
             'resource_type_id' => $resource_type_id
@@ -462,8 +462,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createGameResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchCategory([
             'resource_type_id' => $resource_type_id,
@@ -479,8 +479,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createGameResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
         $this->createRandomSubcategory($resource_type_id, $category_id);
@@ -499,8 +499,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchOptionsForCategory([
             'resource_type_id' => $resource_type_id,
@@ -515,8 +515,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchOptionsForCategoryCollection([
             'resource_type_id' => $resource_type_id
@@ -530,8 +530,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         // This test will be modified later when access to categories is
         // removed for the Budget and Budget pro item types, for now it is accessible
@@ -548,8 +548,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetResourceType();
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
 
         // This test will be modified later when we disable categories for the Budget
         // and Budget pro item type, for now it is accessible
@@ -565,8 +565,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetProResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         // This test will be modified later when access to categories is
         // removed for the Budget and Budget pro item types, for now it is accessible
@@ -583,8 +583,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetProResourceType();
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
 
         // This test will be modified later when we disable categories for the Budget
         // and Budget pro item type, for now it is accessible
@@ -600,8 +600,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createGameResourceType();
-        $category_id = $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $category_id = $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchOptionsForCategory([
             'resource_type_id' => $resource_type_id,
@@ -616,8 +616,8 @@ final class CategoryTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createGameResourceType();
-        $this->createRandomCategory($resource_type_id);
+        $resource_type_id = $this->quickCreateGameResourceType();
+        $this->quickCreateRandomCategory($resource_type_id);
 
         $response = $this->fetchOptionsForCategoryCollection([
             'resource_type_id' => $resource_type_id

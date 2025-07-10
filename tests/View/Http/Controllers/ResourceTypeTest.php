@@ -16,8 +16,8 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $this->createAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['allocated-expense'], 'exclude-public'=>'true']);
 
@@ -45,9 +45,9 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $this->createAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchResourceTypeCollection(['offset' => 0, 'limit' => 2, 'exclude-public'=>'true']);
 
@@ -79,9 +79,9 @@ final class ResourceTypeTest extends TestCase
 
         $search_string = $this->faker->text(35);
 
-        $this->createAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResourceType(['description' => $search_string]);
-        $this->createAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType(['description' => $search_string]);
+        $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchResourceTypeCollection(['search'=>'description:' . $search_string, 'exclude-public'=>'true']);
 
@@ -111,9 +111,9 @@ final class ResourceTypeTest extends TestCase
 
         $search_string = $this->faker->text(35);
 
-        $this->createAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResourceType(['name' => $search_string]);
-        $this->createAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType(['name' => $search_string]);
+        $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchResourceTypeCollection(['search'=>'name:' . $search_string, 'exclude-public'=>'true']);
 
@@ -141,10 +141,10 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $this->createAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
         sleep(1); // Ensure the created_at timestamps are different
-        $this->createAllocatedExpenseResourceType(['name' => 'created-last']);
+        $this->quickCreateAllocatedExpenseResourceType(['name' => 'created-last']);
 
         $response = $this->fetchResourceTypeCollection([
             'sort'=>'created:desc',
@@ -175,9 +175,9 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $this->createAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResourceType(['name' => 'AAAAAAAAAAAA']);
-        $this->createAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType();
+        $this->quickCreateAllocatedExpenseResourceType(['name' => 'AAAAAAAAAAAA']);
+        $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchResourceTypeCollection([
             'sort'=>'name:asc',
@@ -204,7 +204,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchResourceType(['resource_type_id'=> $resource_type_id]);
         $response->assertStatus(200);
@@ -217,7 +217,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchResourceType([
             'resource_type_id'=> $resource_type_id,
@@ -233,7 +233,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
         $this->createAllocatedExpenseResource($resource_type_id);
         $this->createAllocatedExpenseResource($resource_type_id);
@@ -256,8 +256,8 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $this->createBudgetResourceType();
-        $this->createBudgetResourceType();
+        $this->quickCreateBudgetResourceType();
+        $this->quickCreateBudgetResourceType();
 
         $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['budget'], 'exclude-public'=>'true']);
 
@@ -281,7 +281,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetResourceType();
+        $resource_type_id = $this->quickCreateBudgetResourceType();
 
         $response = $this->fetchResourceType(['resource_type_id' => $resource_type_id]);
 
@@ -294,7 +294,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetResourceType();
+        $resource_type_id = $this->quickCreateBudgetResourceType();
 
         $response = $this->fetchResourceType([
             'resource_type_id'=> $resource_type_id,
@@ -310,7 +310,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetResourceType();
+        $resource_type_id = $this->quickCreateBudgetResourceType();
 
         $this->createBudgetResource($resource_type_id);
 
@@ -332,8 +332,8 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $this->createBudgetProResourceType();
-        $this->createBudgetProResourceType();
+        $this->quickCreateBudgetProResourceType();
+        $this->quickCreateBudgetProResourceType();
 
         $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['budget-pro'], 'exclude-public'=>'true']);
 
@@ -357,7 +357,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createBudgetProResourceType();
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
 
         $response = $this->fetchResourceType(['resource_type_id' => $resource_type_id]);
 
@@ -370,7 +370,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetProResourceType();
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
 
         $response = $this->fetchResourceType([
             'resource_type_id'=> $resource_type_id,
@@ -386,7 +386,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetProResourceType();
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
 
         $this->createBudgetProResource($resource_type_id);
 
@@ -408,8 +408,8 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $this->createGameResourceType();
-        $this->createGameResourceType();
+        $this->quickCreateGameResourceType();
+        $this->quickCreateGameResourceType();
 
         $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['game'], 'exclude-public'=>'true']);
 
@@ -433,7 +433,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
-        $resource_type_id = $this->createGameResourceType();
+        $resource_type_id = $this->quickCreateGameResourceType();
 
         $response = $this->fetchResourceType(['resource_type_id' => $resource_type_id]);
 
@@ -446,7 +446,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createGameResourceType();
+        $resource_type_id = $this->quickCreateGameResourceType();
 
         $response = $this->fetchResourceType([
             'resource_type_id'=> $resource_type_id,
@@ -462,7 +462,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createGameResourceType();
+        $resource_type_id = $this->quickCreateGameResourceType();
 
         $this->createYahtzeeResource($resource_type_id);
 
@@ -480,7 +480,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
         $response = $this->fetchOptionsForResourceType(['resource_type_id' => $resource_type_id]);
         $response->assertStatus(200);
@@ -503,7 +503,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetResourceType();
+        $resource_type_id = $this->quickCreateBudgetResourceType();
 
         $response = $this->fetchOptionsForResourceType(['resource_type_id' => $resource_type_id]);
         $response->assertStatus(200);
@@ -517,7 +517,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createBudgetProResourceType();
+        $resource_type_id = $this->quickCreateBudgetProResourceType();
 
         $response = $this->fetchOptionsForResourceType(['resource_type_id' => $resource_type_id]);
         $response->assertStatus(200);
@@ -531,7 +531,7 @@ final class ResourceTypeTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createGameResourceType();
+        $resource_type_id = $this->quickCreateGameResourceType();
 
         $response = $this->fetchOptionsForResourceType(['resource_type_id' => $resource_type_id]);
         $response->assertStatus(200);

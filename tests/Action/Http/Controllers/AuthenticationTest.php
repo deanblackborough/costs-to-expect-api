@@ -2,14 +2,13 @@
 
 namespace Tests\Action\Http\Controllers;
 
-use App\User;
 use Tests\TestCase;
 
 final class AuthenticationTest extends TestCase
 {
     public function testCheckSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $this->get('v3/auth/check')->assertExactJson(['auth'=>true]);
     }
@@ -706,7 +705,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdatePasswordFailsMismatchedPasswords(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $response = $this->post(
             'v3/auth/update-password',
@@ -721,7 +720,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdatePasswordFailsNoPayload(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $response = $this->post(
             'v3/auth/update-password',
@@ -736,7 +735,7 @@ final class AuthenticationTest extends TestCase
     {
         $this->createUserAndReturnId();
         
-        $this->actingAs(User::find($this->fetchRandomUser()->id));
+        $this->actingAs($this->createUser());
 
         $new_password = $this->faker->password(12);
 
@@ -753,7 +752,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdateProfileFailsBadEmail(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $response = $this->post(
             'v3/auth/update-profile',
@@ -767,7 +766,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdateProfileFailsNoPayload(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $response = $this->post(
             'v3/auth/update-profile',
@@ -781,7 +780,7 @@ final class AuthenticationTest extends TestCase
     {
         $this->createUserAndReturnId();
         
-        $this->actingAs(User::find($this->fetchRandomUser()->id));
+        $this->actingAs($this->createUser());
 
         $response = $this->post(
             'v3/auth/update-profile',
@@ -795,7 +794,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUserSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $response = $this->get('v3/auth/user');
 

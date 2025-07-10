@@ -12,7 +12,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
@@ -42,7 +42,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id, ['effective_date' => '2020-09-12']);
@@ -81,7 +81,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
@@ -121,7 +121,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
@@ -158,7 +158,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
@@ -195,7 +195,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
@@ -228,7 +228,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
         $item_id = $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
 
@@ -246,7 +246,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     public function optionsRequestForAllocatedExpenseItem(): void
     {
         $this->actingAs(User::find(1));
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
         $item_id = $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
 
@@ -265,7 +265,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     public function optionsRequestForAllocatedExpenseItemCollection(): void
     {
         $this->actingAs(User::find(1));
-        $resource_type_id = $this->createAllocatedExpenseResourceType();
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
