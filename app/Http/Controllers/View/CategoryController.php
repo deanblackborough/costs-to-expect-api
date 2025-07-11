@@ -37,8 +37,8 @@ class CategoryController extends Controller
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
             
-            $searchRequestService = new Parameter\Search($request->get('search'));
-            $searchParameters = $searchRequestService->fetch(Config::get('api.category.searchable'));
+            $search_request_service = new Parameter\Search($request->get('search'));
+            $search_parameters = $search_request_service->fetch(Config::get('api.category.searchable'));
             
             $sort_request_service = new Parameter\Sort($request->get('sort'));
             $sort_parameters = $sort_request_service->fetch(Config::get('api.category.sortable'));
@@ -46,12 +46,12 @@ class CategoryController extends Controller
             $total = (new Category())->total(
                 (int) $resource_type_id,
                 $this->viewable_resource_types,
-                $searchParameters
+                $search_parameters
             );
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination->allowPaginationOverride($this->allow_entire_collection)->
-                setSearchParameters($searchParameters)->
+                setSearchParameters($search_parameters)->
                 setSortParameters($sort_parameters)->
                 parameters();
 
@@ -60,7 +60,7 @@ class CategoryController extends Controller
                 $this->viewable_resource_types,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $searchParameters,
+                $search_parameters,
                 $sort_parameters
             );
 
@@ -81,7 +81,7 @@ class CategoryController extends Controller
                 ->collection($pagination_parameters, count($categories), $total)
                 ->addCacheControl($cache_control->visibility(), $cache_control->ttl())
                 ->addETag($collection)
-                ->addSearch($searchRequestService->xHeader())
+                ->addSearch($search_request_service->xHeader())
                 ->addSort($sort_request_service->xHeader());
 
             if ($last_updated !== null) {
