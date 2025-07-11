@@ -216,7 +216,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createResourceType($payload);
+        $response = $this->postToResourceTypeCreate($payload);
 
         if ($response->assertStatus(201)) {
             return $response->json('id');
@@ -295,7 +295,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function quickCreateBudgetProResourceType(): string
     {
-        $response = $this->createResourceType(
+        $response = $this->postToResourceTypeCreate(
             [
                 'name' => $this->faker->text(255),
                 'description' => $this->faker->text,
@@ -356,7 +356,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function quickCreateBudgetResourceType(): string
     {
-        $response = $this->createResourceType(
+        $response = $this->postToResourceTypeCreate(
             [
                 'name' => $this->faker->text(255),
                 'description' => $this->faker->text,
@@ -375,7 +375,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function quickCreateGameResourceType(): string
     {
-        $response = $this->createResourceType(
+        $response = $this->postToResourceTypeCreate(
             [
                 'name' => $this->faker->text(255),
                 'description' => $this->faker->text,
@@ -462,7 +462,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function createResourceType(array $payload): TestResponse
+    protected function postToResourceTypeCreate(array $payload): TestResponse
     {
         return $this->post(route('resource-type.create'), $payload);
     }
@@ -491,7 +491,7 @@ abstract class TestCase extends BaseTestCase
             $this->fail('The requested item type is not an allowable value "' . $this->item_types[$item_type] . '"');
         }
 
-        $response = $this->createResourceType(
+        $response = $this->postToResourceTypeCreate(
             [
                 'name' => $this->faker->text(255),
                 'description' => $this->faker->text,
@@ -657,7 +657,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function deleteRequestedResourceType(string $resource_type_id): TestResponse
+    protected function deleteToResourceTypeDelete(string $resource_type_id): TestResponse
     {
         return $this->delete(
             route('resource-type.delete', ['resource_type_id' => $resource_type_id]), []
@@ -939,7 +939,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function updateRequestedResourceType(string $resource_type_id, array $payload): TestResponse
+    protected function patchToResourceTypeUpdate(string $resource_type_id, array $payload): TestResponse
     {
         return $this->patch(
             route('resource-type.update', ['resource_type_id' => $resource_type_id]),
