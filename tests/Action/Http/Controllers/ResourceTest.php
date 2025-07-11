@@ -16,7 +16,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -36,7 +36,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -56,7 +56,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -75,7 +75,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'description' => $this->faker->text(200),
@@ -96,7 +96,7 @@ final class ResourceTest extends TestCase
 
         $name = $this->faker->text(200);
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $name,
@@ -108,7 +108,7 @@ final class ResourceTest extends TestCase
         $response->assertStatus(201);
 
         // Create again with non-unique name for resource type
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $name,
@@ -127,7 +127,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             []
         );
@@ -149,7 +149,7 @@ final class ResourceTest extends TestCase
 
             $resource_type_id = (new Hash())->encode('resource-type', $resource_type->id);
 
-            $response = $this->postToRecoureCreate(
+            $response = $this->postToResourceCreate(
                 $resource_type_id,
                 [
                     'name' => $this->faker->text(200),
@@ -172,7 +172,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -192,7 +192,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -213,7 +213,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateBudgetProResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -233,7 +233,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateBudgetResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -252,7 +252,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateGameResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -271,7 +271,7 @@ final class ResourceTest extends TestCase
 
         $id = $this->quickCreateGameResourceType();
 
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $id,
             [
                 'name' => $this->faker->text(200),
@@ -394,7 +394,7 @@ final class ResourceTest extends TestCase
 
         // Create first resource
         $name = $this->faker->text(200);
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $resource_type_id,
             [
                 'name' => $name,
@@ -406,7 +406,7 @@ final class ResourceTest extends TestCase
         $response->assertStatus(201);
 
         // Create second resource
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),

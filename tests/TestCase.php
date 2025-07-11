@@ -186,7 +186,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createAllocatedExpenseResource(string $resource_type_id): string
     {
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -314,7 +314,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createBudgetProResource(string $resource_type_id): string
     {
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -345,7 +345,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->postToRecoureCreate($resource_type_id, $payload);
+        $response = $this->postToResourceCreate($resource_type_id, $payload);
 
         if ($response->assertStatus(201)) {
             return $response->json('id');
@@ -425,7 +425,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createSubcategory(
+        $response = $this->postToSubcategoryCreate(
             $resource_type_id,
             $category_id,
             $payload
@@ -454,7 +454,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function postToRecoureCreate(string $resource_type_id, array $payload): TestResponse
+    protected function postToResourceCreate(string $resource_type_id, array $payload): TestResponse
     {
         return $this->post(
             route('resource.create', ['resource_type_id' => $resource_type_id]),
@@ -467,7 +467,7 @@ abstract class TestCase extends BaseTestCase
         return $this->post(route('resource-type.create'), $payload);
     }
 
-    protected function createSubcategory(
+    protected function postToSubcategoryCreate(
         string $resource_type_id,
         string $category_id,
         array $payload
@@ -588,7 +588,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createYahtzeeResource(string $resource_type_id): string
     {
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -606,7 +606,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function createYatzyResource(string $resource_type_id): string
     {
-        $response = $this->postToRecoureCreate(
+        $response = $this->postToResourceCreate(
             $resource_type_id,
             [
                 'name' => $this->faker->text(200),
@@ -664,7 +664,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function deleteSubcategory(string $resource_type_id, $category_id, $subcategory_id): TestResponse
+    protected function deleteToSubcategoryDelete(string $resource_type_id, $category_id, $subcategory_id): TestResponse
     {
         return $this->delete(
             route(
@@ -744,12 +744,12 @@ abstract class TestCase extends BaseTestCase
         return $this->route('resource-type.show', $parameters);
     }
 
-    protected function fetchSubcategory(array $parameters = []): TestResponse
+    protected function getToSubcategoryShow(array $parameters = []): TestResponse
     {
         return $this->route('subcategory.show', $parameters);
     }
 
-    protected function fetchSubcategoryCollection(array $parameters = []): TestResponse
+    protected function getToSubcategoryList(array $parameters = []): TestResponse
     {
         return $this->route('subcategory.list', $parameters);
     }
@@ -947,7 +947,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function updateSubcategory(
+    protected function patchToSubcategoryUpdate(
         string $resource_type_id,
         string $category_id,
         string $subcategory_id,

@@ -2,19 +2,16 @@
 
 namespace Tests\View\Http\Controllers;
 
-use App\User;
 use Tests\TestCase;
 
 final class SubcategoryTest extends TestCase
 {
     /**
      * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
     public function allocatedExpenseSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -22,7 +19,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
         ]);
@@ -42,14 +39,10 @@ final class SubcategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseSubcategoryCollectionPagination(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -57,7 +50,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'offset' => 0,
@@ -83,14 +76,10 @@ final class SubcategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseSubcategoryCollectionPaginationPrevious(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -98,7 +87,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'offset' => 2,
@@ -124,14 +113,10 @@ final class SubcategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseSubcategoryCollectionSearchDescription(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $search_string = $this->faker->text(100);
 
@@ -141,7 +126,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id, ['description' => $search_string]);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'search' => 'description:' . $search_string,
@@ -163,14 +148,10 @@ final class SubcategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseSubcategoryCollectionSearchName(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $search_string = $this->faker->text(25);
 
@@ -180,7 +161,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id, ['name' => $search_string]);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'search' => 'name:' . $search_string,
@@ -202,14 +183,10 @@ final class SubcategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseSubCategoryCollectionSortCreated(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -219,7 +196,7 @@ final class SubcategoryTest extends TestCase
         sleep(2); // Ensure the created_at timestamps are different
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id, ['name' => 'created-last']);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'sort'=>'created:desc'
@@ -241,14 +218,10 @@ final class SubcategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseSubCategoryCollectionSortDescription(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -257,7 +230,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id, ['description' => 'AAAAAAAAAAAB']);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'sort'=>'description:desc'
@@ -279,14 +252,10 @@ final class SubcategoryTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseSubCategoryCollectionSortName(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -295,7 +264,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id, ['name' => 'AAAAAAAAAAAB']);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'sort'=>'name:asc'
@@ -320,13 +289,13 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function allocatedExpenseSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategory([
+        $response = $this->getToSubcategoryShow([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'subcategory_id' => $subcategory_id
@@ -336,14 +305,10 @@ final class SubcategoryTest extends TestCase
         $this->assertJsonMatchesSubcategorySchema($response->content());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -351,7 +316,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
         ]);
@@ -374,13 +339,13 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function budgetProSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategory([
+        $response = $this->getToSubcategoryShow([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'subcategory_id' => $subcategory_id
@@ -390,14 +355,10 @@ final class SubcategoryTest extends TestCase
         $this->assertJsonMatchesSubcategorySchema($response->content());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -405,7 +366,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
         ]);
@@ -428,13 +389,13 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function budgetSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategory([
+        $response = $this->getToSubcategoryShow([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'subcategory_id' => $subcategory_id
@@ -444,14 +405,10 @@ final class SubcategoryTest extends TestCase
         $this->assertJsonMatchesSubcategorySchema($response->content());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function gameSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -459,7 +416,7 @@ final class SubcategoryTest extends TestCase
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
         $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategoryCollection([
+        $response = $this->getToSubcategoryList([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
         ]);
@@ -482,13 +439,13 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function gameSubcategoryShow(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
         $subcategory_id = $this->quickCreateRandomSubcategory($resource_type_id, $category_id);
 
-        $response = $this->fetchSubcategory([
+        $response = $this->getToSubcategoryShow([
             'resource_type_id' => $resource_type_id,
             'category_id' => $category_id,
             'subcategory_id' => $subcategory_id
@@ -501,7 +458,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForAllocatedExpenseSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -520,7 +477,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForAllocatedExpenseSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -537,7 +494,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -558,7 +515,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -577,7 +534,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -598,7 +555,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -617,7 +574,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForGameSubcategory(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -638,7 +595,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function optionsRequestForGameSubcategoryCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
