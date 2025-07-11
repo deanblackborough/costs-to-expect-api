@@ -35,9 +35,9 @@ class ResourceTypeController extends Controller
         $cache_collection->setFromCache($cache_control->getByKey($request->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-            $request_parameters = Parameter\Request::fetch(
-                array_keys(Config::get('api.resource-type.parameters'))
-            );
+            
+            $request_parameter_service = new Parameter\Request($request->all());
+            $request_parameters = $request_parameter_service->fetch(array_keys(Config::get('api.resource-type.parameters')));
 
             $search_request_service = new Parameter\Search($request->get('search'));
             $search_parameters = $search_request_service->fetch(Config::get('api.resource-type.searchable'));
@@ -99,7 +99,8 @@ class ResourceTypeController extends Controller
 
     public function show(Request $request, $resource_type_id): JsonResponse
     {
-        $parameters = Parameter\Request::fetch(array_keys(Config::get('api.resource-type.parameters-show')));
+        $request_parameter_service = new Parameter\Request($request->all());
+        $request_parameters = $request_parameter_service->fetch(array_keys(Config::get('api.resource-type.parameters-show')));
 
         $resource_type = (new ResourceType())->single(
             (int) $resource_type_id,
@@ -113,21 +114,21 @@ class ResourceTypeController extends Controller
         $transformer_relations = [];
 
         if (
-            array_key_exists('include-resources', $parameters) === true &&
-            $parameters['include-resources'] === true
+            array_key_exists('include-resources', $request_parameters) === true &&
+            $request_parameters['include-resources'] === true
         ) {
             $transformer_relations['resources'] = (new Resource())->paginatedCollection((int) $resource_type_id);
         }
 
         if (
-            array_key_exists('include-permitted-users', $parameters) === true &&
-            $parameters['include-permitted-users'] === true
+            array_key_exists('include-permitted-users', $request_parameters) === true &&
+            $request_parameters['include-permitted-users'] === true
         ) {
             $transformer_relations['permitted_users'] = (new PermittedUser())->paginatedCollection((int) $resource_type_id);
         }
 
         $headers = new Header();
-        $headers->item()->addParameters(Parameter\Request::xHeader());
+        $headers->item()->addParameters($request_parameter_service->xHeader());
 
         return response()->json(
             (new ResourceTypeTransformer($resource_type, $transformer_relations))->asArray(),

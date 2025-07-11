@@ -103,8 +103,9 @@ class CategoryController extends Controller
         if ($this->hasViewAccessToResourceType((int) $resource_type_id) === false) {
             return \App\HttpResponse\Response::notFoundOrNotAccessible(trans('entities.category'));
         }
-
-        $parameters = Parameter\Request::fetch(array_keys(Config::get('api.category.parameters-show')));
+        
+        $request_parameter_service = new Parameter\Request($request->all());
+        $request_parameters = $request_parameter_service->fetch(array_keys(Config::get('api.category.parameters-show')));
 
         $category = (new Category())->single(
             (int) $resource_type_id,
@@ -117,8 +118,8 @@ class CategoryController extends Controller
 
         $subcategories = [];
         if (
-            array_key_exists('include-subcategories', $parameters) === true &&
-            $parameters['include-subcategories'] === true
+            array_key_exists('include-subcategories', $request_parameters) === true &&
+            $request_parameters['include-subcategories'] === true
         ) {
             $subcategories = (new Subcategory())->paginatedCollection(
                 (int) $resource_type_id,
@@ -131,7 +132,7 @@ class CategoryController extends Controller
         $headers = new Header();
         $headers->item();
 
-        $parameters_header = Parameter\Request::xHeader();
+        $parameters_header = $request_parameter_service->xHeader();
         if ($parameters_header !== null) {
             $headers->addParameters($parameters_header);
         }

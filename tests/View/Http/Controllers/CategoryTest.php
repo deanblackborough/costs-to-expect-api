@@ -2,7 +2,6 @@
 
 namespace Tests\View\Http\Controllers;
 
-use App\User;
 use Tests\TestCase;
 
 final class CategoryTest extends TestCase
