@@ -39,22 +39,21 @@ class ResourceTypeController extends Controller
                 array_keys(Config::get('api.resource-type.parameters'))
             );
 
-            $searchRequestService = new Parameter\Search($request->get('search'));
-            $searchParameters = $searchRequestService->fetch(Config::get('api.resource-type.searchable'));
-
-            $sort_parameters = Parameter\Sort::fetch(
-                Config::get('api.resource-type.sortable')
-            );
-
+            $search_request_service = new Parameter\Search($request->get('search'));
+            $search_parameters = $search_request_service->fetch(Config::get('api.resource-type.searchable'));
+            
+            $sort_request_service = new Parameter\Sort($request->get('sort'));
+            $sort_parameters = $sort_request_service->fetch(Config::get('api.resource-type.sortable'));
+            
             $total = (new ResourceType())->totalCount(
                 $this->viewable_resource_types,
-                $searchParameters
+                $search_parameters
             );
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination
                 ->allowPaginationOverride($this->allow_entire_collection)
-                ->setSearchParameters($searchParameters)
+                ->setSearchParameters($search_parameters)
                 ->setSortParameters($sort_parameters)
                 ->setParameters($request_parameters)
                 ->parameters();
@@ -63,7 +62,7 @@ class ResourceTypeController extends Controller
                 $this->viewable_resource_types,
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $searchParameters,
+                $search_parameters,
                 $sort_parameters,
                 $request_parameters
             );
@@ -79,14 +78,13 @@ class ResourceTypeController extends Controller
                 },
                 $resource_types
             );
-
-            $headers = new Header();
-            $headers
+            
+            $headers = (new Header())
                 ->collection($pagination_parameters, count($resource_types), $total)
                 ->addCacheControl($cache_control->visibility(), $cache_control->ttl())
                 ->addETag($collection)
-                ->addSearch($searchRequestService->xHeader())
-                ->addSort(Parameter\Sort::xHeader());
+                ->addSearch($search_request_service->xHeader())
+                ->addSort($sort_request_service->xHeader());
 
             if ($last_updated !== null) {
                 $headers->addLastUpdated($last_updated);

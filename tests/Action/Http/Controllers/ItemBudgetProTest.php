@@ -14,7 +14,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->createItem(
             $resource_type_id,
@@ -40,7 +40,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->createItem(
             $resource_type_id,
@@ -66,7 +66,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->createItem(
             $resource_type_id,
@@ -92,7 +92,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->createItem(
             $resource_type_id,
@@ -118,7 +118,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->createItem(
             $resource_type_id,
@@ -143,7 +143,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->createItem(
             $resource_type_id,
@@ -160,7 +160,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->createItem(
             $resource_type_id,
@@ -187,7 +187,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
         $item_id = '1234asdffgd';
 
         $response = $this->deleteItem(
@@ -205,7 +205,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
         $item_id = $this->createBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->deleteItem(
@@ -223,7 +223,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
         $item_id = $this->createBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->updateItem(
@@ -244,7 +244,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
         $item_id = $this->createBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->updateItem(
@@ -263,7 +263,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
         $item_id = $this->createBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->updateItem(

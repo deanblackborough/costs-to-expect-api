@@ -184,7 +184,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the allocated expense item');
     }
 
-    protected function createAllocatedExpenseResource(string $resource_type_id): string
+    protected function quickCreateAllocatedExpenseResource(string $resource_type_id): string
     {
         $response = $this->postToResourceCreate(
             $resource_type_id,
@@ -312,7 +312,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the budget pro resource type');
     }
 
-    protected function createBudgetProResource(string $resource_type_id): string
+    protected function quickCreateBudgetProResource(string $resource_type_id): string
     {
         $response = $this->postToResourceCreate(
             $resource_type_id,
@@ -330,7 +330,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the resource');
     }
 
-    protected function createBudgetResource(
+    protected function quickCreateBudgetResource(
         string $resource_type_id,
         array $override = []
     ): string
@@ -586,7 +586,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the yatzy game item');
     }
 
-    protected function createYahtzeeResource(string $resource_type_id): string
+    protected function quickCreateYahtzeeResource(string $resource_type_id): string
     {
         $response = $this->postToResourceCreate(
             $resource_type_id,
@@ -719,7 +719,7 @@ abstract class TestCase extends BaseTestCase
         return $this->route('resource.list', $parameters);
     }
 
-    protected function fetchResourceTypeCollection(array $parameters = []): TestResponse
+    protected function getToResourceTypeList(array $parameters = []): TestResponse
     {
         return $this->route('resource-type.list', $parameters);
     }
@@ -739,7 +739,7 @@ abstract class TestCase extends BaseTestCase
         return User::query()->where('id', '!=', 1)->inRandomOrder()->first();
     }
 
-    protected function fetchResourceType(array $parameters = []): TestResponse
+    protected function getToResourceTypeShow(array $parameters = []): TestResponse
     {
         return $this->route('resource-type.show', $parameters);
     }

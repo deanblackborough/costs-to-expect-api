@@ -2,24 +2,19 @@
 
 namespace Tests\View\Http\Controllers;
 
-use App\User;
 use Tests\TestCase;
 
 final class ResourceTypeTest extends TestCase
 {
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $this->quickCreateAllocatedExpenseResourceType();
         $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['allocated-expense'], 'exclude-public'=>'true']);
+        $response = $this->getToResourceTypeList(['item-type'=>$this->item_types['allocated-expense'], 'exclude-public'=>'true']);
 
         $response->assertStatus(200);
         $response->assertHeader('X-Total-Count', 2);
@@ -36,20 +31,16 @@ final class ResourceTypeTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseResourceTypeCollectionPagination(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $this->quickCreateAllocatedExpenseResourceType();
         $this->quickCreateAllocatedExpenseResourceType();
         $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->fetchResourceTypeCollection(['offset' => 0, 'limit' => 2, 'exclude-public'=>'true']);
+        $response = $this->getToResourceTypeList(['offset' => 0, 'limit' => 2, 'exclude-public'=>'true']);
 
         $response->assertStatus(200);
         $response->assertHeader('X-Offset', 0);
@@ -68,14 +59,10 @@ final class ResourceTypeTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseResourceTypeCollectionSearchDescription(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $search_string = $this->faker->text(35);
 
@@ -83,7 +70,7 @@ final class ResourceTypeTest extends TestCase
         $this->quickCreateAllocatedExpenseResourceType(['description' => $search_string]);
         $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->fetchResourceTypeCollection(['search'=>'description:' . $search_string, 'exclude-public'=>'true']);
+        $response = $this->getToResourceTypeList(['search'=>'description:' . $search_string, 'exclude-public'=>'true']);
 
         $response->assertStatus(200);
         $response->assertHeader('X-Search', 'description:' . urlencode($search_string));
@@ -100,14 +87,10 @@ final class ResourceTypeTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseResourceTypeCollectionSearchName(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $search_string = $this->faker->text(35);
 
@@ -115,7 +98,7 @@ final class ResourceTypeTest extends TestCase
         $this->quickCreateAllocatedExpenseResourceType(['name' => $search_string]);
         $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->fetchResourceTypeCollection(['search'=>'name:' . $search_string, 'exclude-public'=>'true']);
+        $response = $this->getToResourceTypeList(['search'=>'name:' . $search_string, 'exclude-public'=>'true']);
 
         $response->assertStatus(200);
         $response->assertHeader('X-Search', 'name:' . urlencode($search_string));
@@ -132,21 +115,17 @@ final class ResourceTypeTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseResourceTypeCollectionSortCreated(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->primary_user);
 
         $this->quickCreateAllocatedExpenseResourceType();
         $this->quickCreateAllocatedExpenseResourceType();
         sleep(1); // Ensure the created_at timestamps are different
         $this->quickCreateAllocatedExpenseResourceType(['name' => 'created-last']);
 
-        $response = $this->fetchResourceTypeCollection([
+        $response = $this->getToResourceTypeList([
             'sort'=>'created:desc',
             'exclude-public'=>'true'
         ]);
@@ -166,20 +145,16 @@ final class ResourceTypeTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function allocatedExpenseResourceTypeCollectionSortName(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $this->quickCreateAllocatedExpenseResourceType();
         $this->quickCreateAllocatedExpenseResourceType(['name' => 'AAAAAAAAAAAA']);
         $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->fetchResourceTypeCollection([
+        $response = $this->getToResourceTypeList([
             'sort'=>'name:asc',
             'exclude-public'=>'true'
         ]);
@@ -202,11 +177,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeShow(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->fetchResourceType(['resource_type_id'=> $resource_type_id]);
+        $response = $this->getToResourceTypeShow(['resource_type_id'=> $resource_type_id]);
         $response->assertStatus(200);
 
         $this->assertJsonMatchesResourceTypeSchema($response->content());
@@ -215,11 +190,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-permitted-users' => true
         ]);
@@ -231,14 +206,14 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
-        $this->createAllocatedExpenseResource($resource_type_id);
-        $this->createAllocatedExpenseResource($resource_type_id);
+        $this->quickCreateAllocatedExpenseResource($resource_type_id);
+        $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-resources' => true
         ]);
@@ -247,19 +222,15 @@ final class ResourceTypeTest extends TestCase
         $this->assertJsonMatchesResourceTypeWhichIncludesResourcesSchema($response->content());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $this->quickCreateBudgetResourceType();
         $this->quickCreateBudgetResourceType();
 
-        $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['budget'], 'exclude-public'=>'true']);
+        $response = $this->getToResourceTypeList(['item-type'=>$this->item_types['budget'], 'exclude-public'=>'true']);
 
         $response->assertStatus(200);
         $response->assertHeader('X-Total-Count', 2);
@@ -279,11 +250,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetResourceTypeShow(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
 
-        $response = $this->fetchResourceType(['resource_type_id' => $resource_type_id]);
+        $response = $this->getToResourceTypeShow(['resource_type_id' => $resource_type_id]);
 
         $response->assertStatus(200);
         $this->assertJsonMatchesResourceTypeSchema($response->content());
@@ -292,11 +263,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-permitted-users' => true
         ]);
@@ -308,13 +279,13 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
 
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-resources' => true
         ]);
@@ -323,19 +294,15 @@ final class ResourceTypeTest extends TestCase
         $this->assertJsonMatchesResourceTypeWhichIncludesResourcesSchema($response->content());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $this->quickCreateBudgetProResourceType();
         $this->quickCreateBudgetProResourceType();
 
-        $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['budget-pro'], 'exclude-public'=>'true']);
+        $response = $this->getToResourceTypeList(['item-type'=>$this->item_types['budget-pro'], 'exclude-public'=>'true']);
 
         $response->assertStatus(200);
         $response->assertHeader('X-Total-Count', 2);
@@ -355,11 +322,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetProResourceTypeShow(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
 
-        $response = $this->fetchResourceType(['resource_type_id' => $resource_type_id]);
+        $response = $this->getToResourceTypeShow(['resource_type_id' => $resource_type_id]);
 
         $response->assertStatus(200);
         $this->assertJsonMatchesResourceTypeSchema($response->content());
@@ -368,11 +335,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetProResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-permitted-users' => true
         ]);
@@ -384,13 +351,13 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetProResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
 
-        $this->createBudgetProResource($resource_type_id);
+        $this->quickCreateBudgetProResource($resource_type_id);
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-resources' => true
         ]);
@@ -399,19 +366,15 @@ final class ResourceTypeTest extends TestCase
         $this->assertJsonMatchesResourceTypeWhichIncludesResourcesSchema($response->content());
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function gameResourceTypeCollection(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $this->quickCreateGameResourceType();
         $this->quickCreateGameResourceType();
 
-        $response = $this->fetchResourceTypeCollection(['item-type'=>$this->item_types['game'], 'exclude-public'=>'true']);
+        $response = $this->getToResourceTypeList(['item-type'=>$this->item_types['game'], 'exclude-public'=>'true']);
 
         $response->assertStatus(200);
         $response->assertHeader('X-Total-Count', 2);
@@ -431,11 +394,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function gameResourceTypeShow(): void
     {
-        $this->actingAs(User::find($this->createUserAndReturnId()));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
 
-        $response = $this->fetchResourceType(['resource_type_id' => $resource_type_id]);
+        $response = $this->getToResourceTypeShow(['resource_type_id' => $resource_type_id]);
 
         $response->assertStatus(200);
         $this->assertJsonMatchesResourceTypeSchema($response->content());
@@ -444,11 +407,11 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function gameResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateGameResourceType();
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-permitted-users' => true
         ]);
@@ -460,13 +423,13 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function gameResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateGameResourceType();
 
-        $this->createYahtzeeResource($resource_type_id);
+        $this->quickCreateYahtzeeResource($resource_type_id);
 
-        $response = $this->fetchResourceType([
+        $response = $this->getToResourceTypeShow([
             'resource_type_id'=> $resource_type_id,
             'include-resources' => true
         ]);
@@ -478,7 +441,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForAllocatedExpenseResourceType(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
@@ -501,7 +464,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetResourceType(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
 
@@ -515,7 +478,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProResourceType(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
 
@@ -529,7 +492,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForGameResourceType(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->primary_user);
 
         $resource_type_id = $this->quickCreateGameResourceType();
 

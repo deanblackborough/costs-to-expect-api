@@ -17,9 +17,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $this->createAllocatedExpenseResource($resource_type_id);
-        $this->createAllocatedExpenseResource($resource_type_id);
-        $this->createAllocatedExpenseResource($resource_type_id);
+        $this->quickCreateAllocatedExpenseResource($resource_type_id);
+        $this->quickCreateAllocatedExpenseResource($resource_type_id);
+        $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id
@@ -46,7 +46,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $response = $this->fetchResource([
             'resource_type_id' => $resource_type_id,
@@ -67,9 +67,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $this->createBudgetProResource($resource_type_id);
-        $this->createBudgetProResource($resource_type_id);
-        $this->createBudgetProResource($resource_type_id);
+        $this->quickCreateBudgetProResource($resource_type_id);
+        $this->quickCreateBudgetProResource($resource_type_id);
+        $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id
@@ -96,7 +96,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->fetchResource([
             'resource_type_id' => $resource_type_id,
@@ -117,9 +117,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id
@@ -150,9 +150,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id,
@@ -189,9 +189,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id,
@@ -230,9 +230,9 @@ final class ResourceTest extends TestCase
         $search_string = $this->faker->text(100);
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id, ['description' => $search_string]);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id, ['description' => $search_string]);
+        $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id,
@@ -266,9 +266,9 @@ final class ResourceTest extends TestCase
         $search_string = $this->faker->text(25);
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id, ['name' => $search_string]);
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id, ['name' => $search_string]);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id,
@@ -300,10 +300,10 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
         sleep(1); // Ensure the created_at timestamps are different
-        $this->createBudgetResource($resource_type_id, ['name' => 'created-last']);
+        $this->quickCreateBudgetResource($resource_type_id, ['name' => 'created-last']);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id,
@@ -336,9 +336,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id, ['description' => 'AAAAAAAAAAAAB']);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id, ['description' => 'AAAAAAAAAAAAB']);
+        $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id,
@@ -371,9 +371,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $this->createBudgetResource($resource_type_id);
-        $this->createBudgetResource($resource_type_id, ['name' => 'AAAAAAAAAAAAB']);
-        $this->createBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id);
+        $this->quickCreateBudgetResource($resource_type_id, ['name' => 'AAAAAAAAAAAAB']);
+        $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id,
@@ -402,7 +402,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $resource_id = $this->createBudgetResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchResource([
             'resource_type_id' => $resource_type_id,
@@ -419,7 +419,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $response = $this->fetchOptionsForResource([
             'resource_type_id' => $resource_type_id,
@@ -453,7 +453,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $resource_id = $this->createBudgetResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->fetchOptionsForResource([
             'resource_type_id' => $resource_type_id,
@@ -487,7 +487,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->fetchOptionsForResource([
             'resource_type_id' => $resource_type_id,
@@ -521,7 +521,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $response = $this->fetchOptionsForResource([
             'resource_type_id' => $resource_type_id,
@@ -593,9 +593,9 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $this->createYahtzeeResource($resource_type_id);
-        $this->createYahtzeeResource($resource_type_id);
-        $this->createYahtzeeResource($resource_type_id);
+        $this->quickCreateYahtzeeResource($resource_type_id);
+        $this->quickCreateYahtzeeResource($resource_type_id);
+        $this->quickCreateYahtzeeResource($resource_type_id);
 
         $response = $this->fetchResourceCollection([
             'resource_type_id' => $resource_type_id
@@ -622,7 +622,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find($this->createUserAndReturnId()));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $response = $this->fetchResource([
             'resource_type_id' => $resource_type_id,

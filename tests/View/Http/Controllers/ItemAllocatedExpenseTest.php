@@ -13,7 +13,7 @@ final class ItemAllocatedExpenseTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
@@ -43,7 +43,7 @@ final class ItemAllocatedExpenseTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id, ['effective_date' => '2020-09-12']);
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id, ['effective_date' => '2020-10-02']);
@@ -82,7 +82,7 @@ final class ItemAllocatedExpenseTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
@@ -122,7 +122,7 @@ final class ItemAllocatedExpenseTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id, ['description' => 'search-string']);
@@ -159,7 +159,7 @@ final class ItemAllocatedExpenseTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id, ['name' => 'search-string']);
@@ -196,7 +196,7 @@ final class ItemAllocatedExpenseTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id, ['name' => 'AAAAAAAAAAAA']);
@@ -229,7 +229,7 @@ final class ItemAllocatedExpenseTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
         $item_id = $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItem([
@@ -247,7 +247,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
         $item_id = $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
 
         $response = $this->fetchOptionsForItem([
@@ -266,7 +266,7 @@ final class ItemAllocatedExpenseTest extends TestCase
     {
         $this->actingAs(User::find(1));
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
         $this->createAllocatedExpenseItem($resource_type_id, $resource_id);

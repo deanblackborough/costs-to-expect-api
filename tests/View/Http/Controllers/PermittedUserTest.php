@@ -12,7 +12,7 @@ final class PermittedUserTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $response = $this->fetchResourceTypeCollection();
+        $response = $this->getToResourceTypeList();
         $response->assertStatus(200);
 
         foreach ($response->json() as $resource_type) {
@@ -37,7 +37,7 @@ final class PermittedUserTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        $response = $this->fetchResourceTypeCollection(['offset'=>0, 'limit'=> 1]);
+        $response = $this->getToResourceTypeList(['offset'=>0, 'limit'=> 1]);
         $response->assertStatus(200);
 
         $resource_type_id = $response->json()[0]['id'];

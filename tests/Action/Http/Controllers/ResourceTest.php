@@ -290,7 +290,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $id = $this->createAllocatedExpenseResource($resource_type_id);
+        $id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $response = $this->deleteResource($resource_type_id, $id);
 
@@ -303,7 +303,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $id = $this->createBudgetProResource($resource_type_id);
+        $id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->deleteResource($resource_type_id, $id);
 
@@ -316,7 +316,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $id = $this->createBudgetResource($resource_type_id);
+        $id = $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->deleteResource($resource_type_id, $id);
 
@@ -329,7 +329,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $id = $this->createYahtzeeResource($resource_type_id);
+        $id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $response = $this->deleteResource($resource_type_id, $id);
 
@@ -355,7 +355,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $response = $this->updateResource(
             $resource_type_id,
@@ -374,7 +374,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $response = $this->updateResource(
             $resource_type_id,
@@ -436,7 +436,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
-        $resource_id = $this->createAllocatedExpenseResource($resource_type_id);
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
 
         $response = $this->updateResource(
             $resource_type_id,
@@ -455,7 +455,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
-        $resource_id = $this->createBudgetProResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
         $response = $this->updateResource(
             $resource_type_id,
@@ -474,7 +474,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
-        $resource_id = $this->createBudgetResource($resource_type_id);
+        $resource_id = $this->quickCreateBudgetResource($resource_type_id);
 
         $response = $this->updateResource(
             $resource_type_id,
@@ -493,7 +493,7 @@ final class ResourceTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $response = $this->updateResource(
             $resource_type_id,

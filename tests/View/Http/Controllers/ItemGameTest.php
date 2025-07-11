@@ -12,7 +12,7 @@ final class ItemGameTest extends TestCase
     {
         $this->actingAs(User::find(1));
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
 
         $response = $this->fetchOptionsForItem([
@@ -31,7 +31,7 @@ final class ItemGameTest extends TestCase
     {
         $this->actingAs(User::find(1));
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
@@ -93,7 +93,7 @@ final class ItemGameTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
@@ -127,7 +127,7 @@ final class ItemGameTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
@@ -167,7 +167,7 @@ final class ItemGameTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
         $this->createYahtzeeGameItem($resource_type_id, $resource_id);
@@ -201,7 +201,7 @@ final class ItemGameTest extends TestCase
         $this->actingAs(User::find(1));
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYahtzeeResource($resource_type_id);
+        $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItem([
