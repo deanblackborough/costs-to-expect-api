@@ -679,7 +679,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function fetchAllItemTypes(array $parameters = []): TestResponse
+    protected function getToItemTypeList(array $parameters = []): TestResponse
     {
         return $this->route('item-type.list', $parameters);
     }

@@ -41,25 +41,24 @@ class ItemTypeController extends Controller
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
 
-            $searchRequestService = new Parameter\Search($request->get('search'));
-            $searchParameters = $searchRequestService->fetch(Config::get('api.item-type.searchable'));
+            $search_request_service = new Parameter\Search($request->get('search'));
+            $search_parameters = $search_request_service->fetch(Config::get('api.item-type.searchable'));
+            
+            $sort_request_service = new Parameter\Sort($request->get('sort'));
+            $sort_parameters = $sort_request_service->fetch(Config::get('api.item-type.sortable'));
 
-            $sort_parameters = Parameter\Sort::fetch(
-                Config::get('api.item-type.sortable')
-            );
-
-            $total = (new ItemType())->totalCount($searchParameters);
+            $total = (new ItemType())->totalCount($search_parameters);
 
             $pagination = new \App\HttpResponse\Pagination($request->path(), $total);
             $pagination_parameters = $pagination->allowPaginationOverride($this->allow_entire_collection)->
-                setSearchParameters($searchParameters)->
+                setSearchParameters($search_parameters)->
                 setSortParameters($sort_parameters)->
                 parameters();
 
             $item_types = (new ItemType())->paginatedCollection(
                 $pagination_parameters['offset'],
                 $pagination_parameters['limit'],
-                $searchParameters,
+                $search_parameters,
                 $sort_parameters
             );
 
@@ -74,8 +73,8 @@ class ItemTypeController extends Controller
             $headers->collection($pagination_parameters, count($item_types), $total)->
                 addCacheControl($cache_control->visibility(), $cache_control->ttl())->
                 addETag($collection)->
-                addSearch($searchRequestService->xHeader())->
-                addSort(Parameter\Sort::xHeader());
+                addSearch($search_request_service->xHeader())->
+                addSort($sort_request_service->xHeader());
 
             $cache_collection->create($total, $collection, $pagination_parameters, $headers->headers());
             $cache_control->putByKey($request->getRequestUri(), $cache_collection->content());
