@@ -650,7 +650,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function deleteResource(string $resource_type_id, $resource_id): TestResponse
+    protected function deleteToResourceDelete(string $resource_type_id, $resource_id): TestResponse
     {
         return $this->delete(
             route('resource.delete', ['resource_type_id' => $resource_type_id, 'resource_id' => $resource_id]), []
@@ -709,12 +709,12 @@ abstract class TestCase extends BaseTestCase
         return $this->route('item.list', $parameters);
     }
 
-    protected function fetchResource(array $parameters = []): TestResponse
+    protected function getToResourceShow(array $parameters = []): TestResponse
     {
         return $this->route('resource.show', $parameters);
     }
 
-    protected function fetchResourceCollection(array $parameters = []): TestResponse
+    protected function getToResourceList(array $parameters = []): TestResponse
     {
         return $this->route('resource.list', $parameters);
     }
@@ -925,7 +925,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function updateResource(string $resource_type_id, string $resource_id, array $payload): TestResponse
+    protected function patchToResourceUpdate(string $resource_type_id, string $resource_id, array $payload): TestResponse
     {
         return $this->patch(
             route(

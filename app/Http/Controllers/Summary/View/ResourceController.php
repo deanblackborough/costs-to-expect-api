@@ -15,17 +15,13 @@ use Illuminate\Support\Facades\Config;
  * Summary controller for the resource routes
  *
  * @author Dean Blackborough <dean@g3d-development.com>
- * @copyright Dean Blackborough 2018-2023
+ * @copyright Dean Blackborough 2018-2025
  * @license https://github.com/costs-to-expect/api/blob/master/LICENSE
  */
 class ResourceController extends Controller
 {
     /**
      * Return a summary of the resources
-     *
-     * @param string $resource_type_id
-     *
-     * @return JsonResponse
      */
     public function index(Request $request, string $resource_type_id): JsonResponse
     {
