@@ -277,7 +277,7 @@ final class CategoryTest extends TestCase
     /** @test */
     public function allocatedExpenseCategoryShowIncludeSubcategories(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);

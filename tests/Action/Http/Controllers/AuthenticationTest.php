@@ -8,7 +8,7 @@ final class AuthenticationTest extends TestCase
 {
     public function testCheckSuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $this->get('v3/auth/check')->assertExactJson(['auth'=>true]);
     }
@@ -705,7 +705,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdatePasswordFailsMismatchedPasswords(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->post(
             'v3/auth/update-password',
@@ -720,7 +720,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdatePasswordFailsNoPayload(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->post(
             'v3/auth/update-password',
@@ -752,7 +752,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdateProfileFailsBadEmail(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->post(
             'v3/auth/update-profile',
@@ -766,7 +766,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdateProfileFailsNoPayload(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->post(
             'v3/auth/update-profile',
@@ -778,8 +778,6 @@ final class AuthenticationTest extends TestCase
 
     public function testUpdateProfileSuccess(): void
     {
-        $this->createUserAndReturnId();
-        
         $this->actingAs($this->createUser());
 
         $response = $this->post(
@@ -794,7 +792,7 @@ final class AuthenticationTest extends TestCase
 
     public function testUserSuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->get('v3/auth/user');
 

@@ -9,7 +9,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function createAllocatedExpenseSubcategoryFailsNoDescriptionInPayload(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -28,7 +28,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function createAllocatedExpenseSubcategoryFailsNoPayload(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -45,7 +45,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function createAllocatedExpenseSubcategoryFailsNonUniqueName(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -78,7 +78,7 @@ final class SubcategoryTest extends TestCase
        /** @test */
     public function createAllocatedExpenseSubcategoryForbiddenWhenCategoryIdInvalid(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
@@ -96,7 +96,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function createAllocatedExpenseSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -116,7 +116,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function createBudgetSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -136,7 +136,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function createBudgetProSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -156,7 +156,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function createGameSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -176,7 +176,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function deleteAllocatedExpenseSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -194,7 +194,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function deleteBudgetSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -212,7 +212,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function deleteBudgetProSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -230,7 +230,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function deleteGameSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -248,7 +248,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateAllocatedExpenseSubcategoryFailsExtraFieldsInPayload(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -269,7 +269,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateAllocatedExpenseSubcategoryFailsNoPayload(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -288,7 +288,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateAllocatedExpenseSubcategoryFailsNonUniqueName(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -337,7 +337,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateAllocatedExpenseSubcategoryDescriptionSuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -358,7 +358,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateAllocatedExpenseSubcategoryNameSuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -379,7 +379,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateAllocatedExpenseSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -401,7 +401,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateBudgetSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -423,7 +423,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateBudgetProSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);
@@ -445,7 +445,7 @@ final class SubcategoryTest extends TestCase
     /** @test */
     public function updateGameSubcategorySuccess(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $category_id = $this->quickCreateRandomCategory($resource_type_id);

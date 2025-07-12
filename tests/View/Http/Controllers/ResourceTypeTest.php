@@ -34,7 +34,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeCollectionPagination(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $this->quickCreateAllocatedExpenseResourceType();
         $this->quickCreateAllocatedExpenseResourceType();
@@ -62,7 +62,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeCollectionSearchDescription(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $search_string = $this->faker->text(35);
 
@@ -90,7 +90,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeCollectionSearchName(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $search_string = $this->faker->text(35);
 
@@ -118,7 +118,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeCollectionSortCreated(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $this->quickCreateAllocatedExpenseResourceType();
         $this->quickCreateAllocatedExpenseResourceType();
@@ -177,7 +177,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeShow(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
@@ -190,7 +190,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
@@ -206,7 +206,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function allocatedExpenseResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
@@ -263,7 +263,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
 
@@ -279,7 +279,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
 
@@ -335,7 +335,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetProResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
 
@@ -351,7 +351,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function budgetProResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
 
@@ -407,7 +407,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function gameResourceTypeShowWithParameterIncludePermittedUsers(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
 
@@ -423,7 +423,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function gameResourceTypeShowWithParameterIncludeResource(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
 
@@ -441,7 +441,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForAllocatedExpenseResourceType(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
 
@@ -464,7 +464,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetResourceType(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
 
@@ -478,7 +478,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProResourceType(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
 
@@ -492,7 +492,7 @@ final class ResourceTypeTest extends TestCase
     /** @test */
     public function optionsRequestForGameResourceType(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
 

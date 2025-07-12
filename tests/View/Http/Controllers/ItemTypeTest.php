@@ -9,7 +9,7 @@ final class ItemTypeTest extends TestCase
     /** @test */
     public function itemTypeCollection(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->getToItemTypeList();
         $response->assertStatus(200);
@@ -28,7 +28,7 @@ final class ItemTypeTest extends TestCase
     /** @test */
     public function itemTypeCollectionPagination(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->getToItemTypeList(['offset'=>1, 'limit'=> 2]);
 
@@ -50,7 +50,7 @@ final class ItemTypeTest extends TestCase
     /** @test */
     public function itemTypeCollectionSearchDescription(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->getToItemTypeList(['search'=>'description:track']);
 
@@ -72,7 +72,7 @@ final class ItemTypeTest extends TestCase
     /** @test */
     public function itemTypeCollectionSearchName(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->getToItemTypeList(['search'=>'name:game']);
 
@@ -94,7 +94,7 @@ final class ItemTypeTest extends TestCase
     /** @test */
     public function itemTypeCollectionSearchNameNoResults(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->getToItemTypeList(['search'=>'name:xxxxxxxxx']);
 
@@ -116,7 +116,7 @@ final class ItemTypeTest extends TestCase
     /** @test */
     public function itemTypeCollectionSortName(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->getToItemTypeList(['sort'=>'name:asc', 'limit' => 1]);
 
@@ -141,7 +141,7 @@ final class ItemTypeTest extends TestCase
     /** @test */
     public function itemTypeShow(): void
     {
-        $this->actingAs($this->primary_user);
+        $this->actingAs($this->createUser());
 
         $response = $this->getToItemTypeList(['offset'=>0, 'limit'=> 1]);
         $response->assertStatus(200);
