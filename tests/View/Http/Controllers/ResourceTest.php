@@ -514,7 +514,7 @@ final class ResourceTest extends TestCase
         $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
 
         $response = $this->fetchOptionsForResource([
             'resource_type_id' => $resource_type_id,
@@ -594,9 +594,9 @@ final class ResourceTest extends TestCase
         $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $this->createYatzyResource($resource_type_id);
-        $this->createYatzyResource($resource_type_id);
-        $this->createYatzyResource($resource_type_id);
+        $this->quickCreateYatzyResource($resource_type_id);
+        $this->quickCreateYatzyResource($resource_type_id);
+        $this->quickCreateYatzyResource($resource_type_id);
 
         $response = $this->getToResourceList([
             'resource_type_id' => $resource_type_id
@@ -623,7 +623,7 @@ final class ResourceTest extends TestCase
         $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
 
         $response = $this->getToResourceShow([
             'resource_type_id' => $resource_type_id,

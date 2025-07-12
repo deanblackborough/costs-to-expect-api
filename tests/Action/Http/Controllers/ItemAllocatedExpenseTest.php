@@ -118,7 +118,7 @@ final class ItemAllocatedExpenseTest extends TestCase
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
-        $item_id = $this->createAllocatedExpenseItem($resource_type_id,$resource_id);
+        $item_id = $this->quickCreateAllocatedExpenseItem($resource_type_id,$resource_id);
 
         $response = $this->deleteToItemDelete(
             $resource_type_id,
@@ -136,7 +136,7 @@ final class ItemAllocatedExpenseTest extends TestCase
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
-        $item_id = $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateAllocatedExpenseItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,
@@ -157,7 +157,7 @@ final class ItemAllocatedExpenseTest extends TestCase
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
-        $item_id = $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateAllocatedExpenseItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,
@@ -176,7 +176,7 @@ final class ItemAllocatedExpenseTest extends TestCase
 
         $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
         $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
-        $item_id = $this->createAllocatedExpenseItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateAllocatedExpenseItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,

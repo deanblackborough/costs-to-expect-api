@@ -2,8 +2,6 @@
 
 namespace Tests\Action\Http\Controllers;
 
-use App\User;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 final class ItemGameTest extends TestCase
@@ -11,7 +9,7 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function createYahtzeeGameItemSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
@@ -32,10 +30,10 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function createYatzyGameItemSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
 
         $response = $this->postToItemCreate(
             $resource_type_id,
@@ -53,7 +51,7 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function deleteYahtzeeGameItemFailsNotFound(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
@@ -71,11 +69,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function deleteYahtzeeGameItemSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
-        $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateYahtzeeGameItem($resource_type_id, $resource_id);
 
         $response = $this->deleteToItemDelete(
             $resource_type_id,
@@ -89,10 +87,10 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function deleteYatzyGameItemFailsNotFound(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
         $item_id = '1234567890';
 
         $response = $this->deleteToItemDelete(
@@ -107,11 +105,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function deleteYatzyGameItemSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
-        $item_id = $this->createYatzyGameItem($resource_type_id, $resource_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
+        $item_id = $this->quickCreateYatzyGameItem($resource_type_id, $resource_id);
 
         $response = $this->deleteToItemDelete(
             $resource_type_id,
@@ -125,11 +123,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function updateYahtzeeGameItemFailsNonExistentField(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
-        $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateYahtzeeGameItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,
@@ -146,11 +144,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function updateYahtzeeGameItemFailsNoPayload(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
-        $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateYahtzeeGameItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,
@@ -165,11 +163,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function updateYahtzeeGameItemSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
-        $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateYahtzeeGameItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,
@@ -186,11 +184,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function updateYatzyGameItemFailsNonExistentField(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
-        $item_id = $this->createYatzyGameItem($resource_type_id, $resource_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
+        $item_id = $this->quickCreateYatzyGameItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,
@@ -207,11 +205,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function updateYatzyGameItemFailsNoPayload(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
-        $item_id = $this->createYatzyGameItem($resource_type_id, $resource_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
+        $item_id = $this->quickCreateYatzyGameItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,
@@ -226,11 +224,11 @@ final class ItemGameTest extends TestCase
     /** @test */
     public function updateYatzyGameItemSuccess(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
-        $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateYahtzeeGameItem($resource_type_id, $resource_id);
 
         $response = $this->patchToItemUpdate(
             $resource_type_id,

@@ -153,7 +153,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the category');
     }
 
-    protected function createAllocatedExpenseItem(
+    protected function quickCreateAllocatedExpenseItem(
         string $resource_type_id,
         string $resource_id,
         array $override = []
@@ -530,7 +530,7 @@ abstract class TestCase extends BaseTestCase
         return $user;
     }
 
-    protected function createYahtzeeGameItem(
+    protected function quickCreateYahtzeeGameItem(
         string $resource_type_id,
         string $resource_id,
         array $override = []
@@ -558,7 +558,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the yahtzee game item');
     }
 
-    protected function createYatzyGameItem(
+    protected function quickCreateYatzyGameItem(
         string $resource_type_id,
         string $resource_id,
         array $override = []
@@ -604,7 +604,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the resource');
     }
 
-    protected function createYatzyResource(string $resource_type_id): string
+    protected function quickCreateYatzyResource(string $resource_type_id): string
     {
         $response = $this->postToResourceCreate(
             $resource_type_id,
@@ -699,12 +699,12 @@ abstract class TestCase extends BaseTestCase
         return $this->route('category.list', $parameters);
     }
 
-    protected function fetchItem(array $parameters = []): TestResponse
+    protected function getToItemShow(array $parameters = []): TestResponse
     {
         return $this->route('item.show', $parameters);
     }
 
-    protected function fetchItemCollection(array $parameters = []): TestResponse
+    protected function getToItemList(array $parameters = []): TestResponse
     {
         return $this->route('item.list', $parameters);
     }

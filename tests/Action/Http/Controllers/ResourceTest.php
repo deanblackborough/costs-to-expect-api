@@ -341,7 +341,7 @@ final class ResourceTest extends TestCase
         $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $id = $this->createYatzyResource($resource_type_id);
+        $id = $this->quickCreateYatzyResource($resource_type_id);
 
         $response = $this->deleteToResourceDelete($resource_type_id, $id);
 
@@ -511,7 +511,7 @@ final class ResourceTest extends TestCase
         $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateGameResourceType();
-        $resource_id = $this->createYatzyResource($resource_type_id);
+        $resource_id = $this->quickCreateYatzyResource($resource_type_id);
 
         $response = $this->patchToResourceUpdate(
             $resource_type_id,

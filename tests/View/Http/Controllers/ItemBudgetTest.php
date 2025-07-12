@@ -19,7 +19,7 @@ final class ItemBudgetTest extends TestCase
         $this->quickCreateBudgetItem($resource_type_id, $resource_id);
         $this->quickCreateBudgetItem($resource_type_id, $resource_id);
 
-        $response = $this->fetchItemCollection([
+        $response = $this->getToItemList([
             $resource_type_id,
             $resource_id
         ]);
@@ -53,7 +53,7 @@ final class ItemBudgetTest extends TestCase
         $this->quickCreateBudgetItem($resource_type_id, $resource_id);
         $this->quickCreateBudgetItem($resource_type_id, $resource_id);
 
-        $response = $this->fetchItemCollection([
+        $response = $this->getToItemList([
             $resource_type_id,
             $resource_id,
             'offset'=>0,
@@ -93,7 +93,7 @@ final class ItemBudgetTest extends TestCase
         $this->quickCreateBudgetItem($resource_type_id, $resource_id, ['name' => 'find-me']);
         $this->quickCreateBudgetItem($resource_type_id, $resource_id);
 
-        $response = $this->fetchItemCollection([
+        $response = $this->getToItemList([
             $resource_type_id,
             $resource_id,
             'search'=>'name:find-me'
@@ -130,7 +130,7 @@ final class ItemBudgetTest extends TestCase
         $this->quickCreateBudgetItem($resource_type_id, $resource_id, ['amount' => '110000.27']);
         $this->quickCreateBudgetItem($resource_type_id, $resource_id, ['amount' => '6.15']);
 
-        $response = $this->fetchItemCollection([
+        $response = $this->getToItemList([
             $resource_type_id,
             $resource_id,
             'sort'=>'amount:asc'
@@ -168,7 +168,7 @@ final class ItemBudgetTest extends TestCase
         sleep(1); // ensure the created_at timestamps are different
         $this->quickCreateBudgetItem($resource_type_id, $resource_id, ['name' => 'created-last']);
 
-        $response = $this->fetchItemCollection([
+        $response = $this->getToItemList([
             $resource_type_id,
             $resource_id,
             'sort'=>'created:desc'
@@ -205,7 +205,7 @@ final class ItemBudgetTest extends TestCase
         $this->quickCreateBudgetItem($resource_type_id, $resource_id, ['name' => 'AAAAAAAAAAAA']);
         $this->quickCreateBudgetItem($resource_type_id, $resource_id);
 
-        $response = $this->fetchItemCollection([
+        $response = $this->getToItemList([
             $resource_type_id,
             $resource_id,
             'sort'=>'name:asc'
@@ -235,7 +235,7 @@ final class ItemBudgetTest extends TestCase
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
         $item_id = $this->quickCreateBudgetItem($resource_type_id, $resource_id);
 
-        $response = $this->fetchItem([
+        $response = $this->getToItemShow([
             $resource_type_id,
             $resource_id,
             $item_id

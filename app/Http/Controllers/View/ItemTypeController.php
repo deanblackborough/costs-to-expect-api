@@ -28,8 +28,6 @@ class ItemTypeController extends Controller
 
     /**
      * Return all the item types
-     *
-     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
