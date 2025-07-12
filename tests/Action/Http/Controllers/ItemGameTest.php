@@ -16,7 +16,7 @@ final class ItemGameTest extends TestCase
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
 
-        $response = $this->createItem(
+        $response = $this->postToItemCreate(
             $resource_type_id,
             $resource_id,
             [
@@ -37,7 +37,7 @@ final class ItemGameTest extends TestCase
         $resource_type_id = $this->quickCreateGameResourceType();
         $resource_id = $this->createYatzyResource($resource_type_id);
 
-        $response = $this->createItem(
+        $response = $this->postToItemCreate(
             $resource_type_id,
             $resource_id,
             [
@@ -59,7 +59,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = '1234567890';
 
-        $response = $this->deleteItem(
+        $response = $this->deleteToItemDelete(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -77,7 +77,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
 
-        $response = $this->deleteItem(
+        $response = $this->deleteToItemDelete(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -95,7 +95,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->createYatzyResource($resource_type_id);
         $item_id = '1234567890';
 
-        $response = $this->deleteItem(
+        $response = $this->deleteToItemDelete(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -113,7 +113,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->createYatzyResource($resource_type_id);
         $item_id = $this->createYatzyGameItem($resource_type_id, $resource_id);
 
-        $response = $this->deleteItem(
+        $response = $this->deleteToItemDelete(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -131,7 +131,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
 
-        $response = $this->updateItem(
+        $response = $this->patchToItemUpdate(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -152,7 +152,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
 
-        $response = $this->updateItem(
+        $response = $this->patchToItemUpdate(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -171,7 +171,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
 
-        $response = $this->updateItem(
+        $response = $this->patchToItemUpdate(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -192,7 +192,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->createYatzyResource($resource_type_id);
         $item_id = $this->createYatzyGameItem($resource_type_id, $resource_id);
 
-        $response = $this->updateItem(
+        $response = $this->patchToItemUpdate(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -213,7 +213,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->createYatzyResource($resource_type_id);
         $item_id = $this->createYatzyGameItem($resource_type_id, $resource_id);
 
-        $response = $this->updateItem(
+        $response = $this->patchToItemUpdate(
             $resource_type_id,
             $resource_id,
             $item_id,
@@ -232,7 +232,7 @@ final class ItemGameTest extends TestCase
         $resource_id = $this->quickCreateYahtzeeResource($resource_type_id);
         $item_id = $this->createYahtzeeGameItem($resource_type_id, $resource_id);
 
-        $response = $this->updateItem(
+        $response = $this->patchToItemUpdate(
             $resource_type_id,
             $resource_id,
             $item_id,

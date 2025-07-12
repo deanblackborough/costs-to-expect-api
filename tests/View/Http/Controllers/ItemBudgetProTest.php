@@ -19,9 +19,9 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -54,12 +54,12 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['deleted'=>1]); // Show not be returned
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['deleted'=>1]); // Show not be returned
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['deleted'=>1]); // Show not be returned
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['deleted'=>1]); // Show not be returned
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['deleted'=>1]); // Show not be returned
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['deleted'=>1]); // Show not be returned
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -92,9 +92,9 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -132,9 +132,9 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['name' => 'find-me']);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['name' => 'find-me']);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -169,9 +169,9 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['amount' => '10000.15']);
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['amount' => '110000.27']);
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['amount' => '6.15']);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['amount' => '10000.15']);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['amount' => '110000.27']);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['amount' => '6.15']);
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -206,10 +206,10 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
         sleep(1); // ensure the created_at timestamps are different
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['name' => 'created-last']);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['name' => 'created-last']);
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -244,9 +244,9 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['name' => 'AAAAAAAAAAAA']);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['name' => 'AAAAAAAAAAAA']);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -281,9 +281,9 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['deleted' => 1]);
-        $this->createBudgetProItem($resource_type_id, $resource_id, ['deleted' => 1]);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['deleted' => 1]);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id, ['deleted' => 1]);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItemCollection([
             $resource_type_id,
@@ -313,7 +313,7 @@ final class ItemBudgetProTest extends TestCase
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
-        $item_id = $this->createBudgetProItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchItem([
             $resource_type_id,
@@ -331,7 +331,7 @@ final class ItemBudgetProTest extends TestCase
         $this->actingAs(User::find(1));
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
-        $item_id = $this->createBudgetProItem($resource_type_id, $resource_id);
+        $item_id = $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchOptionsForItem([
             'resource_type_id' => $resource_type_id,
@@ -351,9 +351,9 @@ final class ItemBudgetProTest extends TestCase
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
-        $this->createBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
+        $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
 
         $response = $this->fetchOptionsForItemCollection([
             'resource_type_id' => $resource_type_id,

@@ -171,7 +171,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createItem(
+        $response = $this->postToItemCreate(
             $resource_type_id,
             $resource_id,
             $payload
@@ -225,7 +225,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the allocated expense resource type');
     }
 
-    protected function createBudgetItem(
+    protected function quickCreateBudgetItem(
         string $resource_type_id,
         string $resource_id,
         array $override = []
@@ -246,7 +246,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createItem(
+        $response = $this->postToItemCreate(
             $resource_type_id,
             $resource_id,
             $payload
@@ -259,7 +259,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the budget item');
     }
 
-    protected function createBudgetProItem(
+    protected function quickCreateBudgetProItem(
         string $resource_type_id,
         string $resource_id,
         array $override = []
@@ -280,7 +280,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createItem(
+        $response = $this->postToItemCreate(
             $resource_type_id,
             $resource_id,
             $payload
@@ -392,7 +392,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the game resource type');
     }
 
-    protected function createItem(
+    protected function postToItemCreate(
         string $resource_type_id,
         string $resource_id,
         array $payload
@@ -545,7 +545,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createItem(
+        $response = $this->postToItemCreate(
             $resource_type_id,
             $resource_id,
             $payload
@@ -573,7 +573,7 @@ abstract class TestCase extends BaseTestCase
             $payload[$k] = $v;
         }
 
-        $response = $this->createItem(
+        $response = $this->postToItemCreate(
             $resource_type_id,
             $resource_id,
             $payload
@@ -622,7 +622,7 @@ abstract class TestCase extends BaseTestCase
         $this->fail('Unable to create the resource');
     }
 
-    protected function deleteItem(string $resource_type_id, $resource_id, string $item_id): TestResponse
+    protected function deleteToItemDelete(string $resource_type_id, $resource_id, string $item_id): TestResponse
     {
         return $this->delete(
             route(
@@ -905,7 +905,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function updateItem(
+    protected function patchToItemUpdate(
         string $resource_type_id,
         string $resource_id,
         string $item_id,
