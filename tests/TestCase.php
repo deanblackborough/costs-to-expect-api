@@ -446,7 +446,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function createRequestedPermittedUser(string $resource_type_id, array $payload): TestResponse
+    protected function postToPermittedUserCreate(string $resource_type_id, array $payload): TestResponse
     {
         return $this->post(
             route('permitted-user.create', ['resource_type_id' => $resource_type_id]),
@@ -643,7 +643,7 @@ abstract class TestCase extends BaseTestCase
         );
     }
 
-    protected function deleteRequestedPermittedUser(string $resource_type_id, string $permitted_user_id): TestResponse
+    protected function deleteToPermittedUserDelete(string $resource_type_id, string $permitted_user_id): TestResponse
     {
         return $this->delete(
             route('permitted-user.delete', ['resource_type_id' => $resource_type_id, 'permitted_user_id' => $permitted_user_id]), []
@@ -684,7 +684,7 @@ abstract class TestCase extends BaseTestCase
         return $this->route('item-type.list', $parameters);
     }
 
-    protected function fetchAllPermittedUsers(array $parameters = []): TestResponse
+    protected function getToPermittedUserList(array $parameters = []): TestResponse
     {
         return $this->route('permitted-user.list', $parameters);
     }
@@ -729,7 +729,7 @@ abstract class TestCase extends BaseTestCase
         return $this->route('item-type.show', $parameters);
     }
 
-    protected function fetchPermittedUser(array $parameters = []): TestResponse
+    protected function getToPermittedUserShow(array $parameters = []): TestResponse
     {
         return $this->route('permitted-user.show', $parameters);
     }
