@@ -2,19 +2,14 @@
 
 namespace Tests\View\Http\Controllers;
 
-use App\User;
 use Tests\TestCase;
 
 final class ItemBudgetProTest extends TestCase
 {
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollection(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -42,14 +37,10 @@ final class ItemBudgetProTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollectionExcludeDeleted(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -80,14 +71,10 @@ final class ItemBudgetProTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollectionPagination(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -120,14 +107,10 @@ final class ItemBudgetProTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollectionSearchName(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -157,14 +140,10 @@ final class ItemBudgetProTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollectionSortAmount(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -194,14 +173,10 @@ final class ItemBudgetProTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollectionSortCreated(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -232,14 +207,10 @@ final class ItemBudgetProTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollectionSortName(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -269,14 +240,10 @@ final class ItemBudgetProTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetProItemCollectionWithParameterIncludeDeleted(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -309,7 +276,7 @@ final class ItemBudgetProTest extends TestCase
     /** @test */
     public function budgetProItemShow(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
@@ -328,7 +295,7 @@ final class ItemBudgetProTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProItem(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
         $item_id = $this->quickCreateBudgetProItem($resource_type_id, $resource_id);
@@ -347,7 +314,7 @@ final class ItemBudgetProTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetProItemCollection(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
         $resource_type_id = $this->quickCreateBudgetProResourceType();
         $resource_id = $this->quickCreateBudgetProResource($resource_type_id);
 

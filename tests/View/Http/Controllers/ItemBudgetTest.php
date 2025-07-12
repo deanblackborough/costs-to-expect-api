@@ -2,7 +2,6 @@
 
 namespace Tests\View\Http\Controllers;
 
-use App\User;
 use Tests\TestCase;
 
 final class ItemBudgetTest extends TestCase
@@ -10,7 +9,7 @@ final class ItemBudgetTest extends TestCase
     /** @test */
     public function budgetItemCollection(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
@@ -37,14 +36,10 @@ final class ItemBudgetTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetItemCollectionPagination(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
@@ -77,14 +72,10 @@ final class ItemBudgetTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetItemCollectionSearchName(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
@@ -114,14 +105,10 @@ final class ItemBudgetTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetItemCollectionSortAmount(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
@@ -151,14 +138,10 @@ final class ItemBudgetTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetItemCollectionSortCreated(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
@@ -189,14 +172,10 @@ final class ItemBudgetTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     * @runInSeparateProcess
-     * @preserveGlobalState disabled
-     */
+    /** @test */
     public function budgetItemCollectionSortName(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
@@ -229,7 +208,7 @@ final class ItemBudgetTest extends TestCase
     /** @test */
     public function budgetItemShow(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
 
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
@@ -248,7 +227,7 @@ final class ItemBudgetTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetItem(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
         $item_id = $this->quickCreateBudgetItem($resource_type_id, $resource_id);
@@ -267,7 +246,7 @@ final class ItemBudgetTest extends TestCase
     /** @test */
     public function optionsRequestForBudgetItemCollection(): void
     {
-        $this->actingAs(User::find(1));
+        $this->actingAs($this->createUser());
         $resource_type_id = $this->quickCreateBudgetResourceType();
         $resource_id = $this->quickCreateBudgetResource($resource_type_id);
 

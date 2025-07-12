@@ -21,8 +21,6 @@ abstract class TestCase extends BaseTestCase
 
     protected string $email_for_expected_test_user = 'test-account-email@email.com';
     protected string $password_for_expected_test_user = 'test-account-secret-password';
-    
-    protected User $primary_user;
 
     protected array $item_types = [
         'allocated-expense' => 'OqZwKX16bW',
@@ -870,8 +868,6 @@ abstract class TestCase extends BaseTestCase
         $user->email = $this->email_for_expected_test_user;
         $user->password = Hash::make($this->password_for_expected_test_user);
         $user->save();
-        
-        $this->primary_user = $user;
         
         // Create the allocated expense resource type for the primary user
         $resource_type = new ResourceType();

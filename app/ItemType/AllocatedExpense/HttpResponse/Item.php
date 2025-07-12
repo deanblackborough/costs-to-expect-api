@@ -124,11 +124,12 @@ class Item extends ApiItemResponse
         $this->search_parameters = $search_parameter_service->fetch(
             LaravelConfig::get($base_path . '.searchable', [])
         );
-
-        $this->filter_parameters = Filter::fetch(
+        
+        $filter_parameter_service = new Filter(request()->get('filter'));
+        $this->filter_parameters = $filter_parameter_service->fetch(
             LaravelConfig::get($base_path . '.filterable', [])
         );
-        
+
         $sort_parameter_service = new Sort(request()->get('sort'));
         $this->sort_fields = $sort_parameter_service->fetch(
             LaravelConfig::get($base_path . '.sortable', [])
