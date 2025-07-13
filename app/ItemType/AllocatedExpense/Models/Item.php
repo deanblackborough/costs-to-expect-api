@@ -7,6 +7,7 @@ namespace App\ItemType\AllocatedExpense\Models;
 use App\Models\Utility;
 use App\Models\Currency;
 use App\HttpRequest\Validate\Boolean;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
@@ -429,30 +430,12 @@ class Item extends LaravelModel
 
         $collection->offset($offset);
         $collection->limit($limit);
+        
+        $last_updated_expression = $this->lastUpdatedExpression();
 
         return $collection
             ->select($select_fields)
-            ->selectRaw(
-                "
-                (
-                    SELECT 
-                        GREATEST(
-                            MAX(`{$this->table}`.`created_at`), 
-                            IFNULL(MAX(`{$this->table}`.`updated_at`), 0),
-                            0
-                        )
-                    FROM 
-                        `{$this->table}` 
-                    JOIN 
-                        `item` ON 
-                            `{$this->table}`.`item_id` = `item`.`id`
-                    WHERE
-                        `item`.`resource_id` = ? 
-                ) AS `last_updated`",
-                [
-                    $resource_id
-                ]
-            )
+            ->selectRaw($last_updated_expression->getValue(DB::connection()->getQueryGrammar()), [$resource_id])
             ->get()
             ->toArray();
     }
@@ -473,5 +456,43 @@ class Item extends LaravelModel
         }
 
         return false;
+    }
+
+    private function lastUpdatedExpression(): Expression
+    {
+        if (DB::getDriverName() === 'mysql') {
+            return DB::raw('
+                (
+                    SELECT 
+                        GREATEST(
+                            MAX(`item_type_allocated_expense`.`created_at`), 
+                            IFNULL(MAX(`item_type_allocated_expense`.`updated_at`), 0),
+                            0
+                        )
+                    FROM 
+                        `item_type_allocated_expense` 
+                    JOIN 
+                        `item` ON 
+                            `item_type_allocated_expense`.`item_id` = `item`.`id`
+                    WHERE
+                        `item`.`resource_id` = ? 
+                ) AS `last_updated`');
+        }
+
+        return DB::raw('(
+                SELECT
+                    MAX(
+                        COALESCE(item_type_allocated_expense.created_at, 0),
+                        COALESCE(item_type_allocated_expense.updated_at, 0),
+                        0
+                    )
+                FROM
+                    item_type_allocated_expense 
+                JOIN 
+                    `item` ON 
+                        `item_type_allocated_expense`.`item_id` = `item`.`id`
+                    WHERE
+                        `item`.`resource_id` = ? 
+            ) AS last_updated');
     }
 }

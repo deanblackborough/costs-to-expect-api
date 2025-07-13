@@ -57,7 +57,7 @@ class Utility
             $collection->where(static function ($collection) {
                 $collection
                     ->whereNull('item_type_allocated_expense.publish_after')
-                    ->orWhereRaw('item_type_allocated_expense.publish_after < NOW()');
+                    ->orWhereRaw('item_type_allocated_expense.publish_after < CURRENT_TIMESTAMP');
             });
         }
 
