@@ -16,6 +16,7 @@
         <server name="APP_ENV" value="testing"/>
         <server name="APP_CACHE" value="false"/>
         <server name="APP_DEBUG" value="true"/>
+        <server name="APP_KEY" value="base64:gb5P7MM2HiQG4OCuqLPgwnV2WMMq63u2T1Ly0GOsnI0="/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="database"/>
         <server name="DB_CONNECTION" value="sqlite"/>
