@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\ItemType\Game\Models;
 
 use App\Models\Utility;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @mixin QueryBuilder
@@ -38,27 +40,7 @@ class Summary extends LaravelModel
                 `item_subtype`.`description` AS resource_item_subtype_description,
                 COUNT({$this->sub_table}.item_id) AS count
             ")
-            ->selectRaw(
-                "
-                (
-                    SELECT 
-                        GREATEST(
-                            MAX(`{$this->sub_table}`.`created_at`), 
-                            IFNULL(MAX(`{$this->sub_table}`.`updated_at`), 0),
-                            0
-                        )
-                    FROM 
-                        `{$this->sub_table}` 
-                    JOIN 
-                        `item` ON 
-                            `{$this->sub_table}`.`item_id` = `{$this->table}`.`id`
-                    WHERE
-                        `item`.`resource_id` = ? 
-                ) AS `last_updated`",
-                [
-                    $resource_id
-                ]
-            )
+            ->selectRaw($this->lastUpdatedExpression()->getValue(DB::connection()->getQueryGrammar()), [$resource_id])
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
             ->join("resource", "resource.id", "item.resource_id")
             ->join("resource_type", "resource_type.id", "resource.resource_type_id")
@@ -112,27 +94,7 @@ class Summary extends LaravelModel
                 `item_subtype`.`description` AS resource_item_subtype_description,
                 COUNT({$this->sub_table}.item_id) AS count
             ")
-            ->selectRaw(
-                "
-                (
-                    SELECT 
-                        GREATEST(
-                            MAX(`{$this->sub_table}`.`created_at`), 
-                            IFNULL(MAX(`{$this->sub_table}`.`updated_at`), 0),
-                            0
-                        )
-                    FROM 
-                        `{$this->sub_table}` 
-                    JOIN 
-                        `item` ON 
-                            `{$this->sub_table}`.`item_id` = `{$this->table}`.`id`
-                    WHERE
-                        `item`.`resource_id` = ? 
-                ) AS `last_updated`",
-                [
-                    $resource_id
-                ]
-            )
+            ->selectRaw($this->lastUpdatedExpression()->getValue(DB::connection()->getQueryGrammar()), [$resource_id])
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
             ->join("resource", "resource.id", "item.resource_id")
             ->join("resource_type", "resource_type.id", "resource.resource_type_id")
@@ -149,5 +111,43 @@ class Summary extends LaravelModel
             ->groupBy('resource.id', 'item_subtype.id')
             ->get()
             ->toArray();
+    }
+
+    private function lastUpdatedExpression(): Expression
+    {
+        if (DB::getDriverName() === 'mysql') {
+            return DB::raw("
+                (
+                    SELECT
+                        GREATEST(
+                            MAX(`{$this->sub_table}`.`created_at`),
+                            IFNULL(MAX(`{$this->sub_table}`.`updated_at`), 0),
+                            0
+                        )
+                    FROM
+                        `{$this->sub_table}`
+                    JOIN
+                        `item` ON
+                            `{$this->sub_table}`.`item_id` = `{$this->table}`.`id`
+                    WHERE
+                        `item`.`resource_id` = ?
+                ) AS `last_updated`");
+        }
+
+        return DB::raw("(
+                SELECT
+                    MAX(
+                        COALESCE({$this->sub_table}.created_at, 0),
+                        COALESCE({$this->sub_table}.updated_at, 0),
+                        0
+                    )
+                FROM
+                    {$this->sub_table}
+                JOIN
+                    item ON
+                        {$this->sub_table}.item_id = {$this->table}.id
+                WHERE
+                    item.resource_id = ?
+            ) AS last_updated");
     }
 }

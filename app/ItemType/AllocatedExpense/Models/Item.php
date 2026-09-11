@@ -135,7 +135,7 @@ class Item extends LaravelModel
     {
         $result = $this->join('item', 'item_type_allocated_expense.item_id', 'item.id')->
             where('item.resource_id', '=', $resource_id)->
-            selectRaw('YEAR(MAX(`item_type_allocated_expense`.`effective_date`)) AS `year_limit`')->
+            selectRaw(Utility::yearExpression('MAX(`item_type_allocated_expense`.`effective_date`)') . ' AS `year_limit`')->
             first();
 
         if ($result === null) {
@@ -157,7 +157,7 @@ class Item extends LaravelModel
     {
         $result = $this->join('item', 'item_type_allocated_expense.item_id', 'item.id')->
             where('item.resource_id', '=', $resource_id)->
-            selectRaw('YEAR(MIN(`item_type_allocated_expense`.`effective_date`)) AS `year_limit`')->
+            selectRaw(Utility::yearExpression('MIN(`item_type_allocated_expense`.`effective_date`)') . ' AS `year_limit`')->
             first();
 
         if ($result === null) {
@@ -230,7 +230,7 @@ class Item extends LaravelModel
             array_key_exists('year', $parameters) === true &&
             $parameters['year'] !== null
         ) {
-            $expression = DB::raw("YEAR(item_type_allocated_expense.effective_date) = ?");
+            $expression = DB::raw(Utility::yearExpression('item_type_allocated_expense.effective_date') . " = ?");
             $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()), [$parameters['year']]);
         }
 
@@ -238,7 +238,7 @@ class Item extends LaravelModel
             array_key_exists('month', $parameters) === true &&
             $parameters['month'] !== null
         ) {
-            $expression = DB::raw("MONTH(item_type_allocated_expense.effective_date) = ?");
+            $expression = DB::raw(Utility::monthExpression('item_type_allocated_expense.effective_date') . " = ?");
             $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()), $parameters['month']);
         }
 
@@ -368,13 +368,13 @@ class Item extends LaravelModel
 
         if (array_key_exists('year', $parameters) === true &&
             $parameters['year'] !== null) {
-            $expression = DB::raw("YEAR(item_type_allocated_expense.effective_date) = '{$parameters['year']}'");
+            $expression = DB::raw(Utility::yearExpression('item_type_allocated_expense.effective_date') . " = '{$parameters['year']}'");
             $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()));
         }
 
         if (array_key_exists('month', $parameters) === true &&
             $parameters['month'] !== null) {
-            $expression = DB::raw("MONTH(item_type_allocated_expense.effective_date) = '{$parameters['month']}'");
+            $expression = DB::raw(Utility::monthExpression('item_type_allocated_expense.effective_date') . " = '{$parameters['month']}'");
             $collection->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()));
         }
 

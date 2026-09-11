@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Models\Summary;
 
 use App\Models\Utility;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @mixin QueryBuilder
@@ -31,24 +33,7 @@ class Category extends Model
     ): array {
         $collection = $this
             ->selectRaw("COUNT(`{$this->table}`.`id`) AS total")
-            ->selectRaw(
-                "
-                (
-                    SELECT 
-                        GREATEST(
-                            MAX(`{$this->table}`.`created_at`), 
-                            IFNULL(MAX(`{$this->table}`.`updated_at`), 0),
-                            0
-                        )
-                    FROM 
-                        `{$this->table}` 
-                    WHERE
-                        `{$this->table}`.`resource_type_id` = ? 
-                ) AS `last_updated`",
-                [
-                    $resource_type_id
-                ]
-            )
+            ->selectRaw($this->lastUpdatedExpression()->getValue(DB::connection()->getQueryGrammar()), [$resource_type_id])
             ->join("resource_type", "category.resource_type_id", "resource_type.id")
             ->where('category.resource_type_id', '=', $resource_type_id);
 
@@ -61,5 +46,37 @@ class Category extends Model
 
         return $collection->get()
             ->toArray();
+    }
+
+    private function lastUpdatedExpression(): Expression
+    {
+        if (DB::getDriverName() === 'mysql') {
+            return DB::raw("
+                (
+                    SELECT
+                        GREATEST(
+                            MAX(`{$this->table}`.`created_at`),
+                            IFNULL(MAX(`{$this->table}`.`updated_at`), 0),
+                            0
+                        )
+                    FROM
+                        `{$this->table}`
+                    WHERE
+                        `{$this->table}`.`resource_type_id` = ?
+                ) AS `last_updated`");
+        }
+
+        return DB::raw("(
+                SELECT
+                    MAX(
+                        COALESCE({$this->table}.created_at, 0),
+                        COALESCE({$this->table}.updated_at, 0),
+                        0
+                    )
+                FROM
+                    {$this->table}
+                WHERE
+                    {$this->table}.resource_type_id = ?
+            ) AS last_updated");
     }
 }

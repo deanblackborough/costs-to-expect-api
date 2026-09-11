@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\ItemType\AllocatedExpense\Models;
 
 use App\Models\Utility;
+use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
@@ -76,30 +77,7 @@ class SummaryResourceTypeItem extends LaravelModel
                 SUM({$this->sub_table}.actualised_total) AS total, 
                 COUNT({$this->sub_table}.item_id) AS total_count"
             )
-            ->selectRaw(
-                "
-                (
-                    SELECT 
-                        GREATEST(
-                            MAX(`{$this->sub_table}`.`created_at`), 
-                            IFNULL(MAX(`{$this->sub_table}`.`updated_at`), 0),
-                            0
-                        )
-                    FROM 
-                        `{$this->sub_table}` 
-                    JOIN 
-                        `item` ON 
-                            `{$this->sub_table}`.`item_id` = `{$this->table}`.`id`
-                    JOIN 
-                        `resource` ON 
-                            `{$this->table}`.`resource_id` = `resource`.`id`
-                    WHERE
-                        `resource`.`resource_type_id` = ? 
-                ) AS `last_updated`",
-                [
-                    $resource_type_id
-                ]
-            )
+            ->selectRaw($this->lastUpdatedExpression()->getValue(DB::connection()->getQueryGrammar()), [$resource_type_id])
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
             ->join('resource', 'item.resource_id', 'resource.id')
             ->join('resource_type', 'resource.resource_type_id', 'resource_type.id')
@@ -128,13 +106,15 @@ class SummaryResourceTypeItem extends LaravelModel
         int $resource_type_id,
         array $parameters
     ): array {
+        $year_column = Utility::yearExpression("{$this->sub_table}.effective_date");
+
         $collection = $this
             ->selectRaw(
                 "
-                YEAR({$this->sub_table}.effective_date) as year,
+                {$year_column} as year,
                 currency.code AS currency_code,
-                SUM({$this->sub_table}.actualised_total) AS total, 
-                COUNT({$this->sub_table}.item_id) AS total_count, 
+                SUM({$this->sub_table}.actualised_total) AS total,
+                COUNT({$this->sub_table}.item_id) AS total_count,
                 MAX({$this->sub_table}.created_at) AS last_updated"
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -167,15 +147,16 @@ class SummaryResourceTypeItem extends LaravelModel
         int $year,
         array $parameters
     ): array {
-        $expression = DB::raw("YEAR({$this->sub_table}.effective_date)");
-        
+        $expression = DB::raw(Utility::yearExpression("{$this->sub_table}.effective_date"));
+        $month_column = Utility::monthExpression("{$this->sub_table}.effective_date");
+
         $collection = $this
             ->selectRaw(
                 "
-                MONTH({$this->sub_table}.effective_date) as month, 
+                {$month_column} as month,
                 currency.code AS currency_code,
-                SUM({$this->sub_table}.actualised_total) AS total, 
-                COUNT({$this->sub_table}.item_id) AS total_count, 
+                SUM({$this->sub_table}.actualised_total) AS total,
+                COUNT({$this->sub_table}.item_id) AS total_count,
                 MAX({$this->sub_table}.created_at) AS last_updated"
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -183,7 +164,7 @@ class SummaryResourceTypeItem extends LaravelModel
             ->join("resource_type", "resource_type.id", "resource.resource_type_id")
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
             ->where("resource_type.id", "=", $resource_type_id)
-            ->where($expression->getValue(DB::connection()->getQueryGrammar()), '=', $year);
+            ->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()) . ' = ?', [$year]);
 
         $collection = Utility::applyExcludeFutureUnpublishedClause($collection, $parameters);
 
@@ -211,16 +192,17 @@ class SummaryResourceTypeItem extends LaravelModel
         int $month,
         array $parameters
     ): array {
-        $expression_year = DB::raw("YEAR({$this->sub_table}.effective_date)");
-        $expression_month = DB::raw("MONTH({$this->sub_table}.effective_date)");
-        
+        $expression_year = DB::raw(Utility::yearExpression("{$this->sub_table}.effective_date"));
+        $expression_month = DB::raw(Utility::monthExpression("{$this->sub_table}.effective_date"));
+        $month_column = Utility::monthExpression("{$this->sub_table}.effective_date");
+
         $collection = $this
             ->selectRaw(
                 "
-                MONTH({$this->sub_table}.effective_date) as month, 
+                {$month_column} as month,
                 currency.code AS currency_code,
-                SUM({$this->sub_table}.actualised_total) AS total, 
-                COUNT({$this->sub_table}.item_id) AS total_count, 
+                SUM({$this->sub_table}.actualised_total) AS total,
+                COUNT({$this->sub_table}.item_id) AS total_count,
                 MAX({$this->sub_table}.created_at) AS last_updated"
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -228,8 +210,8 @@ class SummaryResourceTypeItem extends LaravelModel
             ->join("resource_type", "resource_type.id", "resource.resource_type_id")
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
             ->where("resource_type.id", "=", $resource_type_id)
-            ->where($expression_year->getValue(DB::connection()->getQueryGrammar()), '=', $year)
-            ->where($expression_month->getValue(DB::connection()->getQueryGrammar()), '=', $month);
+            ->whereRaw($expression_year->getValue(DB::connection()->getQueryGrammar()) . ' = ?', [$year])
+            ->whereRaw($expression_month->getValue(DB::connection()->getQueryGrammar()) . ' = ?', [$month]);
 
         $collection = Utility::applyExcludeFutureUnpublishedClause($collection, $parameters);
 
@@ -255,15 +237,16 @@ class SummaryResourceTypeItem extends LaravelModel
         int $year,
         array $parameters
     ): array {
-        $expression = DB::raw("YEAR({$this->sub_table}.effective_date)");
-        
+        $expression = DB::raw(Utility::yearExpression("{$this->sub_table}.effective_date"));
+        $year_column = Utility::yearExpression("{$this->sub_table}.effective_date");
+
         $collection = $this
             ->selectRaw(
                 "
-                YEAR({$this->sub_table}.effective_date) as year, 
+                {$year_column} as year,
                 currency.code AS currency_code,
-                SUM({$this->sub_table}.actualised_total) AS total, 
-                COUNT({$this->sub_table}.item_id) AS total_count, 
+                SUM({$this->sub_table}.actualised_total) AS total,
+                COUNT({$this->sub_table}.item_id) AS total_count,
                 MAX({$this->sub_table}.created_at) AS last_updated"
             )
             ->join($this->sub_table, 'item.id', "{$this->sub_table}.item_id")
@@ -271,7 +254,7 @@ class SummaryResourceTypeItem extends LaravelModel
             ->join("resource_type", "resource_type.id", "resource.resource_type_id")
             ->join('currency', "{$this->sub_table}.currency_id", 'currency.id')
             ->where("resource_type.id", "=", $resource_type_id)
-            ->where($expression->getValue(DB::connection()->getQueryGrammar()), '=', $year);
+            ->whereRaw($expression->getValue(DB::connection()->getQueryGrammar()) . ' = ?', [$year]);
 
         $collection = Utility::applyExcludeFutureUnpublishedClause($collection, $parameters);
 
@@ -386,8 +369,8 @@ class SummaryResourceTypeItem extends LaravelModel
         array $search_parameters = [],
         array $filter_parameters = []
     ): array {
-        $expression_year = DB::raw("YEAR({$this->sub_table}.effective_date) = {$year}");
-        $expression_month = DB::raw("MONTH({$this->sub_table}.effective_date) = {$month}");
+        $expression_year = DB::raw(Utility::yearExpression("{$this->sub_table}.effective_date") . " = {$year}");
+        $expression_month = DB::raw(Utility::monthExpression("{$this->sub_table}.effective_date") . " = {$month}");
         
         $collection = $this
             ->selectRaw("
@@ -529,5 +512,49 @@ class SummaryResourceTypeItem extends LaravelModel
             ->orderBy('name')
             ->get()
             ->toArray();
+    }
+
+    private function lastUpdatedExpression(): Expression
+    {
+        if (DB::getDriverName() === 'mysql') {
+            return DB::raw("
+                (
+                    SELECT
+                        GREATEST(
+                            MAX(`{$this->sub_table}`.`created_at`),
+                            IFNULL(MAX(`{$this->sub_table}`.`updated_at`), 0),
+                            0
+                        )
+                    FROM
+                        `{$this->sub_table}`
+                    JOIN
+                        `item` ON
+                            `{$this->sub_table}`.`item_id` = `{$this->table}`.`id`
+                    JOIN
+                        `resource` ON
+                            `{$this->table}`.`resource_id` = `resource`.`id`
+                    WHERE
+                        `resource`.`resource_type_id` = ?
+                ) AS `last_updated`");
+        }
+
+        return DB::raw("(
+                SELECT
+                    MAX(
+                        COALESCE({$this->sub_table}.created_at, 0),
+                        COALESCE({$this->sub_table}.updated_at, 0),
+                        0
+                    )
+                FROM
+                    {$this->sub_table}
+                JOIN
+                    item ON
+                        {$this->sub_table}.item_id = {$this->table}.id
+                JOIN
+                    resource ON
+                        {$this->table}.resource_id = resource.id
+                WHERE
+                    resource.resource_type_id = ?
+            ) AS last_updated");
     }
 }

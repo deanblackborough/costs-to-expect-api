@@ -71,6 +71,24 @@ class Utility
         return $collection->whereIn('resource_type.id', $viewable_resource_types);
     }
 
+    public static function yearExpression(string $column): string
+    {
+        if (DB::getDriverName() === 'mysql') {
+            return "YEAR({$column})";
+        }
+
+        return "CAST(strftime('%Y', {$column}) AS INTEGER)";
+    }
+
+    public static function monthExpression(string $column): string
+    {
+        if (DB::getDriverName() === 'mysql') {
+            return "MONTH({$column})";
+        }
+
+        return "CAST(strftime('%m', {$column}) AS INTEGER)";
+    }
+
     public static function deleteCategories(int $resource_type_id): int
     {
         return DB::delete('

@@ -46,7 +46,7 @@ class ItemPartialTransferController extends Controller
         $cache_collection->setFromCache($cache_control->getByKey(request()->getRequestUri()));
 
         if ($cache_control->isRequestCacheable() === false || $cache_collection->valid() === false) {
-            $parameters = Parameter\Request::fetch(
+            $parameters = (new Parameter\Request(request()->all()))->fetch(
                 array_keys(Config::get('api.item-partial-transfer.parameters'))
             );
 

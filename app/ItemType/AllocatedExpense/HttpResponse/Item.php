@@ -119,20 +119,24 @@ class Item extends ApiItemResponse
             array_keys(LaravelConfig::get($base_path . '.parameters', [])),
             $this->resource_type_id
         );
-        
+        $this->request_service = $request_parameter_service;
+
         $search_parameter_service = new Search(request()->get('search'));
         $this->search_parameters = $search_parameter_service->fetch(
             LaravelConfig::get($base_path . '.searchable', [])
         );
-        
+        $this->search_service = $search_parameter_service;
+
         $filter_parameter_service = new Filter(request()->get('filter'));
         $this->filter_parameters = $filter_parameter_service->fetch(
             LaravelConfig::get($base_path . '.filterable', [])
         );
+        $this->filter_service = $filter_parameter_service;
 
         $sort_parameter_service = new Sort(request()->get('sort'));
         $this->sort_fields = $sort_parameter_service->fetch(
             LaravelConfig::get($base_path . '.sortable', [])
         );
+        $this->sort_service = $sort_parameter_service;
     }
 }

@@ -474,16 +474,21 @@ class SummaryResourceTypeItem extends ApiSummaryResourceTypeItemResponse
     {
         $base_path = 'api.resource-type-item-type-allocated-expense';
 
-        $this->parameters = Parameter\Request::fetch(
+        $requestParameterService = new Parameter\Request(request()->all());
+        $this->parameters = $requestParameterService->fetch(
             array_keys(LaravelConfig::get($base_path . '.summary-parameters', [])),
             $this->resource_type_id
         );
+        $this->request_service = $requestParameterService;
 
         $searchParameterService = new Search(request()->get('search'));
         $this->search_parameters = $searchParameterService->fetch(LaravelConfig::get($base_path . '.summary-searchable', []));
+        $this->search_service = $searchParameterService;
 
-        $this->filter_parameters = Parameter\Filter::fetch(
+        $filterParameterService = new Parameter\Filter(request()->get('filter'));
+        $this->filter_parameters = $filterParameterService->fetch(
             LaravelConfig::get($base_path . '.summary-filterable', [])
         );
+        $this->filter_service = $filterParameterService;
     }
 }

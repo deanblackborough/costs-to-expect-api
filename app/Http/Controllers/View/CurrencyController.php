@@ -41,7 +41,8 @@ class CurrencyController extends Controller
             $searchRequestService = new Parameter\Search($request->get('search'));
             $searchParameters = $searchRequestService->fetch(Config::get('api.currency.searchable'));
 
-            $sort_parameters = Parameter\Sort::fetch(
+            $sortRequestService = new Parameter\Sort($request->get('sort'));
+            $sort_parameters = $sortRequestService->fetch(
                 Config::get('api.currency.sortable')
             );
 
@@ -72,7 +73,7 @@ class CurrencyController extends Controller
                 addCacheControl($cache_control->visibility(), $cache_control->ttl())->
                 addETag($collection)->
                 addSearch($searchRequestService->xHeader())->
-                addSort(Parameter\Sort::xHeader());
+                addSort($sortRequestService->xHeader());
 
             $cache_collection->create($total, $collection, $pagination_parameters, $headers->headers());
             $cache_control->putByKey($request->getRequestUri(), $cache_collection->content());

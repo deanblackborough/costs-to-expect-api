@@ -96,11 +96,10 @@ class Handler extends ExceptionHandler
                     ];
                 }
 
-                response()->json(
+                return response()->json(
                     $response,
                     500
-                )->send();
-                exit;
+                );
             default:
                 $message = $exception->getMessage();
                 break;
