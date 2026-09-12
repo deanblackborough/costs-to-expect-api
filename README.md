@@ -19,8 +19,8 @@ The API is used by the following Apps;
 - [Budget](https://budget.costs-to-expect.com) Our free and Open Source Budgeting tool
 - [Budget Pro](https://budget-pro.costs-to-expect.com) The commercial version of Budget
 - [Expense](https://app.costs-to-expect.com) Our free and Open Source expense tracker
-- [Yahtzee Game Scorer](https://yahtzee.game-score.com) Our Yahtzee Game Scorer, free for all to use
-- [Yatzy Game Scorer](https://yatzu.game-score.com) Our Yatzy Game Scorer, free for all to use
+- [Yahtzee Game Scorer](https://yahtzee.game-scorer.com) Our Yahtzee Game Scorer, free for all to use
+- [Yatzy Game Scorer](https://yatzu.game-scorer.com) Our Yatzy Game Scorer, free for all to use
 - [Social Experiment](https://www.costs-to-expect.com) How much does it cost to raise a child to adulthood in the UK?
 
 ## Set up
