@@ -20,7 +20,7 @@ The API is used by the following Apps;
 - [Budget Pro](https://budget-pro.costs-to-expect.com) The commercial version of Budget
 - [Expense](https://app.costs-to-expect.com) Our free and Open Source expense tracker
 - [Yahtzee Game Scorer](https://yahtzee.game-scorer.com) Our Yahtzee Game Scorer, free for all to use
-- [Yatzy Game Scorer](https://yatzu.game-scorer.com) Our Yatzy Game Scorer, free for all to use
+- [Yatzy Game Scorer](https://yatzy.game-scorer.com) Our Yatzy Game Scorer, free for all to use
 - [Social Experiment](https://www.costs-to-expect.com) How much does it cost to raise a child to adulthood in the UK?
 
 ## Set up
@@ -46,21 +46,21 @@ Firstly, we need to check we are trying to access the right location,
 execute `docker compose exec costs.api.app ls`. You should see a list of the files and 
 directories at the project root. 
 
-Next, we need to configure the API by setting out local .ENV file our .env, 
+Next, we need to configure the API by copying our .env.example file to .env, 
 installing all dependencies and running our migrations.
 
 * Copy the `.env.example` file and name the copy `.env`. Set all the empty values, all 
 drivers have been set to our defaults, sessions, cache, and the queue default to the database driver.
 * `docker compose exec costs.api.app php artisan key:generate`
-* `docker compose exec costs.api.app php artisan migrate`)
+* `docker compose exec costs.api.app php artisan migrate`
 * `docker compose exec costs.api.app php artisan queue:work`
-* Run an OPTIONS request on `http://[your.domail.local:8080]/v3/resource_types`, you will see an OPTIONS response, 
-alternatively a GET request to `http://[your.domail.local:8080]/v1` will show all the defined routes.
-* You can create a user by POSTing to `http://[your.domail.local:8080]/v3/auth/register`. This route is only 
+* Run an OPTIONS request on `http://[your.domain.local:8080]/v3/resource-types`, you will see an OPTIONS response, 
+alternatively a GET request to `http://[your.domain.local:8080]/v3` will show all the defined routes.
+* You can create a user by POSTing to `http://[your.domain.local:8080]/v3/auth/register`. This route is only 
 callable by trusted internal services, see **Internal API key** below - you will need to set `INTERNAL_API_KEY` 
 in your `.env` and send it as the `X-Internal-Api-Key` header on the request, or the route will return a 403.
 * You create a password by POSTing a password and password_confirmation to the URI register response. 
-* You can sign-in by posting to `http://[your.domail.local:8080]/v3/auth/login` - you will need a bearer for all the routes that require authentication.
+* You can sign-in by posting to `http://[your.domain.local:8080]/v3/auth/login` - you will need a bearer for all the routes that require authentication.
 * Our API defaults to Mailgun, populate `MAILGUN_DOMAIN` and `MAILGUN_SECRET` with the relevant values from your account, 
 you will also need to set `MAIL_FROM_ADDRESS` and `MAIL_TO_ADDRESS`. You may need to set `Authorized Recipients` in Mailgun. 
 
@@ -146,7 +146,7 @@ You can exclude public resource types by include exclude-public=true in the quer
 | POST         | v3/auth/forgot-password *(requires `X-Internal-Api-Key`, see Internal API key)*                                                                |
 | OPTIONS      | v3/auth/login                                                                                                                                  |
 | POST         | v3/auth/login                                                                                                                                  |
-| GET          | v3/auth/logout                                                                                                                                 |
+| GET/HEAD     | v3/auth/logout                                                                                                                                  |
 | OPTIONS      | v3/auth/register                                                                                                                               |
 | POST         | v3/auth/register *(requires `X-Internal-Api-Key`, see Internal API key)*                                                                       |
 | OPTIONS      | v3/auth/update-password                                                                                                                        |
@@ -190,6 +190,10 @@ You can exclude public resource types by include exclude-public=true in the quer
 | OPTIONS      | v3/item-types/{item_type_id}/item-subtypes                                                                                                     |
 | GET/HEAD     | v3/item-types/{item_type_id}/item-subtypes/{item_subtype_id}                                                                                   |
 | OPTIONS      | v3/item-types/{item_type_id}/item-subtypes/{item_subtype_id}                                                                                   |
+| GET/HEAD     | v3/queue                                                                                                                                        |
+| OPTIONS      | v3/queue                                                                                                                                        |
+| GET/HEAD     | v3/queue/{queue_id}                                                                                                                             |
+| OPTIONS      | v3/queue/{queue_id}                                                                                                                             |
 | GET/HEAD     | v3/resource-types                                                                                                                              |
 | OPTIONS      | v3/resource-types                                                                                                                              |
 | POST         | v3/resource-types                                                                                                                              |
@@ -260,8 +264,8 @@ You can exclude public resource types by include exclude-public=true in the quer
 | GET/HEAD     | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/log                                                               |
 | OPTIONS      | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/log                                                               |
 | POST         | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/log                                                               |
-| GET/HEAD     | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/log/{item_data_id}                                                |
-| OPTIONS      | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/log/{item_data_id}                                                |
+| GET/HEAD     | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/log/{item_log_id}                                                 |
+| OPTIONS      | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/log/{item_log_id}                                                 |
 | OPTIONS      | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/partial-transfer                                                  |
 | POST         | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/partial-transfer                                                  |
 | OPTIONS      | v3/resource-types/{resource_type_id}/resources/{resource_id}/items/{item_id}/transfer                                                          |
