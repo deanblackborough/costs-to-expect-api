@@ -38,6 +38,7 @@ class ItemPartialTransfer extends Model
         $collection = $this
             ->select(
                 $this->table . '.id',
+                $this->table . '.resource_type_id',
                 $this->table . '.percentage',
                 $this->table . '.item_id AS item_item_id',
                 $this->table . '.created_at',
@@ -89,6 +90,7 @@ class ItemPartialTransfer extends Model
             ->where($this->table . '.id', '=', $item_partial_transfer_id)
             ->select(
                 $this->table . '.id',
+                $this->table . '.resource_type_id',
                 $this->table . '.percentage',
                 $this->table . '.item_id AS item_item_id',
                 'item_type_allocated_expense.name AS item_name',

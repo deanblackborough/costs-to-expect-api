@@ -144,6 +144,16 @@ class Response
         );
     }
 
+    public static function invalidInternalApiKey(): JsonResponse
+    {
+        return response()->json(
+            [
+                'message' => trans('responses.invalid-internal-api-key')
+            ],
+            403
+        );
+    }
+
     public static function authenticationFailed(?Throwable $e = null): JsonResponse
     {
         $response = [

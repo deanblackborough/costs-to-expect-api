@@ -1535,6 +1535,106 @@ abstract class TestCase extends BaseTestCase
         return $this->optionsRoute('auth.update-profile.options', $parameters);
     }
 
+    protected function fetchOptionsForCheck(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.check.options', $parameters);
+    }
+
+    protected function fetchOptionsForCreateNewPassword(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.create-new-password.options', $parameters);
+    }
+
+    protected function fetchOptionsForForgotPassword(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.forgot-password.options', $parameters);
+    }
+
+    protected function getToAuthUser(array $parameters = []): TestResponse
+    {
+        return $this->route('auth.user.show', $parameters);
+    }
+
+    protected function fetchOptionsForAuthUser(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.options', $parameters);
+    }
+
+    protected function getToPermittedResourceTypeList(array $parameters = []): TestResponse
+    {
+        return $this->route('auth.user.permitted-resource-types.list', $parameters);
+    }
+
+    protected function fetchOptionsForPermittedResourceTypeCollection(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.permitted-resource-types.list.options', $parameters);
+    }
+
+    protected function getToPermittedResourceTypeShow(array $parameters = []): TestResponse
+    {
+        return $this->route('auth.user.permitted-resource-types.show', $parameters);
+    }
+
+    protected function fetchOptionsForPermittedResourceType(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.permitted-resource-types.show.options', $parameters);
+    }
+
+    protected function getToPermittedResourceTypeResourcesList(array $parameters = []): TestResponse
+    {
+        return $this->route('auth.user.permitted-resource-types-resources.list', $parameters);
+    }
+
+    protected function fetchOptionsForPermittedResourceTypeResourcesCollection(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.permitted-resource-types-resources.list.options', $parameters);
+    }
+
+    protected function getToPermittedResourceTypeResourceShow(array $parameters = []): TestResponse
+    {
+        return $this->route('auth.user.permitted-resource-types-resources.show', $parameters);
+    }
+
+    protected function fetchOptionsForPermittedResourceTypeResource(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.permitted-resource-types-resources.show.options', $parameters);
+    }
+
+    protected function fetchOptionsForAuthRequestDelete(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.request-delete.options', $parameters);
+    }
+
+    protected function fetchOptionsForAuthRequestResourceDelete(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.request-resource-delete.options', $parameters);
+    }
+
+    protected function fetchOptionsForAuthRequestResourceTypeDelete(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.request-resource-type-delete.options', $parameters);
+    }
+
+    protected function getToTokenList(array $parameters = []): TestResponse
+    {
+        return $this->route('auth.user.token.list', $parameters);
+    }
+
+    protected function fetchOptionsForTokenCollection(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.token.list.options', $parameters);
+    }
+
+    protected function getToTokenShow(array $parameters = []): TestResponse
+    {
+        return $this->route('auth.user.token.show', $parameters);
+    }
+
+    protected function fetchOptionsForToken(array $parameters = []): TestResponse
+    {
+        return $this->optionsRoute('auth.user.token.show.options', $parameters);
+    }
+
     protected function route(string $route, array $parameters = []): TestResponse
     {
         return $this->get(route($route, $parameters));
@@ -1561,7 +1661,9 @@ abstract class TestCase extends BaseTestCase
         $this->withoutMiddleware(
             ThrottleRequests::class
         );
-        
+
+        $this->withHeader('X-Internal-Api-Key', 'testing-internal-api-key');
+
         if (env('APP_KEY') === '' || env('APP_KEY') === null) {
             $this->artisan('key:generate --env=testing');
         }

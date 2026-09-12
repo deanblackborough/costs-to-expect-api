@@ -74,6 +74,10 @@ final class ItemPartialTransferTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertJsonMatchesPartialTransferSchema($response->content());
+
+        $this->assertStringContainsString("resource-types/{$resource_type_id}/resources/{$from_resource_id}", $response->json('from.uri'));
+        $this->assertStringContainsString("resource-types/{$resource_type_id}/resources/{$to_resource_id}", $response->json('to.uri'));
+        $this->assertStringContainsString("resource-types/{$resource_type_id}/resources/{$from_resource_id}/items/{$item_id}", $response->json('item.uri'));
     }
 
     /** @test */
