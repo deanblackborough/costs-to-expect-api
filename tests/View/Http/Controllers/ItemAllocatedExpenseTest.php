@@ -107,6 +107,52 @@ final class ItemAllocatedExpenseTest extends TestCase
         }
     }
 
+    /**
+     * @test
+     * @dataProvider rogueLimitAndOffsetValues
+     */
+    public function allocatedExpenseItemCollectionRogueLimitAndOffsetDoesNotError(
+        int|string $limit,
+        int|string $offset,
+        int $expected_limit,
+        int $expected_offset
+    ): void {
+        $this->actingAs($this->createUser());
+
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
+
+        $this->quickCreateAllocatedExpenseItem($resource_type_id, $resource_id);
+
+        $response = $this->getToItemList([
+            $resource_type_id,
+            $resource_id,
+            'limit' => $limit,
+            'offset' => $offset
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertHeader('X-Limit', $expected_limit);
+        $response->assertHeader('X-Offset', $expected_offset);
+    }
+
+    public static function rogueLimitAndOffsetValues(): array
+    {
+        return [
+            'the actual production incident payload' => [-9043281, 0, 10, 0],
+            'sqlmap union-based injection payload as limit' => [
+                "-9043281' UNION ALL SELECT NULL,NULL,NULL,NULL,CONCAT(0x7e363233667e,(1),0x7e613662627e) -- -",
+                0,
+                10,
+                0
+            ],
+            'zero limit' => [0, 0, 10, 0],
+            'small negative limit' => [-1, 0, 10, 0],
+            'negative offset' => [5, -20, 5, 0],
+            'negative limit and negative offset together' => [-1, -1, 10, 0],
+        ];
+    }
+
     /** @test */
     public function allocatedExpenseItemCollectionSearchDescription(): void
     {

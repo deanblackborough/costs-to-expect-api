@@ -222,8 +222,11 @@ class Pagination
 
     private function generateUris(): array
     {
-        $this->offset = (int) request()->query('offset', 0);
-        $this->limit = (int) request()->query('limit', $this->limit);
+        $offset = (int) request()->query('offset', 0);
+        $this->offset = $offset >= 0 ? $offset : 0;
+
+        $limit = (int) request()->query('limit', $this->limit);
+        $this->limit = $limit > 0 ? $limit : $this->limit;
 
         if ($this->allow_override === true && Boolean::convertedValue(request()->query('collection')) === true) {
             $this->collection = true;
