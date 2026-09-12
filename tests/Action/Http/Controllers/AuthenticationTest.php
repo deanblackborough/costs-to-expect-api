@@ -798,4 +798,164 @@ final class AuthenticationTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function testLogoutSuccess(): void
+    {
+        $user = $this->createUser();
+        $plainTextToken = $user->createToken('test-device')->plainTextToken;
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $plainTextToken)->get('v3/auth/logout');
+
+        $response->assertStatus(200);
+
+        $this->assertEquals(
+            0,
+            \Illuminate\Support\Facades\DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->count()
+        );
+    }
+
+    public function testLogoutFailsUnauthenticated(): void
+    {
+        $response = $this->get('v3/auth/logout');
+
+        $response->assertStatus(403);
+    }
+
+    public function testMigrateBudgetProRequestDeleteSuccess(): void
+    {
+        $this->actingAs($this->createUser());
+
+        $response = $this->post('v3/auth/user/migrate/budget-pro/request-migration', []);
+
+        $response->assertStatus(201);
+    }
+
+    public function testMigrateBudgetProRequestDeleteFailsUnauthenticated(): void
+    {
+        $response = $this->post('v3/auth/user/migrate/budget-pro/request-migration', []);
+
+        $response->assertStatus(403);
+    }
+
+    public function testRequestDeleteSuccess(): void
+    {
+        $this->actingAs($this->createUser());
+
+        $response = $this->post('v3/auth/user/request-delete', []);
+
+        $response->assertStatus(201);
+    }
+
+    public function testRequestDeleteFailsUnauthenticated(): void
+    {
+        $response = $this->post('v3/auth/user/request-delete', []);
+
+        $response->assertStatus(403);
+    }
+
+    public function testRequestResourceTypeDeleteSuccess(): void
+    {
+        $this->actingAs($this->createUser());
+
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+
+        $response = $this->post(
+            route('auth.user.request-resource-type-delete', ['permitted_resource_type_id' => $resource_type_id]),
+            []
+        );
+
+        $response->assertStatus(201);
+    }
+
+    public function testRequestResourceTypeDeleteFailsNotPermitted(): void
+    {
+        $this->actingAs($this->createUser());
+
+        $resource_type = \App\Models\ResourceType::query()
+            ->join('permitted_user', 'resource_type.id', '=', 'permitted_user.resource_type_id')
+            ->where('permitted_user.user_id', '=', 1)
+            ->first();
+
+        if ($resource_type === null) {
+            $this->fail('Unable to fetch a resource type for testing in');
+        }
+
+        $other_resource_type_id = (new \App\HttpRequest\Hash())->encode('resource-type', $resource_type->id);
+
+        $response = $this->post(
+            route('auth.user.request-resource-type-delete', ['permitted_resource_type_id' => $other_resource_type_id]),
+            []
+        );
+
+        $response->assertStatus(404);
+    }
+
+    public function testRequestResourceTypeDeleteFailsUnauthenticated(): void
+    {
+        $response = $this->post(
+            route('auth.user.request-resource-type-delete', ['permitted_resource_type_id' => 'ABCDEDFGFG']),
+            []
+        );
+
+        $response->assertStatus(403);
+    }
+
+    public function testRequestResourceDeleteSuccess(): void
+    {
+        $this->actingAs($this->createUser());
+
+        $resource_type_id = $this->quickCreateAllocatedExpenseResourceType();
+        $resource_id = $this->quickCreateAllocatedExpenseResource($resource_type_id);
+
+        $response = $this->post(
+            route('auth.user.request-resource-delete', [
+                'permitted_resource_type_id' => $resource_type_id,
+                'resource_id' => $resource_id
+            ]),
+            []
+        );
+
+        $response->assertStatus(201);
+    }
+
+    public function testRequestResourceDeleteFailsUnauthenticated(): void
+    {
+        $response = $this->post(
+            route('auth.user.request-resource-delete', [
+                'permitted_resource_type_id' => 'ABCDEDFGFG',
+                'resource_id' => 'ABCDEDFGFG'
+            ]),
+            []
+        );
+
+        $response->assertStatus(403);
+    }
+
+    public function testDeleteTokenSuccess(): void
+    {
+        $user = $this->createUser();
+        $this->actingAs($user);
+
+        $token = $user->createToken('a-device');
+
+        $response = $this->delete(route('auth.user.token.delete', ['token_id' => $token->accessToken->id]));
+
+        $response->assertStatus(204);
+    }
+
+    public function testDeleteTokenFailsNotFound(): void
+    {
+        $this->actingAs($this->createUser());
+
+        $response = $this->delete(route('auth.user.token.delete', ['token_id' => 999999]));
+
+        $response->assertStatus(404);
+    }
+
+    public function testDeleteTokenFailsUnauthenticated(): void
+    {
+        $response = $this->delete(route('auth.user.token.delete', ['token_id' => 1]));
+
+        $response->assertStatus(403);
+    }
 }
