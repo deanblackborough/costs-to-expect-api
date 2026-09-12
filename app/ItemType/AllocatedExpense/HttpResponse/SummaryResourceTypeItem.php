@@ -26,9 +26,9 @@ class SummaryResourceTypeItem extends ApiSummaryResourceTypeItemResponse
 
         $this->model = new \App\ItemType\AllocatedExpense\Models\SummaryResourceTypeItem();
 
-        $this->shortCircuit(); // Skip working out which for obvious routes
-
         $this->requestParameters();
+
+        $this->shortCircuit(); // Skip working out which for obvious routes
 
         $this->removeDecisionParameters();
     }

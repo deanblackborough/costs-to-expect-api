@@ -243,7 +243,7 @@ class Request
 
         foreach ($this->parameters as $key => $value) {
             $header .= match ($key) {
-                'category', 'resource-type', 'subcategory' => '|' . $key . ':' . urlencode((string)$_GET[$key]),
+                'category', 'resource-type', 'subcategory' => '|' . $key . ':' . urlencode((string)$this->request_parameters[$key]),
                 default => '|' . $key . ':' . urlencode((string)$value),
             };
         }

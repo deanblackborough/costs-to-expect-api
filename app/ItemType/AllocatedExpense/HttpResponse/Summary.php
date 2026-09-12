@@ -28,9 +28,9 @@ class Summary extends ApiSummaryResponse
 
         $this->model = new \App\ItemType\AllocatedExpense\Models\Summary();
 
-        $this->shortCircuit(); // Skip working out which for obvious routes
-
         $this->requestParameters();
+
+        $this->shortCircuit(); // Skip working out which for obvious routes
 
         $this->removeDecisionParameters();
     }
