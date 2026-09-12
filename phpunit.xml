@@ -12,6 +12,11 @@
             <directory suffix="Test.php">./tests/View</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+    </source>
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="APP_CACHE" value="false"/>
