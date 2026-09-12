@@ -129,12 +129,11 @@
             </svg>
             <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
                 <div class="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
-                    <span class="mt 8 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Launching soon!</span>
-                    <h1 class="mt-2 max-w-lg text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Budget Pro (alpha)</h1>
-                    <p class="mt-6 text-lg leading-8 text-gray-600">Budget Pro is Budget on steroids - it's everything you love about Budget improved in every way. More viewing options, more controls, you name it.</p>
+                    <h1 class="mt-2 max-w-lg text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Budget Pro</h1>
+                    <p class="mt-6 text-lg leading-8 text-gray-600">Budget Pro is a planning-first budgeting app for people who want control before they spend, not after. Most budgeting tools show you what you’ve already spent. Budget Pro shows you what’s coming next — and lets you change it before it happens</p>
                     <div class="mt-10 flex items-center gap-x-6">
                         <a href="https://budget-pro.costs-to-expect.com/register" class="rounded-md bg-pinky-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-pinky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pinky-600">Register for FREE</a>
-                        <a href="https://budget-pro.costs-to-expect.com" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span aria-hidden="true">→</span></a>
+                        <a href="https://budget-pro.costs-to-expect.com/product/features" class="text-sm font-semibold leading-6 text-gray-900">See everything Budget Pro does <span aria-hidden="true">→</span></a>
                     </div>
                 </div>
                 <div class="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
@@ -357,7 +356,7 @@
                     <div>
                         <h3 class="text-base font-medium text-lg text-gray-900">Support</h3>
                         <p class="mt-2 mb-2 text-sm text-gray-800">
-                            <a href="https://www.deanblackborough.com" class="text-pinky-500 hover:text-pinky-900">Dean Blackborough</a> &copy; 2018-2025
+                            <a href="https://www.deanblackborough.com" class="text-pinky-500 hover:text-pinky-900">Dean Blackborough</a> &copy; 2018-2026
                         </p>
                         <p class="mb-2 text-sm text-gray-800">Version {{ $version }}<br />
                             Released {{ date('jS M Y', strtotime($date)) }}
